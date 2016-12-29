@@ -29,7 +29,7 @@ export default class Store {
             {
                 if(list.hasOwnProperty(i) && list[i].item.mounted)
                 {
-                    if(Array.isArray(list[i].item.Midlewares))
+                    if(list[i].item.Midlewares && Array.isArray(list[i].item.Midlewares))
                     {
                         for(var j = 0; j < list[i].item.Midlewares.length; j++)
                         {
@@ -52,34 +52,36 @@ export default class Store {
         this.getState = (data) => {
             return state;
         }
-        this.subscribe = (elemento, filter, key) => {
+        this.subscribe = (elemento, filter, key, root) => {
             var subscribe = {item: elemento, filter: filter};
             if(typeof elemento === 'undefined') {
                 return;
             }
-            if(typeof elemento.componentDidMount === 'function') {
-                let componentDidMount = elemento.componentDidMount; 
-                elemento.componentDidMount = function() { 
-                    this.mounted = true;
-                    componentDidMount();
-                }.bind(elemento);
-            } else {
-                elemento.componentDidMount = function() { 
-                    this.mounted = true;
-                }.bind(elemento);
-            }
-            if(typeof elemento.componentWillUnmount === 'function') {
-                let componentWillUnmount = elemento.componentWillUnmount; 
-                elemento.componentWillUnmount = function() { 
-                    this.mounted = false;
-                    this.unsubscribe();
-                    componentWillUnmount();
-                }.bind(elemento);
-            } else {
-                elemento.componentWillUnmount = function() { 
-                    this.mounted = false;
-                    this.unsubscribe();
-                }.bind(elemento);
+            if (root !== true) {
+                if(typeof elemento.componentDidMount === 'function') {
+                    let componentDidMount = elemento.componentDidMount; 
+                    elemento.componentDidMount = function() { 
+                        this.mounted = true;
+                        componentDidMount();
+                    }.bind(elemento);
+                } else {
+                    elemento.componentDidMount = function() { 
+                        this.mounted = true;
+                    }.bind(elemento);
+                }
+                if(typeof elemento.componentWillUnmount === 'function') {
+                    let componentWillUnmount = elemento.componentWillUnmount; 
+                    elemento.componentWillUnmount = function() { 
+                        this.mounted = false;
+                        this.unsubscribe();
+                        componentWillUnmount();
+                    }.bind(elemento);
+                } else {
+                    elemento.componentWillUnmount = function() { 
+                        this.mounted = false;
+                        this.unsubscribe();
+                    }.bind(elemento);
+                }
             }
             elemento.unsubscribe = function() {
                 delete elementos[key];

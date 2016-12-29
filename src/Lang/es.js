@@ -9,7 +9,7 @@ export default {
     login_confirm_password: "Confirmar password",
     login_signup: 'Sign up',
     login_login: 'Log-in',
-
+    login_logout: 'Salir',
     
     json_invalid: 'La respuesta del servidor no es valida'
 };

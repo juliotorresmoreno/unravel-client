@@ -1,17 +1,3 @@
-
-
-.bg-black {
-    background-color: #333 !important
-}
-
-.bg-black a {
-    color: white
-}
-
-.bg-black a:hover {
-    color: white
-}
-
 button {
     min-width: 100px
 }

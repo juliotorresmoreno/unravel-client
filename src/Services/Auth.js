@@ -2,6 +2,7 @@ import ServiceBase from '../Lib/ServiceBase';
 
 const register = '/auth/registrar';
 const login    = '/auth/login';
+const logout   = '/auth/logout';
 const session  = '/auth/session';
 
 export default class Auth extends ServiceBase
@@ -11,13 +12,13 @@ export default class Auth extends ServiceBase
         super();
         const resolve = (url, data) => {
             return (resolve, reject) => {
-                (() =>  data !== undefined ? this.post(url, data): fetch(url))()
+                (() => data !== undefined ? this.post(url, data): fetch(url))()
                     .then((response) => {
                         response.json()
                             .then((json) => {
                                 if(response.ok)
                                 {
-                                    store.setState({session: json});
+                                    store.setState({session: json.session});
                                     this.secure(resolve)({
                                         response: response,
                                         data: json
@@ -29,7 +30,6 @@ export default class Auth extends ServiceBase
                                 }
                             })
                             .catch((error) => {
-                                console.log("yea", error);
                                 this.secure(reject)({error: error});
                             });
                     })
@@ -47,7 +47,36 @@ export default class Auth extends ServiceBase
             return new Promise(resolve(store.getState().config.api + login, data));
         };
         this.getSession = () => {
-            return new Promise(resolve(store.getState().config.api + session));
+            return new Promise((resolve, reject) => {
+                this.getJSON(store.getState().config.api + session)
+                    .then((response) => {
+                        store.setState({session: response.session});
+                        this.secure(resolve)({session: response});
+                    })
+                    .catch((error) => {
+                        this.secure(reject)({error: error});
+                        console.log(error);
+                    });
+            });
+        };
+        this.fullName = () => {
+            return store.getState().session ? store.getState().session.nombres + ' ' + store.getState().session.apellidos: '';
+        }
+        this.logout = () => 
+        {
+            return new Promise((resolve, reject) => {
+                fetch(store.getState().config.api + logout)
+                    .then((response) => {
+                        if(response.ok)
+                        {
+                            store.setState({session: false});
+                            this.secure(resolve)({response: response});
+                        }
+                    })
+                    .catch((error) => {
+                        this.secure(reject)(error);
+                    })
+            });
         };
         store.auth = this;
     }

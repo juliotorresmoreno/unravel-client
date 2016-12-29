@@ -16,10 +16,12 @@ export default class Login extends LoginCtrl {
         const title = this.props.store.lang.get('login_title_login');
         const username = this.props.store.lang.get('login_username');
         const password = this.props.store.lang.get('login_password');
+        const displayE = this.state.error ? '': 'none';
         return (
             <Container text>
+                <br/>
                 <div style={{maxWidth:350,width:'100%',marginLeft:'50%',transform:'translateX(-50%)'}}>
-                    <h2 style={{color:'red'}}>{this.state.error}</h2>
+                    <h2 style={{color:'red',display:displayE}}>{this.state.error}</h2>
                     <Form onSubmit={this.onLogin}>
                         <h2 style={{textAlign:'center'}}>{title}</h2>
                         <br/>

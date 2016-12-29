@@ -1,55 +1,46 @@
 
 import ReactDOM from 'react-dom';
-import { IndexRoute, Router, Route, browserHistory } from 'react-router'
+import { Router, Route, browserHistory } from 'react-router'
 import React, { Component } from 'react'
 import './index.css';
 import App from './Views/App';
-import Login from './Views/Login/main';
-import Register from './Views/Register/main';
-
-
+import E404 from './Views/E404/main';
 import Lang from './Lang/main';
 import Auth from './Services/Auth';
 import Alert from './Services/Alert';
 import Store from './Store/Store';
 import config from './config/config';
 
+import Profile from './Views/Profile/main';
+import News from './Views/News/main';
+import Messages from './Views/Messages/main';
+import Friends from './Views/Friends/main';
+import Galery from './Views/Galery/main';
+
 var store = new Store({config:config});
 store.addService(Lang);
 store.addService(Auth);
 store.addService(Alert);
 
-class NoMatch extends Component {
-    render() {
-        return (
-            <span>Not found</span>
-        );
-    }
-}
-
-var noauth = (
-    <Route path="/" component={App} store={store}>
-        <IndexRoute component={Login} />
-        <Route path="login" component={Login} />
-        <Route path="signup" component={Register}/>
-        <Route path="*" component={NoMatch}/>
-    </Route>
-);
-var auth = (
-    <Route path="/" component={App} store={store}>
-        <Route path="*" component={NoMatch}/>
-    </Route>
-);
 
 class Index extends Component {
-    constructor(args) {
-        super(args);
-        store.subscribe(this, ['session'], "Index");
-    }
     render() {
         return (
             <Router history={browserHistory}>
-                {store.getState().session ? auth: noauth}
+                <Route path="/" component={App} store={store}>
+                    <Route path="news" component={News} />
+                    <Route path="profile" component={Profile} />
+                    <Route path="messages" component={Messages} />
+                    <Route path="friends" component={Friends} />
+                    <Route path="galery" component={Galery} />
+
+                    <Route path=":user/profile" component={Profile} />
+                    <Route path=":user/messages" component={Messages} />
+                    <Route path=":user/friends" component={Friends} />
+                    <Route path=":user/galery" component={Galery} />
+                    <Route path=":user/news" component={News} />
+                    <Route path="*" component={E404} />
+                </Route>
             </Router>
         );
     }

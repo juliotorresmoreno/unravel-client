@@ -26,7 +26,8 @@ export default class Register extends RegisterCtrl{
         const confirm = this.props.store.lang.get('login_confirm_password');
         return (
             <Container text>
-                <div style={{maxWidth:400,marginLeft:'50%',transform:'translateX(-50%)'}}>
+                <br/>
+                <div style={{maxWidth:350,width:'100%',marginLeft:'50%',transform:'translateX(-50%)'}}>
                     <Form onSubmit={this.onRegister}>
                         <h2 style={{textAlign:'center'}}>{title}</h2>
                         <br/>
