@@ -16,7 +16,7 @@ export default class Head extends HeadCtrl{
         }
         else
         {
-            return <NoLogged store={this.props.store}/>;
+            return <NoLogged router={this.props.router} store={this.props.store}/>;
         }
     }
 }

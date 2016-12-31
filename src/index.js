@@ -5,12 +5,15 @@ import React, { Component } from 'react'
 import './index.css';
 import App from './Views/App';
 import E404 from './Views/E404/main';
-import Lang from './Lang/main';
-import Auth from './Services/Auth';
-import Alert from './Services/Alert';
 import Store from './Store/Store';
 import config from './config/config';
 
+import SLang from './Lang/main';
+import SAuth from './Services/Auth';
+import SAlert from './Services/Alert';
+import SProfile from './Services/Profile';
+
+import Register from './Views/Register/main';
 import Profile from './Views/Profile/main';
 import News from './Views/News/main';
 import Messages from './Views/Messages/main';
@@ -18,9 +21,10 @@ import Friends from './Views/Friends/main';
 import Galery from './Views/Galery/main';
 
 var store = new Store({config:config});
-store.addService(Lang);
-store.addService(Auth);
-store.addService(Alert);
+store.addService(SLang);
+store.addService(SAuth);
+store.addService(SAlert);
+store.addService(SProfile);
 
 
 class Index extends Component {
@@ -28,6 +32,7 @@ class Index extends Component {
         return (
             <Router history={browserHistory}>
                 <Route path="/" component={App} store={store}>
+                    <Route path="signup" component={Register} />
                     <Route path="news" component={News} />
                     <Route path="profile" component={Profile} />
                     <Route path="messages" component={Messages} />

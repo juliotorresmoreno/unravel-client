@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component } = React;
 
-export default class MenuRightCtrl extends Component {
+export default class MenuLeftCtrl extends Component {
     form = {}
     errors = {}
     onRegister = (event) => {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Segment, Menu } from 'semantic-ui-react';
 
 import Head from './Head/main';
+import MenuLeft from './MenuLeft/main';
 import MenuRight from './MenuRight/main';
+import News from './News/main';
 import Login from './Login/main';
 import Register from './Register/main';
-import E404 from './E404/main';
 
 class App extends Component {
     constructor(args) {
@@ -14,41 +14,37 @@ class App extends Component {
         this.props.route.store.auth.getSession();
     }
     render() {
-        let children;
         if (this.props.route.store.getState().session)
         {
-            children = this.props.children && React.cloneElement(this.props.children, {
-                store: this.props.route.store
-            });
+            let children = <News store={this.props.route.store} />;
+            if(this.props.children)
+            {
+                children = this.props.children && React.cloneElement(this.props.children, {
+                    store: this.props.route.store
+                });
+            }
             return (
                 <div>
                     <Head router={this.props.router} store={this.props.route.store} />
                     <div style={{display:'flex',flexDirection:'vertical'}}>
-                        <MenuRight router={this.props.router} store={this.props.route.store} />
-                        <div style={{background: '#DDD',margin:'15px 15px 15px 0',flex:1}}>
+                        <MenuLeft router={this.props.router} store={this.props.route.store} />
+                        <div style={{background: '',margin:'15px 15px 15px 0',flex:1}}>
                             {children}
                         </div>
+                        <MenuRight router={this.props.router} store={this.props.route.store} />
                     </div>
                 </div>
             );
         }
         else
         {
-            switch(this.props.location.pathname)
-            {
-                case '/': case '/login':
-                    children = <Login store={this.props.route.store}/>;
-                    break;
-                case '/signup':
-                    children = <Register store={this.props.route.store}/>;
-                    break;
-                default:
-                    children = <E404/>;
-                    break;
-            }
+            const pathname = this.props.location.pathname;
+            const login = <Login store={this.props.route.store}/>;
+            const register = <Register store={this.props.route.store}/>;
+            const children = pathname !== '/signup' ? login: register;
             return (
                 <div>
-                    <Head store={this.props.route.store} />
+                    <Head router={this.props.router} store={this.props.route.store} />
                     {children}
                 </div>
             );

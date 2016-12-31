@@ -1,10 +1,11 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Image, Menu } from 'semantic-ui-react';
+import { Link } from 'react-router';
 
-import MenuRightCtrl from './main.ctrl';
+import MenuLeftCtrl from './main.ctrl';
 
 
-export default class MenuRight extends MenuRightCtrl {
+export default class MenuLeft extends MenuLeftCtrl {
     state = {};
     constructor(args) {
         super(args);
@@ -19,9 +20,19 @@ export default class MenuRight extends MenuRightCtrl {
         alert('sd');
     }
     render = function() {
+        const session = this.props.store.getState().session;
+        const fullname = session.nombres + ' ' + session.apellidos;
         return (
             <div style={{margin:15}}>
                 <Menu vertical>
+                    <Menu.Item>
+                        <Link to={'/galery'}>
+                            <Image src='/static/svg/user-3.svg' fluid />
+                        </Link>
+                        <br />
+                        <Link to={'/'+session.usuario+'/news'}>{fullname}</Link><br />
+                        <Link to={'/profile'}>Perfil</Link>
+                    </Menu.Item>
                     <Menu.Item as="a" href="/news" onClick={this.handleItemClick}>
                         Noticias
                     </Menu.Item>

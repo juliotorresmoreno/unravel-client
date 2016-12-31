@@ -40,12 +40,18 @@ export default class ServiceBase {
             credentials: 'same-origin'
         });
     }
-    post = (url, data) => {
+    post = (url, data, headers = {}) => {
         return fetch(url, {
             method: "POST",
-            headers: { 
-                'Content-Type': 'application/x-www-form-urlencoded' 
-            },
+            headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
+            credentials: 'same-origin',
+            body: arrayToUrlEncode(data)
+        });
+    }
+    put = (url, data, headers = {}) => {
+        return fetch(url, {
+            method: "POST",
+            headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
             credentials: 'same-origin',
             body: arrayToUrlEncode(data)
         });
