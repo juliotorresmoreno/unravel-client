@@ -14,24 +14,34 @@ const Views = {
 }
 
 export default class Profile extends ProfileCtrl {
-    state = { activeItem: 'Basico' }
+    state = { activeItem: 'Basico', isLoading: true }
+    constructor(args) {
+        super(args);
+        this.props.store.subscribe(this, ['perfil'], "Profile");
+        this.props.store.profile.load()
+            .then(() => {
+                this.setState({isLoading: false})
+            });
+    }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
     render() {
         const { activeItem } = this.state;
         const activeView = Views[activeItem](this.props.store);
-        return (
-            <div>
-                <Menu pointing secondary>
-                    <Menu.Item name='Basico' active={activeItem === 'Basico'} onClick={this.handleItemClick} />
-                    <Menu.Item name='Contacto' active={activeItem === 'Contacto'} onClick={this.handleItemClick} />
-                    <Menu.Item name='Intereses' active={activeItem === 'Intereses'} onClick={this.handleItemClick} />
-                </Menu>
-                <Segment>
-                    {activeView}
-                </Segment>
-            </div>
-        );
+        if (!this.state.isLoading)
+        {
+            return (
+                <div>
+                    <Menu pointing secondary>
+                        <Menu.Item name='Basico' active={activeItem === 'Basico'} onClick={this.handleItemClick} />
+                        <Menu.Item name='Contacto' active={activeItem === 'Contacto'} onClick={this.handleItemClick} />
+                        <Menu.Item name='Intereses' active={activeItem === 'Intereses'} onClick={this.handleItemClick} />
+                    </Menu>
+                    <Segment>
+                        {activeView}
+                    </Segment>
+                </div>
+            );
+        }
+        return (<div>Loading</div>);
     }
 }
-
-//<img src='http://semantic-ui.com/images/wireframe/media-paragraph.png' />

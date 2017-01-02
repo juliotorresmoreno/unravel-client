@@ -3,10 +3,11 @@ const { Component } = React;
 
 export default class BasicCtrl extends Component {
     onHandlerGuardarNombres = (e, obj) => {
-        this.props.store.profile.update({
+        var params = {
             nombres: this.form.nombres,
             apellidos: this.form.apellidos
-        })
+        };
+        this.props.store.profile.update(params)
             .then((response) => {
                 this.props.store.getState().session.nombres = this.form.nombres;
                 this.props.store.getState().session.apellidos = this.form.apellidos;
@@ -17,11 +18,11 @@ export default class BasicCtrl extends Component {
             });
     }
     onHandlerGuardarEmail = (e, obj, permiso) => {
-        console.log(obj);
-        this.props.store.profile.update({
+        var params = {
             email: this.form.email,
             permiso_email: permiso
-        })
+        };
+        this.props.store.profile.update(params)
             .then((response) => {
                 console.log(response);
             })

@@ -11,7 +11,10 @@ class App extends Component {
     constructor(args) {
         super(args);
         this.props.route.store.subscribe(this, ['session'], "App");
-        this.props.route.store.auth.getSession();
+        if (!this.props.route.store.getState().session)
+        {
+            this.props.route.store.auth.getSession();
+        }
     }
     render() {
         if (this.props.route.store.getState().session)

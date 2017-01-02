@@ -6,12 +6,12 @@ import BasicCtrl from './basic.ctrl';
 
 
 export default class Basic extends BasicCtrl {
+    form = {}
     constructor(args) {
         super(args);
-        this.form = {
-            nombres: this.props.store.getState().session.nombres,
-            apellidos: this.props.store.getState().session.apellidos,
-        }
+        this.form.nombres = this.props.store.getState().session.nombres;
+        this.form.apellidos = this.props.store.getState().session.apellidos;
+        this.form.email = this.props.store.getState().perfil.email;
     }
     render() {
         const name = this.props.store.lang.get('login_name');
@@ -22,6 +22,7 @@ export default class Basic extends BasicCtrl {
         const ano = this.props.store.lang.get('profile_nacimiento_ano');
         const sexo = this.props.store.lang.get('profile_sexo');
         const save = this.props.store.lang.get('app_save');
+
         return (
             <div>
                 <Form onSubmit={(e) => e.preventDefault()}>

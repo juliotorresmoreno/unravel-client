@@ -1,6 +1,8 @@
 import ServiceBase from '../Lib/ServiceBase';
 
 const register = '/profile';
+const consulta = '/profile';
+
 
 export default class Profile extends ServiceBase
 {
@@ -29,10 +31,33 @@ export default class Profile extends ServiceBase
                     })
                     .catch((error) => {
                         this.secure(error)(error);
-                        console.log(error);
                     });
             });
+        };
+        this.load = () => {
+            const url = store.getState().config.api + consulta;
+            return new Promise((resolve, reject) => {
+                this.get(url + "?token=" + store.getState().session.token)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => {
+                                store.setState({perfil: json.data});
+                                response.ok ?
+                                    this.secure(resolve)({response: response,data: json}):
+                                    this.secure(reject)(json);
+                            })
+                            .catch((error) => {
+                                response.ok ?
+                                    this.secure(resolve)({response: response}):
+                                    this.secure(reject)({error: error});
+                            });
+                    })
+                    .catch((error) => {
+                        this.secure(error)(error);
+                    });
+            })
         }
+        store.getState().perfil = {};
         store.profile = this;
     }
 }
