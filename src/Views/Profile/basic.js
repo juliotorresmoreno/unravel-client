@@ -4,14 +4,45 @@ import { Form, Button } from 'semantic-ui-react';
 import Permisos from '../../Lib/Permisos';
 import BasicCtrl from './basic.ctrl';
 
+const meses = [
+    { value: '01', text: 'Enero' },
+    { value: '02', text: 'Febrero' },
+    { value: '03', text: 'Marzo' },
+    { value: '04', text: 'Abril' },
+    { value: '05', text: 'Mayo' },
+    { value: '06', text: 'Junio' },
+
+    { value: '07', text: 'Julio' },
+    { value: '08', text: 'Agosto' },
+    { value: '09', text: 'Septiembre' },
+    { value: '10', text: 'Octubre' },
+    { value: '11', text: 'Novienbre' },
+    { value: '12', text: 'Diciembre' }
+];
+
+const anos = [];
+const year = new Date().getFullYear();
+for(var i = year - 10; i >= year - 100; i--)
+{
+    anos.push({value:i, text: i});
+}
+
+const sexos = [
+    { value: 'M', text: 'Masculino' },
+    { value: 'F', text: 'Femenino' },
+    { value: 'O', text: 'Otro' }
+];
 
 export default class Basic extends BasicCtrl {
+    dias_disponibles = [];
     form = {}
     constructor(args) {
         super(args);
         this.form.nombres = this.props.store.getState().session.nombres;
         this.form.apellidos = this.props.store.getState().session.apellidos;
-        this.form.email = this.props.store.getState().perfil.email;
+        this.form.email = this.props.store.getState().profile.email;
+        this.form.nacimiento_mes = this.props.store.getState().profile.nacimiento_mes;
+        this.form.nacimiento_dia = this.props.store.getState().profile.nacimiento_dia;
     }
     render() {
         const name = this.props.store.lang.get('login_name');
@@ -61,31 +92,34 @@ export default class Basic extends BasicCtrl {
                     <Form.Group>
                         <Form.Field>
                             <label>{mes}</label>
-                            <Form.Input
-                                name='nacimiento_dia' 
-                                onChange={this.onHandlerChange}
-                                value={this.form.mes}
-                                placeholder={mes} />
+                            <Form.Select 
+                                name='nacimiento_mes'
+                                options={meses}
+                                value={this.form.nacimiento_mes}
+                                placeholder={mes}
+                                onChange={this.onHandlerChangeMes} />
                         </Form.Field>
                         <Form.Field>
                             <label>{dia}</label>
-                            <Form.Input
-                                name='nacimiento_mes' 
+                            <Form.Select 
+                                name='nacimiento_dia' 
+                                options={this.dias_disponibles}
                                 onChange={this.onHandlerChange}
-                                value={this.form.dia}
+                                value={this.form.nacimiento_dia}
                                 placeholder={dia} />
                         </Form.Field>
                     </Form.Group>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarMesDia} />
                     <br />
                     <br />
 
                     <Form.Group>
                         <Form.Field>
                             <label>{ano}</label>
-                            <Form.Input
-                                name='nacimiento_dia' 
-                                onChange={this.onHandlerChange}
+                            <Form.Select 
+                                name='nacimiento_ano' 
+                                options={anos}
+                                onChange={this.onHandlerChangeMes}
                                 value={this.form.ano}
                                 placeholder={ano} />
                         </Form.Field>
@@ -97,8 +131,9 @@ export default class Basic extends BasicCtrl {
                     <Form.Group>
                         <Form.Field>
                             <label>{sexo}</label>
-                            <Form.Input
-                                name='sexo' 
+                            <Form.Select 
+                                name='sexo'
+                                options={sexos}
                                 onChange={this.onHandlerChange}
                                 value={this.form.sexo}
                                 placeholder={sexo} />

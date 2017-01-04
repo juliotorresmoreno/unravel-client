@@ -3,6 +3,7 @@ import { Button, Dropdown } from 'semantic-ui-react'
 
 export default class Permisos extends Component {
     permiso = 'public';
+    state = {isLoading: false};
     onHandlerClick = (e, obj) => {
         if (typeof obj.name !== 'undefined')
         {
@@ -15,6 +16,14 @@ export default class Permisos extends Component {
         this.forceUpdate();
     }
     render = () => {
+        if(this.state.isLoading) {
+            return (
+                <Button.Group>
+                    <Button disabled>{this.props.label}</Button>
+                    <Dropdown disabled floating button className='icon'/>
+                </Button.Group>
+            );
+        }
         return (
             <Button.Group>
                 <Button primary onClick={this.onHandlerClick}>{this.props.label}</Button>

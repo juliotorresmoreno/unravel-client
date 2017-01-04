@@ -15,10 +15,6 @@ export default class MenuLeft extends MenuLeftCtrl {
         e.preventDefault();
         this.props.router.push(href);
     }
-    toGalery = (e) => {
-        e.preventDefault();
-        alert('sd');
-    }
     render = function() {
         const session = this.props.store.getState().session;
         const fullname = session.nombres + ' ' + session.apellidos;
@@ -35,9 +31,6 @@ export default class MenuLeft extends MenuLeftCtrl {
                     </Menu.Item>
                     <Menu.Item as="a" href="/news" onClick={this.handleItemClick}>
                         Noticias
-                    </Menu.Item>
-                    <Menu.Item as="a" href="/messages" onClick={this.handleItemClick}>
-                        Mensajes
                     </Menu.Item>
                     <Menu.Item as="a" href="/friends" onClick={this.handleItemClick}>
                         Amigos

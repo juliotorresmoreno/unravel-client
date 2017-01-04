@@ -5,7 +5,6 @@ import MenuLeft from './MenuLeft/main';
 import MenuRight from './MenuRight/main';
 import News from './News/main';
 import Login from './Login/main';
-import Register from './Register/main';
 
 class App extends Component {
     constructor(args) {
@@ -17,15 +16,13 @@ class App extends Component {
         }
     }
     render() {
-        if (this.props.route.store.getState().session)
+        var autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized;       
+        let children = !this.props.children ? <News store={this.props.route.store} />:
+            React.cloneElement(this.props.children, {
+                store: this.props.route.store
+            });
+        if (autorized && this.props.route.store.getState().session)
         {
-            let children = <News store={this.props.route.store} />;
-            if(this.props.children)
-            {
-                children = this.props.children && React.cloneElement(this.props.children, {
-                    store: this.props.route.store
-                });
-            }
             return (
                 <div>
                     <Head router={this.props.router} store={this.props.route.store} />
@@ -39,19 +36,12 @@ class App extends Component {
                 </div>
             );
         }
-        else
-        {
-            const pathname = this.props.location.pathname;
-            const login = <Login store={this.props.route.store}/>;
-            const register = <Register store={this.props.route.store}/>;
-            const children = pathname !== '/signup' ? login: register;
-            return (
-                <div>
-                    <Head router={this.props.router} store={this.props.route.store} />
-                    {children}
-                </div>
-            );
-        }
+        return (
+            <div>
+                <Head router={this.props.router} store={this.props.route.store} />
+                {autorized ? <Login store={this.props.route.store}/>: children}
+            </div>
+        );
     }
 }
 

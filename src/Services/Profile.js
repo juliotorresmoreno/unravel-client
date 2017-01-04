@@ -41,7 +41,7 @@ export default class Profile extends ServiceBase
                     .then((response) => {
                         response.json()
                             .then((json) => {
-                                store.setState({perfil: json.data});
+                                store.setState({profile: json});
                                 response.ok ?
                                     this.secure(resolve)({response: response,data: json}):
                                     this.secure(reject)(json);
@@ -57,7 +57,7 @@ export default class Profile extends ServiceBase
                     });
             })
         }
-        store.getState().perfil = {};
+        store.getState().profile = {};
         store.profile = this;
     }
 }

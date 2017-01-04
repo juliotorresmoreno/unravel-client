@@ -17,11 +17,9 @@ export default class Profile extends ProfileCtrl {
     state = { activeItem: 'Basico', isLoading: true }
     constructor(args) {
         super(args);
-        this.props.store.subscribe(this, ['perfil'], "Profile");
+        this.props.store.subscribe(this, ['profile'], "Profile");
         this.props.store.profile.load()
-            .then(() => {
-                this.setState({isLoading: false})
-            });
+            .then(() => this.setState({isLoading: false}));
     }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
     render() {

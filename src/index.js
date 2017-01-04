@@ -19,6 +19,7 @@ import News from './Views/News/main';
 import Messages from './Views/Messages/main';
 import Friends from './Views/Friends/main';
 import Galery from './Views/Galery/main';
+import Groups from './Views/Groups/main';
 
 var store = new Store({config:config});
 store.addService(SLang);
@@ -31,19 +32,20 @@ class Index extends Component {
     render() {
         return (
             <Router history={browserHistory}>
-                <Route path="/" component={App} store={store}>
-                    <Route path="signup" component={Register} />
-                    <Route path="news" component={News} />
-                    <Route path="profile" component={Profile} />
-                    <Route path="messages" component={Messages} />
-                    <Route path="friends" component={Friends} />
-                    <Route path="galery" component={Galery} />
+                <Route path="/" autorized={true} component={App} store={store}>
+                    <Route autorized={false} path="signup" component={Register} />
+                    <Route autorized={true} path="news" component={News} />
+                    <Route autorized={true} path="profile" component={Profile} />
+                    <Route autorized={true} path="messages" component={Messages} />
+                    <Route autorized={true} path="friends" component={Friends} />
+                    <Route autorized={true} path="galery" component={Galery} />
+                    <Route autorized={true} path="groups" component={Groups} />
 
-                    <Route path=":user/profile" component={Profile} />
-                    <Route path=":user/messages" component={Messages} />
-                    <Route path=":user/friends" component={Friends} />
-                    <Route path=":user/galery" component={Galery} />
-                    <Route path=":user/news" component={News} />
+                    <Route autorized={true} path=":user/profile" component={Profile} />
+                    <Route autorized={true} path=":user/messages" component={Messages} />
+                    <Route autorized={true} path=":user/friends" component={Friends} />
+                    <Route autorized={true} path=":user/galery" component={Galery} />
+                    <Route autorized={true} path=":user/news" component={News} />
                     <Route path="*" component={E404} />
                 </Route>
             </Router>

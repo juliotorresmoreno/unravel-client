@@ -14,10 +14,6 @@ export default class MenuRight extends MenuRightCtrl {
         e.preventDefault();
         this.props.router.push(href);
     }
-    toGalery = (e) => {
-        e.preventDefault();
-        alert('sd');
-    }
     render = function() {
         return (
             <div style={{margin:15}}>
