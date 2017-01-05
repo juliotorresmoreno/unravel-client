@@ -12,6 +12,7 @@ import SLang from './Lang/main';
 import SAuth from './Services/Auth';
 import SAlert from './Services/Alert';
 import SProfile from './Services/Profile';
+import SFriends from './Services/Friends';
 
 import Register from './Views/Register/main';
 import Profile from './Views/Profile/main';
@@ -26,6 +27,7 @@ store.addService(SLang);
 store.addService(SAuth);
 store.addService(SAlert);
 store.addService(SProfile);
+store.addService(SFriends);
 
 
 class Index extends Component {

@@ -6,4 +6,8 @@ export default class FriendsCtrl extends Component {
         this.form[obj.name] = obj.value;
         this.forceUpdate();
     }
+    onHandlerSearch = (e, obj) => {
+        this.props.store.friends.find(obj.formData);
+        e.preventDefault();
+    }
 }

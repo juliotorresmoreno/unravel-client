@@ -1,17 +1,5 @@
 
 
-function arrayToUrlEncode(data) {
-    var r = [];
-    for(var i in data)
-    {
-        if (data.hasOwnProperty(i))
-        {
-            r.push(i + '=' + encodeURI(data[i]));
-        }
-    }
-    return r.join('&');
-}
-
 export default class ServiceBase {
     secure = (func) => {
         return func ? func: () => {};
@@ -34,7 +22,7 @@ export default class ServiceBase {
             xhr.send();
         });
     };
-    get = (url, data) => {
+    get = (url) => {
         return fetch(url, {
             method: "GET",
             credentials: 'same-origin'
@@ -45,7 +33,7 @@ export default class ServiceBase {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
             credentials: 'same-origin',
-            body: arrayToUrlEncode(data)
+            body: this.arrayToUrlEncode(data)
         });
     }
     put = (url, data, headers = {}) => {
@@ -53,7 +41,18 @@ export default class ServiceBase {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
             credentials: 'same-origin',
-            body: arrayToUrlEncode(data)
+            body: this.arrayToUrlEncode(data)
         });
+    }
+    arrayToUrlEncode = (data) => {
+        var r = [];
+        for(var i in data)
+        {
+            if (data.hasOwnProperty(i))
+            {
+                r.push(i + '=' + encodeURI(data[i]));
+            }
+        }
+        return r.join('&');
     }
 }
