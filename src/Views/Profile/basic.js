@@ -24,7 +24,7 @@ const anos = [];
 const year = new Date().getFullYear();
 for(var i = year - 10; i >= year - 100; i--)
 {
-    anos.push({value:i, text: i});
+    anos.push({value: i + '', text: i});
 }
 
 const sexos = [
@@ -42,7 +42,11 @@ export default class Basic extends BasicCtrl {
         this.form.apellidos = this.props.store.getState().session.apellidos;
         this.form.email = this.props.store.getState().profile.email;
         this.form.nacimiento_mes = this.props.store.getState().profile.nacimiento_mes;
+        if(this.form.nacimiento_mes)
+            this.showDays();
         this.form.nacimiento_dia = this.props.store.getState().profile.nacimiento_dia;
+        this.form.nacimiento_ano = this.props.store.getState().profile.nacimiento_ano;
+        this.form.sexo = this.props.store.getState().profile.sexo;
     }
     render() {
         const name = this.props.store.lang.get('login_name');
@@ -85,7 +89,8 @@ export default class Basic extends BasicCtrl {
                             value={this.form.email}
                             placeholder={email} />
                     </Form.Field>
-                    <Permisos label={save} onClick={this.onHandlerGuardarEmail} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarEmail}
+                        permiso={this.props.store.getState().profile.permiso_email} />
                     <br />
                     <br />
                     
@@ -109,7 +114,8 @@ export default class Basic extends BasicCtrl {
                                 placeholder={dia} />
                         </Form.Field>
                     </Form.Group>
-                    <Permisos label={save} onClick={this.onHandlerGuardarMesDia} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarMesDia}
+                        permiso={this.props.store.getState().profile.permiso_nacimiento_dia} />
                     <br />
                     <br />
 
@@ -120,11 +126,12 @@ export default class Basic extends BasicCtrl {
                                 name='nacimiento_ano' 
                                 options={anos}
                                 onChange={this.onHandlerChangeMes}
-                                value={this.form.ano}
+                                value={this.form.nacimiento_ano}
                                 placeholder={ano} />
                         </Form.Field>
                     </Form.Group>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarAno}
+                        permiso={this.props.store.getState().profile.permiso_nacimiento_ano} />
                     <br />
                     <br />
 
@@ -139,7 +146,8 @@ export default class Basic extends BasicCtrl {
                                 placeholder={sexo} />
                         </Form.Field>
                     </Form.Group>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarSexo}
+                        permiso={this.props.store.getState().profile.permiso_sexo} />
                 </Form>
                 <br />
                 <br />

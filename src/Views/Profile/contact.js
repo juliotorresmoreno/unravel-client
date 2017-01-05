@@ -7,12 +7,20 @@ import ContactCtrl from './contact.ctrl';
 
 
 export default class Contact extends ContactCtrl {
-    form = {}
+    form = {
+        nacimiento_pais: this.props.store.getState().profile.nacimiento_pais,
+        nacimiento_ciudad: this.props.store.getState().profile.nacimiento_ciudad,
+        residencia_pais: this.props.store.getState().profile.residencia_pais,
+        residencia_ciudad: this.props.store.getState().profile.residencia_ciudad,
+        direccion: this.props.store.getState().profile.direccion,
+        telefono: this.props.store.getState().profile.telefono,
+        celular: this.props.store.getState().profile.celular
+    }
     render() {
-        const pais_nacimiento = this.props.store.lang.get('profile_pais_nacimiento');
-        const ciudad_nacimiento = this.props.store.lang.get('profile_ciudad_nacimiento');
-        const pais_residencia = this.props.store.lang.get('profile_pais_residencia');
-        const ciudad_residencia = this.props.store.lang.get('profile_ciudad_residencia');
+        const nacimiento_pais = this.props.store.lang.get('profile_pais_nacimiento');
+        const nacimiento_ciudad = this.props.store.lang.get('profile_ciudad_nacimiento');
+        const residencia_pais = this.props.store.lang.get('profile_pais_residencia');
+        const residencia_ciudad = this.props.store.lang.get('profile_ciudad_residencia');
         const direccion = this.props.store.lang.get('profile_direccion');
         const telefono = this.props.store.lang.get('profile_telefono');
         const celular = this.props.store.lang.get('profile_celular');
@@ -21,50 +29,54 @@ export default class Contact extends ContactCtrl {
             <div>
                 <Form onSubmit={(e) => e.preventDefault()}>
                     <Form.Field>
-                        <label>{pais_nacimiento}</label>
+                        <label>{nacimiento_pais}</label>
                         <Form.Input 
-                            name="pais_nacimiento"
+                            name="nacimiento_pais"
                             onChange={this.onHandlerChange}
-                            value={this.form.pais_nacimiento}
-                            placeholder={pais_nacimiento} />
+                            value={this.form.nacimiento_pais}
+                            placeholder={nacimiento_pais} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarNacimientoPais}
+                        permiso={this.props.store.getState().profile.permiso_nacimiento_pais} />
                     <br/>
                     <br/>
 
                     <Form.Field>
-                        <label>{ciudad_nacimiento}</label>
+                        <label>{nacimiento_ciudad}</label>
                         <Form.Input
-                            name='ciudad_nacimiento' 
+                            name='nacimiento_ciudad' 
                             onChange={this.onHandlerChange}
-                            value={this.form.ciudad_nacimiento}
-                            placeholder={ciudad_nacimiento} />
+                            value={this.form.nacimiento_ciudad}
+                            placeholder={nacimiento_ciudad} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarNacimientoCiudad}
+                        permiso={this.props.store.getState().profile.permiso_nacimiento_ciudad} />
                     <br/>
                     <br/>
 
                     <Form.Field>
-                        <label>{pais_residencia}</label>
+                        <label>{residencia_pais}</label>
                         <Form.Input
-                            name='pais_residencia' 
+                            name='residencia_pais' 
                             onChange={this.onHandlerChange}
-                            value={this.form.pais_residencia}
-                            placeholder={pais_residencia} />
+                            value={this.form.residencia_pais}
+                            placeholder={residencia_pais} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarResidenciaPais}
+                        permiso={this.props.store.getState().profile.permiso_residencia_pais} />
                     <br/>
                     <br/>
 
                     <Form.Field>
-                        <label>{ciudad_residencia}</label>
+                        <label>{residencia_ciudad}</label>
                         <Form.Input
-                            name='ciudad_residencia' 
+                            name='residencia_ciudad' 
                             onChange={this.onHandlerChange}
-                            value={this.form.ciudad_residencia}
-                            placeholder={ciudad_residencia} />
+                            value={this.form.residencia_ciudad}
+                            placeholder={residencia_ciudad} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarResidenciaCiudad}
+                        permiso={this.props.store.getState().profile.permiso_residencia_ciudad} />
                     <br/>
                     <br/>
 
@@ -76,7 +88,8 @@ export default class Contact extends ContactCtrl {
                             value={this.form.direccion}
                             placeholder={direccion} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarDireccion}
+                        permiso={this.props.store.getState().profile.permiso_direccion} />
                     <br/>
                     <br/>
 
@@ -88,7 +101,8 @@ export default class Contact extends ContactCtrl {
                             value={this.form.telefono}
                             placeholder={telefono} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarTelefono}
+                        permiso={this.props.store.getState().profile.permiso_telefono} />
                     <br/>
                     <br/>
 
@@ -100,7 +114,8 @@ export default class Contact extends ContactCtrl {
                             value={this.form.celular}
                             placeholder={celular} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarCelular}
+                        permiso={this.props.store.getState().profile.permiso_celular} />
 
                 </Form>
                 <br />

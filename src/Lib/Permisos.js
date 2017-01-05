@@ -2,8 +2,11 @@ import React, { Component } from 'react';;
 import { Button, Dropdown } from 'semantic-ui-react'
 
 export default class Permisos extends Component {
-    permiso = 'public';
     state = {isLoading: false};
+    constructor(args) {
+        super(args);
+        this.permiso = this.props.permiso !== undefined ? this.props.permiso: 'public';
+    }
     onHandlerClick = (e, obj) => {
         if (typeof obj.name !== 'undefined')
         {

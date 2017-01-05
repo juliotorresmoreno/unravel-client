@@ -9,7 +9,14 @@ import InterestsCtrl from './interests.ctrl';
 const TextAreaStyle = {height: 73};
 
 export default class Interests extends InterestsCtrl {
-    form = {}
+    form = {
+        personalidad: this.props.store.getState().profile.personalidad,
+        intereses: this.props.store.getState().profile.intereses,
+        series: this.props.store.getState().profile.series,
+        musica: this.props.store.getState().profile.musica,
+        creencias_religiosas: this.props.store.getState().profile.creencias_religiosas,
+        creencias_politicas: this.props.store.getState().profile.creencias_politicas
+    }
     render() {
         const personalidad = this.props.store.lang.get('profile_personalidad');
         const intereses = this.props.store.lang.get('profile_intereses');
@@ -30,7 +37,7 @@ export default class Interests extends InterestsCtrl {
                             value={this.form.personalidad}
                             placeholder={personalidad} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarPersonalidad} />
                     <br/>
                     <br/>
 
@@ -43,7 +50,7 @@ export default class Interests extends InterestsCtrl {
                             value={this.form.intereses}
                             placeholder={intereses} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarIntereses} />
                     <br/>
                     <br/>
 
@@ -56,7 +63,7 @@ export default class Interests extends InterestsCtrl {
                             value={this.form.series}
                             placeholder={series} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarSeries} />
                     <br/>
                     <br/>
 
@@ -69,7 +76,7 @@ export default class Interests extends InterestsCtrl {
                             value={this.form.musica}
                             placeholder={musica} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarMusica} />
                     <br/>
                     <br/>
 
@@ -82,7 +89,7 @@ export default class Interests extends InterestsCtrl {
                             value={this.form.creencias_religiosas}
                             placeholder={creencias_religiosas} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarCreenciasReligiosas} />
                     <br/>
                     <br/>
 
@@ -95,7 +102,7 @@ export default class Interests extends InterestsCtrl {
                             value={this.form.creencias_politicas}
                             placeholder={creencias_politicas} />
                     </Form.Field>
-                    <Permisos label={save} />
+                    <Permisos label={save} onClick={this.onHandlerGuardarCreenciasPoliticas} />
                 </Form>
                 <br/>
                 <br/>

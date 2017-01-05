@@ -21,7 +21,7 @@ export default class Profile extends ProfileCtrl {
         this.props.store.profile.load()
             .then(() => this.setState({isLoading: false}));
     }
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
     render() {
         const { activeItem } = this.state;
         const activeView = Views[activeItem](this.props.store);
