@@ -10,13 +10,14 @@ export default class MenuLeft extends MenuLeftCtrl {
     constructor(args) {
         super(args);
         this.render = this.render.bind(this);
+        this.session = this.props.store.getState().session;
     }
     handleItemClick = (e, { href }) => {
         e.preventDefault();
         this.props.router.push(href);
     }
     render = function() {
-        const session = this.props.store.getState().session;
+        const session = this.session;
         const fullname = session.nombres + ' ' + session.apellidos;
         return (
             <div style={{margin:15}}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, Icon, Image, Button } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 import CardUserCtrl from './main.ctrl';
 const moment = window.moment;
 
