@@ -7,27 +7,38 @@ export default class Friends extends ServiceBase
     constructor(store)
     {
         super();
-        this.get = (usuario) => 
+        this.getUser = (usuario) => 
         {
             return new Promise((resolve, reject) => {
-                store.setState({usuario: {usuario: usuario}});
                 if (Array.isArray(store.getState().friends))
                 {
                     for(let i = 0; i < store.getState().friends.length; i++)
                     {
                         if(store.getState().friends[i].usuario === usuario)
                         {
+                            store.setState({usuario: store.getState().friends[i]});
                             this.secure(resolve)(store.getState().friends[i]);
                             return;
                         }
                     }
                 }
-                console.log("sd");
                 const url = store.getState().config.api + consulta;
-                this.get(url + "?token=" + store.getState().session.token + "&u=" + encodeURI(usuario))
+                this.get(url + "?u=" + encodeURI(usuario) + "&token=" + store.getState().session.token)
                     .then((response) => {
                         response.json()
                             .then((json) => {
+                                if (json.data.length === 1)
+                                {
+                                    store.setState({usuario: json.data[0]});
+                                }
+                                else
+                                {
+                                    store.setState({usuario: {
+                                        usuario: usuario,
+                                        nombres: "Usuario",
+                                        apellidos: "inexistente"
+                                    }});
+                                }
                                 response.ok ?
                                     this.secure(resolve)(json):
                                     this.secure(reject)(json);
@@ -41,7 +52,7 @@ export default class Friends extends ServiceBase
         {
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + consulta;
-                this.get(url + "?token=" + store.getState().session.token + "&q=" + encodeURI(data.query))
+                this.get(url + "?q=" + encodeURI(data.query) + "&token=" + store.getState().session.token)
                     .then((response) => {
                         response.json()
                             .then((json) => {

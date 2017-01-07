@@ -3,6 +3,7 @@ import { Form, Button } from 'semantic-ui-react';
 
 import Permisos from '../../Lib/Permisos';
 import BasicCtrl from './basic.ctrl';
+import BasicView from './basic.ctrl';
 
 const meses = [
     { value: '01', text: 'Enero' },
@@ -38,17 +39,27 @@ export default class Basic extends BasicCtrl {
     form = {}
     constructor(args) {
         super(args);
-        this.form.nombres = this.props.store.getState().session.nombres;
-        this.form.apellidos = this.props.store.getState().session.apellidos;
-        this.form.email = this.props.store.getState().profile.email;
-        this.form.nacimiento_mes = this.props.store.getState().profile.nacimiento_mes;
+        this.session = (() => {
+            if (this.props.params.user && this.props.store.getState().usuario)
+                return this.props.store.getState().usuario;
+            return this.props.store.getState().session;
+        })();
+        this.form.nombres = this.session.nombres;
+        this.form.apellidos = this.session.apellidos;
+        this.form = Object.assign(this.props.store.getState().profile, this.form);
         if(this.form.nacimiento_mes)
             this.showDays();
-        this.form.nacimiento_dia = this.props.store.getState().profile.nacimiento_dia;
-        this.form.nacimiento_ano = this.props.store.getState().profile.nacimiento_ano;
-        this.form.sexo = this.props.store.getState().profile.sexo;
     }
     render() {
+        const session = this.session;
+        if (session !== this.props.store.getState().session)
+        {
+            let params = this.props.params;
+            let store  = this.props.store;
+            let route  = this.props.route;
+            let router = this.props.router;
+            return <BasicView params={params} route={route} router={router} store={store} />
+        }
         const name = this.props.store.lang.get('login_name');
         const lastname = this.props.store.lang.get('login_lastname');
         const email = this.props.store.lang.get('login_email');
@@ -57,7 +68,6 @@ export default class Basic extends BasicCtrl {
         const ano = this.props.store.lang.get('profile_nacimiento_ano');
         const sexo = this.props.store.lang.get('profile_sexo');
         const save = this.props.store.lang.get('app_save');
-
         return (
             <div>
                 <Form onSubmit={(e) => e.preventDefault()}>
@@ -80,7 +90,7 @@ export default class Basic extends BasicCtrl {
                     <Button primary onClick={this.onHandlerGuardarNombres}>{save}</Button>
                     <br />
                     <br />
-
+                    
                     <Form.Field>
                         <label>{email}</label>
                         <Form.Input
@@ -93,7 +103,7 @@ export default class Basic extends BasicCtrl {
                         permiso={this.props.store.getState().profile.permiso_email} />
                     <br />
                     <br />
-                    
+
                     <Form.Group>
                         <Form.Field>
                             <label>{mes}</label>

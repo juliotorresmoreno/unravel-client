@@ -8,9 +8,9 @@ import Contact from './contact';
 import Interests from './interests';
 
 const Views = {
-    Basico: (store) => <Basic store={store} />,
-    Contacto: (store) => <Contact store={store} />,
-    Intereses: (store) => <Interests store={store} />
+    Basico: (p) => <Basic params={p.params} route={p.route} router={p.router} store={p.store} />,
+    Contacto: (p) => <Contact params={p.params} route={p.route} router={p.router} store={p.store} />,
+    Intereses: (p) => <Interests params={p.params} route={p.route} router={p.router} store={p.store} />
 }
 
 export default class Profile extends ProfileCtrl {
@@ -18,13 +18,13 @@ export default class Profile extends ProfileCtrl {
     constructor(args) {
         super(args);
         this.props.store.subscribe(this, ['profile'], "Profile");
-        this.props.store.profile.load()
+        this.props.store.profile.load(this.props.params.user)
             .then(() => this.setState({isLoading: false}));
     }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
     render() {
         const { activeItem } = this.state;
-        const activeView = Views[activeItem](this.props.store);
+        const activeView = Views[activeItem](this.props);
         if (!this.state.isLoading)
         {
             return (

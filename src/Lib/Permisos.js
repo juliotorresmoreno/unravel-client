@@ -22,7 +22,7 @@ export default class Permisos extends Component {
         if(this.state.isLoading) {
             return (
                 <Button.Group>
-                    <Button disabled>{this.props.label}</Button>
+                    <Button disabled loading>{this.props.label}</Button>
                     <Dropdown disabled floating button className='icon'/>
                 </Button.Group>
             );

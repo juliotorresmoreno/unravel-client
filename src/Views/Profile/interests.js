@@ -9,13 +9,15 @@ import InterestsCtrl from './interests.ctrl';
 const TextAreaStyle = {height: 73};
 
 export default class Interests extends InterestsCtrl {
-    form = {
-        personalidad: this.props.store.getState().profile.personalidad,
-        intereses: this.props.store.getState().profile.intereses,
-        series: this.props.store.getState().profile.series,
-        musica: this.props.store.getState().profile.musica,
-        creencias_religiosas: this.props.store.getState().profile.creencias_religiosas,
-        creencias_politicas: this.props.store.getState().profile.creencias_politicas
+    form = {};
+    constructor(args) {
+        super(args);
+        /*const session = (() => {
+            if (this.props.params.user && this.props.store.getState().usuario)
+                return this.props.store.getState().usuario;
+            return this.props.store.getState().session;
+        })();*/
+        this.form = Object.assign(this.props.store.getState().profile, this.form);
     }
     render() {
         const personalidad = this.props.store.lang.get('profile_personalidad');

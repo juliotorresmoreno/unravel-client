@@ -7,14 +7,15 @@ import ContactCtrl from './contact.ctrl';
 
 
 export default class Contact extends ContactCtrl {
-    form = {
-        nacimiento_pais: this.props.store.getState().profile.nacimiento_pais,
-        nacimiento_ciudad: this.props.store.getState().profile.nacimiento_ciudad,
-        residencia_pais: this.props.store.getState().profile.residencia_pais,
-        residencia_ciudad: this.props.store.getState().profile.residencia_ciudad,
-        direccion: this.props.store.getState().profile.direccion,
-        telefono: this.props.store.getState().profile.telefono,
-        celular: this.props.store.getState().profile.celular
+    form = {};
+    constructor(args) {
+        super(args);
+        /*const session = (() => {
+            if (this.props.params.user && this.props.store.getState().usuario)
+                return this.props.store.getState().usuario;
+            return this.props.store.getState().session;
+        })();*/
+        this.form = Object.assign(this.props.store.getState().profile, this.form);
     }
     render() {
         const nacimiento_pais = this.props.store.lang.get('profile_pais_nacimiento');

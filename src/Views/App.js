@@ -24,26 +24,26 @@ class App extends Component {
             this.session = this.props.route.store.getState().session;
         }
     }
-    componentWillMount() {
+    render() {
         var autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized;
         var usuario = this.props.route.store.getState().usuario;
+        var session = this.props.route.store.getState().session;
         var isLogged = autorized && this.props.route.store.getState().session;
         var user = this.props.params.user;
-        if ((!usuario || usuario.usuario !== user) && user && isLogged)
+        if (user && isLogged && (!usuario || usuario.usuario !== user) && session.usuario !== user)
         {
-            this.isLoading = true;
-            this.props.route.store.friends.get(this.props.params.user)
+            this.props.route.store.friends.getUser(user)
                 .then((data) => {
                     this.isLoading = false;
                     this.forceUpdate();
-                    console.log(this.props.route.store.getState());
                 });
-        } else {
+            this.isLoading = true;
+        }
+        else
+        {
             this.isLoading = false;
         }
-    }
-    render() {
-        var autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized;
+
         let children = (() => {
             if (this.isLoading)
                 return <div>Loading</div>
