@@ -3,7 +3,7 @@ import { Form, Button } from 'semantic-ui-react';
 
 import Permisos from '../../Lib/Permisos';
 import BasicCtrl from './basic.ctrl';
-import BasicView from './basic.ctrl';
+import BasicView from './basicView';
 
 const meses = [
     { value: '01', text: 'Enero' },

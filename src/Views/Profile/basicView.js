@@ -1,17 +1,28 @@
 import React from 'react';
-import { Form, Button } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 
-import Permisos from '../../Lib/Permisos';
-import BasicCtrl from './basic.ctrl';
+import BasicViewCtrl from './basicView.ctrl';
 
-const sexos = [
-    { value: 'M', text: 'Masculino' },
-    { value: 'F', text: 'Femenino' },
-    { value: 'O', text: 'Otro' }
-];
+const sexos = { 'M': 'Masculino', 'F': 'Femenino', 'O': 'Otro' };
+const meses = {
+    '01': 'Enero',
+    '02': 'Febrero',
+    '03': 'Marzo',
+    '04': 'Abril',
+    '05': 'Mayo',
+    '06': 'Junio',
 
-export default class BasicView extends BasicCtrl {
-    form = {};
+    '07': 'Julio',
+    '08': 'Agosto',
+    '09': 'Septiembre',
+    '10': 'Octubre',
+    '11': 'Novienbre',
+    '12': 'Diciembre'
+};
+
+export default class BasicView extends BasicViewCtrl {
+    dias_disponibles = [];
+    form = {}
     constructor(args) {
         super(args);
         this.session = (() => {
@@ -25,20 +36,51 @@ export default class BasicView extends BasicCtrl {
         if(this.form.nacimiento_mes)
             this.showDays();
     }
+    showDays() {
+        //Enero 01, Marzo 03, Mayo 05, Julio 07, Agosto 08, Octubre 10 y Diciembre 12
+        var mes = this.form.nacimiento_mes;
+        var ano = this.form.nacimiento_ano;
+        if(mes === undefined)
+            return;
+        var dias = (() => {
+            if (['01', '03', '05', '07', '08', '10', '12'].indexOf(mes) + 1)
+                return 31;
+            if (['04', '06', '09', '11'].indexOf(mes) + 1)
+                return 30;
+            if (!ano || ano % 4 !== 0)
+                return 28;
+            return 29;
+        })();
+        if (this.dias_disponibles.length !== dias) {
+            var source = [];
+            for (let i = 1; i <= dias; i++) {
+                let val = i > 9 ? i + '': '0' + i;
+                source.push({value: val, text: val});
+            }
+            this.dias_disponibles = source;
+        }
+    }
     render() {
-        const session = this.session;
+        //const session = this.session;
         const name = this.props.store.lang.get('login_name');
         const lastname = this.props.store.lang.get('login_lastname');
-        const email = this.props.store.lang.get('login_email');
-        const dia = this.props.store.lang.get('profile_nacimiento_dia');
-        const mes = this.props.store.lang.get('profile_nacimiento_mes');
-        const ano = this.props.store.lang.get('profile_nacimiento_ano');
-        const sexo = this.props.store.lang.get('profile_sexo');
-        const save = this.props.store.lang.get('app_save');
-        const isMe = session !== this.props.store.getState().usuario;
+        //const isMe = session !== this.props.store.getState().usuario;
         return (
             <div>
-                <div>{this.form.nombres + ' ' + this.form.apellidos}</div>
+                <Form onSubmit={(e) => e.preventDefault()}>
+                    <Form.Field>
+                        <label>{name}</label>
+                        {this.form.nombres}
+                    </Form.Field>
+                    <Form.Field>
+                        <label>{lastname}</label>
+                        {this.form.apellidos}
+                    </Form.Field>
+                    {this.campoEmail()}
+                    {this.campoNacimientoDia()}
+                    {this.campoNacimientoMes()}
+                    {this.campoSexo()}
+                </Form>
                 <br />
                 <br />
                 <br />
@@ -46,5 +88,64 @@ export default class BasicView extends BasicCtrl {
                 <br />
             </div>
         );
+    }
+    campoEmail = () => {
+        const label = this.props.store.lang.get('login_email');
+        if (this.form.email) {
+            return (
+                <Form.Field>
+                    <label>{label}</label>
+                    {this.form.email}
+                </Form.Field>
+            );
+        }
+        return null;
+    }
+    campoNacimientoDia = () => {
+        const labelDia = this.props.store.lang.get('profile_nacimiento_dia');
+        const labelMes = this.props.store.lang.get('profile_nacimiento_mes');        
+        if (this.form.nacimiento_mes && this.form.nacimiento_dia) {
+            return (
+                <Form.Group>
+                    <Form.Field>
+                        <label>{labelMes}</label>
+                        {meses[this.form.nacimiento_mes]}
+                    </Form.Field>
+                    <Form.Field>
+                        <label>{labelDia}</label>
+                        {this.form.nacimiento_dia}
+                    </Form.Field>
+                </Form.Group>
+            );
+        }
+        return null;
+    }
+    campoNacimientoMes = () => {
+        const labelAno = this.props.store.lang.get('profile_nacimiento_ano');
+        if (this.form.nacimiento_dia) {
+            return (
+                <Form.Group>
+                    <Form.Field>
+                        <label>{labelAno}</label>
+                        {this.form.nacimiento_ano}
+                    </Form.Field>
+                </Form.Group>
+            );
+        }
+        return null;
+    }
+    campoSexo = () => {
+        const labelSexo = this.props.store.lang.get('profile_sexo');
+        if (this.form.sexo) {
+            return (
+                <Form.Group>
+                    <Form.Field>
+                        <label>{labelSexo}</label>
+                        {sexos[this.form.sexo]}
+                    </Form.Field>
+                </Form.Group>
+            );
+        }
+        return null;
     }
 }
