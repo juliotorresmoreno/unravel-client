@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Form } from 'semantic-ui-react';
 
+
+import ContactView from './contactView';
 import Permisos from '../../Lib/Permisos';
 import ContactCtrl from './contact.ctrl';
 
@@ -10,14 +12,23 @@ export default class Contact extends ContactCtrl {
     form = {};
     constructor(args) {
         super(args);
-        /*const session = (() => {
+        this.session = (() => {
             if (this.props.params.user && this.props.store.getState().usuario)
                 return this.props.store.getState().usuario;
             return this.props.store.getState().session;
-        })();*/
+        })();
         this.form = Object.assign(this.props.store.getState().profile, this.form);
     }
     render() {
+        const session = this.session;
+        if (session !== this.props.store.getState().session)
+        {
+            let params = this.props.params;
+            let store  = this.props.store;
+            let route  = this.props.route;
+            let router = this.props.router;
+            return <ContactView params={params} store={store} route={route} router={router} />;
+        }
         const nacimiento_pais = this.props.store.lang.get('profile_pais_nacimiento');
         const nacimiento_ciudad = this.props.store.lang.get('profile_ciudad_nacimiento');
         const residencia_pais = this.props.store.lang.get('profile_pais_residencia');

@@ -1,6 +1,7 @@
 import ServiceBase from '../Lib/ServiceBase';
 
 const consulta = '/friends';
+const agregar = '/friends/add';
 
 export default class Friends extends ServiceBase
 {
@@ -48,6 +49,19 @@ export default class Friends extends ServiceBase
                     .catch((error) => this.secure(error)(error));
             });
         };
+
+        this.add = (user) =>
+        {
+            return new Promise((resolve, reject) => {
+                const url = store.getState().config.api + agregar;
+                this.put(url + "?token=" + store.getState().session.token, {user: user})
+                    .then((response) => {
+                        
+                    })
+                    .catch((error) => this.secure(error)(error));
+            });
+        };
+
         this.find = (data) => 
         {
             return new Promise((resolve, reject) => {

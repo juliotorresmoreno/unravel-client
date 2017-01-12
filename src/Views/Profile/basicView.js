@@ -61,10 +61,20 @@ export default class BasicView extends BasicViewCtrl {
         }
     }
     render() {
-        //const session = this.session;
         const name = this.props.store.lang.get('login_name');
         const lastname = this.props.store.lang.get('login_lastname');
-        //const isMe = session !== this.props.store.getState().usuario;
+        const campoComponent = (title, value) => {
+            const nacimiento_pais = this.props.store.lang.get(title);
+            if (this.form[value]) {
+                return (
+                    <Form.Field>
+                        <label>{nacimiento_pais}</label>
+                        {this.form[value]}
+                    </Form.Field>
+                );
+            }
+            return null;
+        }
         return (
             <div>
                 <Form onSubmit={(e) => e.preventDefault()}>
@@ -76,30 +86,13 @@ export default class BasicView extends BasicViewCtrl {
                         <label>{lastname}</label>
                         {this.form.apellidos}
                     </Form.Field>
-                    {this.campoEmail()}
+                    {campoComponent('login_email', 'email')}
                     {this.campoNacimientoDia()}
-                    {this.campoNacimientoMes()}
+                    {campoComponent('profile_nacimiento_ano', 'nacimiento_ano')}
                     {this.campoSexo()}
                 </Form>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
             </div>
         );
-    }
-    campoEmail = () => {
-        const label = this.props.store.lang.get('login_email');
-        if (this.form.email) {
-            return (
-                <Form.Field>
-                    <label>{label}</label>
-                    {this.form.email}
-                </Form.Field>
-            );
-        }
-        return null;
     }
     campoNacimientoDia = () => {
         const labelDia = this.props.store.lang.get('profile_nacimiento_dia');
@@ -114,20 +107,6 @@ export default class BasicView extends BasicViewCtrl {
                     <Form.Field>
                         <label>{labelDia}</label>
                         {this.form.nacimiento_dia}
-                    </Form.Field>
-                </Form.Group>
-            );
-        }
-        return null;
-    }
-    campoNacimientoMes = () => {
-        const labelAno = this.props.store.lang.get('profile_nacimiento_ano');
-        if (this.form.nacimiento_dia) {
-            return (
-                <Form.Group>
-                    <Form.Field>
-                        <label>{labelAno}</label>
-                        {this.form.nacimiento_ano}
                     </Form.Field>
                 </Form.Group>
             );

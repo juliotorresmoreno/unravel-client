@@ -4,6 +4,7 @@ import { Form } from 'semantic-ui-react'
 
 import Permisos from '../../Lib/Permisos';
 import InterestsCtrl from './interests.ctrl';
+import InterestsView from './interestsView';
 
 
 const TextAreaStyle = {height: 73};
@@ -12,14 +13,24 @@ export default class Interests extends InterestsCtrl {
     form = {};
     constructor(args) {
         super(args);
-        /*const session = (() => {
+        this.session = (() => {
             if (this.props.params.user && this.props.store.getState().usuario)
                 return this.props.store.getState().usuario;
             return this.props.store.getState().session;
-        })();*/
+        })();
         this.form = Object.assign(this.props.store.getState().profile, this.form);
     }
     render() {
+        const session = this.session;
+        if (session !== this.props.store.getState().session)
+        {
+            let params = this.props.params;
+            let store  = this.props.store;
+            let route  = this.props.route;
+            let router = this.props.router;
+            return <InterestsView params={params} store={store} route={route} router={router} />;
+        }
+
         const personalidad = this.props.store.lang.get('profile_personalidad');
         const intereses = this.props.store.lang.get('profile_intereses');
         const series = this.props.store.lang.get('profile_series');

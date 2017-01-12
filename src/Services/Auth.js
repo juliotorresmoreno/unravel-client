@@ -48,14 +48,19 @@ export default class Auth extends ServiceBase
         };
         this.getSession = () => {
             return new Promise((resolve, reject) => {
-                this.getJSON(store.getState().config.api + session)
+                this.get(store.getState().config.api + session)
                     .then((response) => {
-                        store.setState({session: response.session});
-                        this.secure(resolve)({session: response});
+                        response.json()
+                            .then((json) => {
+                                store.setState({session: json.session});
+                                this.secure(resolve)({session: json});
+                            })
+                            .catch((error) => {
+                                this.secure(reject)({error: error});
+                            });
                     })
                     .catch((error) => {
                         this.secure(reject)({error: error});
-                        console.log(error);
                     });
             });
         };
@@ -65,7 +70,7 @@ export default class Auth extends ServiceBase
         this.logout = () => 
         {
             return new Promise((resolve, reject) => {
-                fetch(store.getState().config.api + logout)
+                fetch(store.getState().config.api + logout + "?token=" + store.getState().session.token)
                     .then((response) => {
                         if(response.ok)
                         {
