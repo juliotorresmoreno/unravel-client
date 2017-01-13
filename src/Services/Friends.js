@@ -1,6 +1,7 @@
 import ServiceBase from '../Lib/ServiceBase';
 
-const consulta = '/friends';
+const consultaFriends = '/friends';
+const consulta = '/users';
 const agregar = '/friends/add';
 
 export default class Friends extends ServiceBase
@@ -23,7 +24,7 @@ export default class Friends extends ServiceBase
                         }
                     }
                 }
-                const url = store.getState().config.api + consulta;
+                const url = store.getState().config.api + consultaFriends;
                 this.get(url + "?u=" + encodeURI(usuario) + "&token=" + store.getState().session.token)
                     .then((response) => {
                         response.json()
@@ -61,18 +62,41 @@ export default class Friends extends ServiceBase
                     .catch((error) => this.secure(error)(error));
             });
         };
-
-        this.find = (data) => 
+        this.friends = (data) => 
         {
             return new Promise((resolve, reject) => {
-                const url = store.getState().config.api + consulta;
-                this.get(url + "?q=" + encodeURI(data.query) + "&token=" + store.getState().session.token)
+                const url = store.getState().config.api + consultaFriends;
+                const query = data && data.query ? "?q=" + encodeURI(data.query): "?";
+                this.get(url + query + "&token=" + store.getState().session.token)
                     .then((response) => {
                         response.json()
                             .then((json) => {
                                 store.setState({friends: json.data});
                                 response.ok ?
-                                    this.secure(resolve)({response: response,data: json}):
+                                    this.secure(resolve)({response: response, data: json}):
+                                    this.secure(reject)(json);
+                            })
+                            .catch((error) => {
+                                response.ok ?
+                                    this.secure(resolve)({response: response}):
+                                    this.secure(reject)({error: error});
+                            });
+                    })
+                    .catch((error) => this.secure(error)(error));
+            });
+        };
+        this.find = (data) => 
+        {
+            return new Promise((resolve, reject) => {
+                const url = store.getState().config.api + consulta;
+                const query = data && data.query ? "?q=" + encodeURI(data.query): "?";
+                this.get(url + query + "&token=" + store.getState().session.token)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => {
+                                store.setState({friends: json.data});
+                                response.ok ?
+                                    this.secure(resolve)({response: response, data: json}):
                                     this.secure(reject)(json);
                             })
                             .catch((error) => {

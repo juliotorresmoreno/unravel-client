@@ -19,6 +19,7 @@ class App extends Component {
                     this.session = this.props.route.store.getState().session;
                     this.isLoading = false;
                     this.mounted ? this.forceUpdate(): void(0);
+                    this.session ? this.props.route.store.friends.find(): void(0);
                 });
         } else {
             this.session = this.props.route.store.getState().session;
@@ -57,6 +58,7 @@ class App extends Component {
         var store  = this.props.route.store;
         var route  = this.props.route;
         var router = this.props.router;
+        var isFriend = store.getState().estado === "Amigos";
         if (autorized && this.props.route.store.getState().session)
         {
             if (isMe) {
@@ -79,7 +81,7 @@ class App extends Component {
                         <div style={{display:'flex',flexDirection:'vertical'}}>
                             <MenuLeft params={params} route={route} router={router} store={store} />
                             <div style={{background: '',margin:'15px 15px 15px 0',flex:1}}>
-                                <Button primary onClick={this.agregarAmigo}>Agregar</Button>
+                                {(() => isFriend ? <Button primary onClick={this.agregarAmigo}>Agregar</Button>: null)()}
                                 {children}
                             </div>
                             <MenuRight params={params} route={route} router={router} store={store} />

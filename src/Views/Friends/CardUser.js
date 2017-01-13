@@ -4,6 +4,10 @@ import { Card, Image } from 'semantic-ui-react'
 import CardUserCtrl from './main.ctrl';
 const moment = window.moment;
 
+const style = {
+    width: 150
+};
+
 export default class CardUser extends CardUserCtrl {
     go = (e, obj) => {
         e.preventDefault()
@@ -12,7 +16,7 @@ export default class CardUser extends CardUserCtrl {
     render = function() {
         return (
             <Card as="a" onClick={this.go} href={"/" + this.props.user.usuario + "/profile"}>
-                <Image src='/static/svg/user-3.svg' />
+                <Image style={style} src='/static/svg/user-3.svg' />
                 <Card.Content>
                     <Card.Header>
                         {this.props.user.nombres + " " + this.props.user.apellidos}

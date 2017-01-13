@@ -8,28 +8,26 @@ export default class MenuRight extends MenuRightCtrl {
     state = {};
     constructor(args) {
         super(args);
-        this.render = this.render.bind(this);
+        this.props.store.subscribe(this, ['friends'], "MenuRight");
     }
     handleItemClick = (e, { href }) => {
         e.preventDefault();
         this.props.router.push(href);
     }
-    render = function() {
+    render = () => {
+        const friends = this.props.store.getState().friends || [];
+        var key = 0;
+        //[{"usuario":"dmonsalve","nombres":"diana","apellidos":"monsalve","estado":"Solicitado","registrado":"0001-01-01T00:00:00Z"}]
         return (
             <div style={{margin:15}}>
                 <Menu vertical>
-                    <Menu.Item as="a" href="/news" onClick={this.handleItemClick}>
-                        Noticias
-                    </Menu.Item>
-                    <Menu.Item as="a" href="/messages" onClick={this.handleItemClick}>
-                        Mensajes
-                    </Menu.Item>
-                    <Menu.Item as="a" href="/friends" onClick={this.handleItemClick}>
-                        Amigos
-                    </Menu.Item>
-                    <Menu.Item as="a" href="/groups" onClick={this.handleItemClick}>
-                        Grupos
-                    </Menu.Item>
+                    {friends.map((friend) => {
+                        return (
+                            <Menu.Item key={key++} as="a" onClick={this.handleItemClick} href={"/" + friend.usuario + "/chat"}>
+                                {friend.nombres + ' ' + friend.apellidos}
+                            </Menu.Item>
+                        );
+                    })}
                 </Menu>
             </div>
         )

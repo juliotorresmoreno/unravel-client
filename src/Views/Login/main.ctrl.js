@@ -7,6 +7,7 @@ export default class LoginCtrl extends Component {
     onLogin = (event) => {
         event.preventDefault();
         this.props.store.auth.login(this.form)
+            .then(() => this.props.route.store.friends.friends())
             .catch((error) => {
                 this.setState({error:error.error});
             });
