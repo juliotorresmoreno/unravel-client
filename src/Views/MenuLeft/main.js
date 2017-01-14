@@ -25,7 +25,7 @@ export default class MenuLeft extends MenuLeftCtrl {
         const fullname = session.nombres + ' ' + session.apellidos;
         const prev = session !== this.session ? '/' + session.usuario: '';
         return (
-            <div style={{margin:15}}>
+            <div className="MenuLeft" style={{margin:15}}>
                 <Menu vertical>
                     <Menu.Item>
                         <Link to={prev + '/galery'}>

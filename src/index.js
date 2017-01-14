@@ -21,6 +21,7 @@ import Messages from './Views/Messages/main';
 import Friends from './Views/Friends/main';
 import Galery from './Views/Galery/main';
 import Groups from './Views/Groups/main';
+import Chat from './Views/Chat/main';
 
 var store = new Store({config:config});
 store.addService(SLang);
@@ -42,7 +43,8 @@ class Index extends Component {
                     <Route autorized={true} path="friends" component={Friends} />
                     <Route autorized={true} path="galery" component={Galery} />
                     <Route autorized={true} path="groups" component={Groups} />
-
+                    
+                    <Route autorized={true} path=":user/chat" component={Chat} />
                     <Route autorized={true} path=":user/profile" component={Profile} />
                     <Route autorized={true} path=":user/messages" component={Messages} />
                     <Route autorized={true} path=":user/friends" component={Friends} />

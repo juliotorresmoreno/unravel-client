@@ -28,9 +28,3 @@ export default class Friends extends FriendsCtrl {
         )
     }
 }
-
-/*<Card.Group>
-    {friends.map(function(value, index){
-        return <CardUser key={index} store={store} router={router} user={value} />;
-    })}
-</Card.Group>*/

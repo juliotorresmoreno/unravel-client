@@ -17,7 +17,7 @@ export default class MenuRight extends MenuRightCtrl {
     render = () => {
         const friends = this.props.store.getState().friends || [];
         return (
-            <div style={{margin:15}}>
+            <div className="MenuRight" style={{margin:15}}>
                 <Menu vertical>
                     {friends.map((friend, index) => {
                         return (

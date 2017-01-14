@@ -61,19 +61,19 @@ class App extends Component {
         var router = this.props.router;
         var isFriend = store.getState().usuario && store.getState().usuario.estado === "Amigos";
         return (
-            <div>
+            <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
                 <Head params={params} route={route} router={router} store={store} />
                 {(() => {
                     if (autorized && this.props.route.store.getState().session)
                         return (
-                            <div style={{display:'flex',flexDirection:'vertical'}}>
+                            <div style={{display:'flex',flexDirection:'vertical',height:'100%'}}>
                                 <MenuLeft params={params} route={route} router={router} store={store} />
-                                <div style={{background: '',margin:'15px 15px 15px 0',flex:1}}>
+                                <div style={{background: '',margin:'15px 0',flex:1,height:'auto'}}>
                                     {(() => {
                                         if (isMe) return children;
                                         return (
-                                            <div>
-                                                {!isFriend?[<Button key={1} primary onClick={this.agregarAmigo}>Agregar</Button>, <br key={2} />]:null}
+                                            <div style={{height:'100%'}}>
+                                                {!isFriend?[<Button key={0} primary onClick={this.agregarAmigo}>Agregar</Button>, <br key={2} />]:null}
                                                 {children}
                                             </div>
                                         );
