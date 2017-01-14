@@ -9,8 +9,6 @@ export default class ContactView extends ContactViewCtrl {
         super(args);
         if(this.props.store.getState().profile) {
             this.form = Object.assign(this.props.store.getState().profile, this.form);
-            if(this.form.nacimiento_mes)
-                this.showDays();
         }
     }
     render() {

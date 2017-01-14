@@ -9,8 +9,6 @@ export default class InterestsView extends InterestsViewCtrl {
         super(args);
         if(this.props.store.getState().profile) {
             this.form = Object.assign(this.props.store.getState().profile, this.form);
-            if(this.form.nacimiento_mes)
-                this.showDays();
         }
     }
     render() {
@@ -24,7 +22,7 @@ export default class InterestsView extends InterestsViewCtrl {
                 );
             }
             return null;
-        }
+        };
         return (
             <div>
                 <Form onSubmit={(e) => e.preventDefault()}>
