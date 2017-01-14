@@ -35,7 +35,7 @@ export default class Store {
                         {
                             if(typeof list[i].item.Midlewares[j] === "function")
                             {
-                                list[i].item.Midlewares[j](this);
+                                list[i].item.Midlewares[j](this, data);
                             }
                         }
                     }

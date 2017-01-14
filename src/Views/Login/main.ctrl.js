@@ -6,8 +6,12 @@ export default class LoginCtrl extends Component {
     state = {};
     onLogin = (event) => {
         event.preventDefault();
-        this.props.store.auth.login(this.form)
-            .then(() => this.props.route.store.friends.friends())
+        const store = this.props.store;
+        store.auth.login(this.form)
+            .then(() => {
+                store.friends.friends();
+                store.connection.open(store.getState().session.token);
+            })
             .catch((error) => {
                 this.setState({error:error.error});
             });

@@ -32,6 +32,10 @@ export default {
     profile_creencias_religiosas: "Creencias religiosas",
     profile_creencias_politicas: "Creencias politicas",
 
+    // chat
+    chat_mensaje_send: "Enviar",
+    chat_mensaje_texto: "Escribe tu mensaje",
+
     //app
     app_save: "Guardar",
 

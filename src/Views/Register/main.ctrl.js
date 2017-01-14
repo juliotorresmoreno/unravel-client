@@ -7,9 +7,7 @@ export default class RegisterCtrl extends Component {
     onRegister = (event) => {
         event.preventDefault();
         this.props.store.auth.register(this.form)
-            .then((result) => {
-                console.log(result);
-            })
+            .then((result) => {})
             .catch((error) => {
                 var errs = error.error.split(";");
                 var errors = {};
@@ -18,7 +16,6 @@ export default class RegisterCtrl extends Component {
                     errors[err[0].trim().toLowerCase()] = err[1].trim();
                 }
                 this.errors = errors;
-                console.log(errors);
                 this.forceUpdate();
             });
     }
