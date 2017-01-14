@@ -32,32 +32,10 @@ export default class BasicView extends BasicViewCtrl {
         })();
         this.form.nombres = this.session.nombres;
         this.form.apellidos = this.session.apellidos;
-        this.form = Object.assign(this.props.store.getState().profile, this.form);
-        if(this.form.nacimiento_mes)
-            this.showDays();
-    }
-    showDays() {
-        //Enero 01, Marzo 03, Mayo 05, Julio 07, Agosto 08, Octubre 10 y Diciembre 12
-        var mes = this.form.nacimiento_mes;
-        var ano = this.form.nacimiento_ano;
-        if(mes === undefined)
-            return;
-        var dias = (() => {
-            if (['01', '03', '05', '07', '08', '10', '12'].indexOf(mes) + 1)
-                return 31;
-            if (['04', '06', '09', '11'].indexOf(mes) + 1)
-                return 30;
-            if (!ano || ano % 4 !== 0)
-                return 28;
-            return 29;
-        })();
-        if (this.dias_disponibles.length !== dias) {
-            var source = [];
-            for (let i = 1; i <= dias; i++) {
-                let val = i > 9 ? i + '': '0' + i;
-                source.push({value: val, text: val});
-            }
-            this.dias_disponibles = source;
+        if(this.props.store.getState().profile) {
+            this.form = Object.assign(this.props.store.getState().profile, this.form);
+            if(this.form.nacimiento_mes)
+                this.showDays();
         }
     }
     render() {
@@ -126,5 +104,29 @@ export default class BasicView extends BasicViewCtrl {
             );
         }
         return null;
+    }
+    showDays() {
+        //Enero 01, Marzo 03, Mayo 05, Julio 07, Agosto 08, Octubre 10 y Diciembre 12
+        var mes = this.form.nacimiento_mes;
+        var ano = this.form.nacimiento_ano;
+        if(mes === undefined)
+            return;
+        var dias = (() => {
+            if (['01', '03', '05', '07', '08', '10', '12'].indexOf(mes) + 1)
+                return 31;
+            if (['04', '06', '09', '11'].indexOf(mes) + 1)
+                return 30;
+            if (!ano || ano % 4 !== 0)
+                return 28;
+            return 29;
+        })();
+        if (this.dias_disponibles.length !== dias) {
+            var source = [];
+            for (let i = 1; i <= dias; i++) {
+                let val = i > 9 ? i + '': '0' + i;
+                source.push({value: val, text: val});
+            }
+            this.dias_disponibles = source;
+        }
     }
 }

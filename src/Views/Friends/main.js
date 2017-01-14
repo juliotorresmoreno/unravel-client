@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Form, Card } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 import CardUser from './CardUser';
 import FriendsCtrl from './main.ctrl';
-
 
 export default class Friends extends FriendsCtrl {
     constructor(args) {
@@ -22,13 +21,16 @@ export default class Friends extends FriendsCtrl {
                         <Form.Input name="query"/>
                     </Form.Field>
                 </Form>
-                <br />
-                <Card.Group>
-                    {friends.map(function(value, index){
-                        return <CardUser key={index} store={store} router={router} user={value} />;
-                    })}
-                </Card.Group>
+                {friends.map(function(value, index){
+                    return <CardUser key={index} store={store} router={router} user={value} />;
+                })}
             </div>
         )
     }
 }
+
+/*<Card.Group>
+    {friends.map(function(value, index){
+        return <CardUser key={index} store={store} router={router} user={value} />;
+    })}
+</Card.Group>*/

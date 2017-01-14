@@ -16,14 +16,12 @@ export default class MenuRight extends MenuRightCtrl {
     }
     render = () => {
         const friends = this.props.store.getState().friends || [];
-        var key = 0;
-        //[{"usuario":"dmonsalve","nombres":"diana","apellidos":"monsalve","estado":"Solicitado","registrado":"0001-01-01T00:00:00Z"}]
         return (
             <div style={{margin:15}}>
                 <Menu vertical>
-                    {friends.map((friend) => {
+                    {friends.map((friend, index) => {
                         return (
-                            <Menu.Item key={key++} as="a" onClick={this.handleItemClick} href={"/" + friend.usuario + "/chat"}>
+                            <Menu.Item key={index} as="a" onClick={this.handleItemClick} href={"/" + friend.usuario + "/chat"}>
                                 {friend.nombres + ' ' + friend.apellidos}
                             </Menu.Item>
                         );

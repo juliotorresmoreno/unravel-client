@@ -23,8 +23,8 @@ export default class Friends extends ServiceBase
                             return;
                         }
                     }
-                }
-                const url = store.getState().config.api + consultaFriends;
+                } 
+                const url = store.getState().config.api + consulta;
                 this.get(url + "?u=" + encodeURI(usuario) + "&token=" + store.getState().session.token)
                     .then((response) => {
                         response.json()

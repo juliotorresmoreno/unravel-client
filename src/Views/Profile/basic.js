@@ -46,9 +46,11 @@ export default class Basic extends BasicCtrl {
         })();
         this.form.nombres = this.session.nombres;
         this.form.apellidos = this.session.apellidos;
-        this.form = Object.assign(this.props.store.getState().profile, this.form);
-        if(this.form.nacimiento_mes)
-            this.showDays();
+        if(this.props.store.getState().profile) {
+            this.form = Object.assign(this.props.store.getState().profile, this.form);
+            if(this.form.nacimiento_mes)
+                this.showDays();
+        }
     }
     render() {
         const session = this.session;
@@ -68,6 +70,7 @@ export default class Basic extends BasicCtrl {
         const ano = this.props.store.lang.get('profile_nacimiento_ano');
         const sexo = this.props.store.lang.get('profile_sexo');
         const save = this.props.store.lang.get('app_save');
+        
         return (
             <div>
                 <Form onSubmit={(e) => e.preventDefault()}>
