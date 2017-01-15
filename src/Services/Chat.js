@@ -41,14 +41,17 @@ export default class Chat extends ServiceBase
                 }
             ]
         }, ['wss'], "ServiceChat");
-        this.get = function(params) {
+        this.consultar = function(params) {
             return new Promise((resolve, reject) => {
-                var url = store.getState().api + consultar + '/' + params.user;
+                var url = store.getState().config.api + consultar + '/' + params.user + "?token=" + store.getState().session.token;;
                 this.get(url)
                     .then((response) => response.json())
                     .then((response) => {
                         if(response.success) {
-                            store.setState({chatUserDetail: response.data});
+                            if(store.getState().chat === undefined)
+                                store.getState().chat = {};
+                            store.getState().chats[params.user] = response.data;
+                            store.setState({updateAt: new Date()});
                             this.secure(resolve)(response);
                         } else {
                             this.secure(reject)(response);

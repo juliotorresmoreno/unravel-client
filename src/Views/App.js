@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button } from 'semantic-ui-react';
+import { Button, Loader } from 'semantic-ui-react';
 import Head from './Head/main';
 import MenuLeft from './MenuLeft/main';
 import MenuRight from './MenuRight/main';
@@ -49,7 +49,7 @@ class App extends Component {
 
         let children = (() => {
             if (this.isLoading)
-                return <div>Loading</div>;
+                return <Loader content='Loading' />;
             return !this.props.children ? <News store={this.props.route.store} />:
                         React.cloneElement(this.props.children, {
                             store: this.props.route.store
@@ -68,12 +68,12 @@ class App extends Component {
                         return (
                             <div style={{display:'flex',flexDirection:'vertical',height:'100%'}}>
                                 <MenuLeft params={params} route={route} router={router} store={store} />
-                                <div style={{background: '',margin:'15px 0',flex:1,height:'auto'}}>
+                                <div style={{padding:'15px 0',flex:1}}>
                                     {(() => {
                                         if (isMe) return children;
                                         return (
-                                            <div style={{height:'100%'}}>
-                                                {!isFriend?[<Button key={0} primary onClick={this.agregarAmigo}>Agregar</Button>, <br key={2} />]:null}
+                                            <div style={{height: '100%'}}>
+                                                {!isFriend?[<Button key={0} primary onClick={this.agregarAmigo}>Agregar</Button>, <br key={1} />]:null}
                                                 {children}
                                             </div>
                                         );

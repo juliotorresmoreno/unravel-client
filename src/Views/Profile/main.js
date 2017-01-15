@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Menu, Segment } from 'semantic-ui-react'
+import { Dimmer, Loader, Menu, Segment } from 'semantic-ui-react'
 
 import ProfileCtrl from './main.ctrl';
 import Basic from './basic';
@@ -40,6 +40,12 @@ export default class Profile extends ProfileCtrl {
                 </div>
             );
         }
-        return (<div>Loading</div>);
+        return (
+            <Segment style={{height: '200px', border: 0}}>
+                <Dimmer active inverted style={{border: 0}}>
+                    <Loader inverted content='Loading' />
+                </Dimmer>
+            </Segment>
+        );
     }
 }

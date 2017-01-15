@@ -5,12 +5,51 @@ import { Button, Comment } from 'semantic-ui-react'
 import ChatCtrl from './main.ctrl';
 const moment = window.moment;
 
+(function() {
+    if(window.attachEvent) {
+        window.attachEvent("resize", resizeThrottler, false);
+    } else if(window.addEventListener) {
+        window.addEventListener("resize", resizeThrottler, false);
+    }
+    var resizeTimeout;
+    function resizeThrottler() {
+        if (!resizeTimeout) {
+            resizeTimeout = setTimeout(function() {
+                resizeTimeout = null;
+                actualResizeHandler();
+            }, 66);
+        }
+    }
+    function actualResizeHandler() {
+        const height = window.innerHeight
+                        || document.documentElement.clientHeight
+                        || document.body.clientHeight;
+        var el = document.getElementById("conversacion");
+        el.style.height = (height - 140) + 'px';
+    }
+}());
+
+
 export default class Chat extends ChatCtrl {
     form = {mensaje: ""}
     constructor(args) {
         super(args);
         this.props.store.subscribe(this, ['wss'], "Chat");
+        this.props.store.chat.consultar({user: this.props.params.user});
     }
+
+    doScroll = () => {
+        var el = document.getElementById("conversacion");
+        var doScroll = el.scrollHeight - el.clientHeight;
+        if (el.scrollTop !== doScroll) {
+            el.scrollTop = doScroll;
+        }
+    }
+
+    componentDidUpdate = () => {
+        this.doScroll();
+    }
+
     render = () => {
         const session = this.props.store.getState().session;
         const usuario = this.props.store.getState().usuario;
@@ -18,26 +57,32 @@ export default class Chat extends ChatCtrl {
         const send = store.lang.get('chat_mensaje_send');
         const label = store.lang.get('chat_mensaje_texto');
         const chats = store.getState().chats[this.props.params.user] || [];
+        const height = window.innerHeight
+                        || document.documentElement.clientHeight
+                        || document.body.clientHeight;
+
         return (
             <div style={{border: "1px solid rgba(34,36,38,.15)", height: "100%", display: 'flex', flexDirection: 'column'}}>
                 <div style={{flex:1, margin: 10}}>
-                {chats.map((value, index) => {
-                    const user = value.usuario === session.usuario ? session: usuario;
-                    return (
-                        <Comment.Group key={index}>
-                            <Comment>
-                                <Comment.Avatar src='/static/svg/user-3.svg' />
-                                <Comment.Content>
-                                    <Comment.Author as='a'>{user.nombres} {user.apellidos}</Comment.Author>
-                                    <Comment.Metadata>
-                                        <div>{moment(value.fecha).format("MMM Do YYYY h:mm:ss a")}</div>
-                                    </Comment.Metadata>
-                                    <Comment.Text>{value.mensaje}</Comment.Text>
-                                </Comment.Content>
-                            </Comment>
-                        </Comment.Group>
-                    );
-                })}
+                    <div id="conversacion" style={{height: height - 140, overflowY: 'scroll'}}>
+                        {chats.map((value, index) => {
+                            const user = value.usuario === session.usuario ? session: usuario;
+                            return (
+                                <Comment.Group key={index}>
+                                    <Comment>
+                                        <Comment.Avatar src='/static/svg/user-3.svg' />
+                                        <Comment.Content>
+                                            <Comment.Author as='a'>{user.nombres} {user.apellidos}</Comment.Author>
+                                            <Comment.Metadata>
+                                                <div>{moment(value.fecha).format("MMM Do YYYY h:mm:ss a")}</div>
+                                            </Comment.Metadata>
+                                            <Comment.Text>{value.mensaje}</Comment.Text>
+                                        </Comment.Content>
+                                    </Comment>
+                                </Comment.Group>
+                            );
+                        })}
+                    </div>
                 </div>
                 <div style={{display: 'flex'}} className="field">
                     <div className="ui input" style={{flex:1}}>
