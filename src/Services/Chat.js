@@ -43,16 +43,31 @@ export default class Chat extends ServiceBase
         }, ['wss'], "ServiceChat");
         this.consultar = function(params) {
             return new Promise((resolve, reject) => {
-                var url = store.getState().config.api + consultar + '/' + params.user + "?token=" + store.getState().session.token;;
+                var url = store.getState().config.api + consultar + '/' + params.user + "?"
+                                + (params.antesDe ? "antesDe=" + encodeURI(params.antesDe) + "&": "")
+                                + (params.despuesDe ? "despuesDe=" + encodeURI(params.despuesDe) + "&": "")
+                                + "token=" + store.getState().session.token;;
                 this.get(url)
                     .then((response) => response.json())
                     .then((response) => {
                         if(response.success) {
                             if(store.getState().chat === undefined)
                                 store.getState().chat = {};
-                            store.getState().chats[params.user] = response.data;
-                            store.getState().chats[params.user].reverse();
-                            store.setState({updateAt: new Date()});
+                            let chat = store.getState().chats[params.user];
+                            if(!chat) {
+                                store.getState().chats[params.user] = response.data;
+                                store.getState().chats[params.user].reverse();
+                                store.setState({updateAt: new Date()});
+                            } else if (response.data.length > 0 && chat.length > 0) {
+                                response.data.reverse();
+                                if(chat[0].fecha > response.data[response.data.length - 1].fecha) {
+                                    store.getState().chats[params.user] = response.data.concat(chat);
+                                    store.setState({updateAt: new Date()});
+                                } else if (chat[chat.length - 1].fecha < response.data[0].fecha) {
+                                    store.getState().chats[params.user] = chat.concat(response.data);
+                                    store.setState({updateAt: new Date()});
+                                }
+                            }
                             this.secure(resolve)(response);
                         } else {
                             this.secure(reject)(response);

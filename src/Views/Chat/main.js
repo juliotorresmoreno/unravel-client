@@ -37,7 +37,14 @@ export default class Chat extends ChatCtrl {
     constructor(args) {
         super(args);
         this.props.store.subscribe(this, ['wss'], "Chat");
-        this.props.store.chat.consultar({user: this.props.params.user});
+
+        const chats = this.props.store.getState().chats[this.props.params.user] || [{}];
+        if (chats.length > 0) {
+            const fecha = chats[chats.length - 1].fecha;
+            this.props.store.chat.consultar({user: this.props.params.user, despuesDe: fecha});
+        } else {
+            this.props.store.chat.consultar({user: this.props.params.user});
+        }
     }
 
     doScroll = () => {
@@ -46,6 +53,10 @@ export default class Chat extends ChatCtrl {
         if (el.scrollTop !== doScroll) {
             el.scrollTop = doScroll;
         }
+    }
+
+    componentDidMount = () => {
+        this.doScroll();
     }
 
     componentDidUpdate = () => {
@@ -65,7 +76,7 @@ export default class Chat extends ChatCtrl {
         return (
             <div style={{border: "1px solid rgba(34,36,38,.15)", height: "100%", display: 'flex', flexDirection: 'column'}}>
                 <div style={{flex:1, margin: 10}}>
-                    <div id="conversacion" onScroll={this.onScroll} style={{height: height - 140, overflowY: 'scroll'}}>
+                    <div id="conversacion" onMouseDown={this.onMouseDown} onScroll={this.onScroll} style={{height: height - 140, overflowY: 'scroll'}}>
                         {chats.map((value, index) => {
                             const user = value.usuario === session.usuario ? session: usuario;
                             return (

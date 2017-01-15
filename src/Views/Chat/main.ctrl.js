@@ -1,6 +1,8 @@
 import React from 'react';
 const { Component } = React;
 
+var consultable = false;
+
 export default class ChatCtrl extends Component {
     onHandlerEnviar = (e, obj) => {
         this.props.store.chat.mensaje(this.props.params.user, this.form.mensaje)
@@ -19,6 +21,14 @@ export default class ChatCtrl extends Component {
     }
 
     onScroll = (e, obj) => {
-        console.log(e, obj);
+        if(e.target.scrollTop === 0 && consultable) {
+            const chats = this.props.store.getState().chats[this.props.params.user] || [];
+            const fecha = chats[0].fecha || '';
+            this.props.store.chat.consultar({user: this.props.params.user, antesDe: fecha});
+            consultable = false;
+        }
+    }
+    onMouseDown = (e, obj) => {
+        consultable = true;
     }
 }

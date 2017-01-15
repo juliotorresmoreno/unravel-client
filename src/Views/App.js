@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, Loader } from 'semantic-ui-react';
+import { Button, Message, Icon } from 'semantic-ui-react';
 import Head from './Head/main';
 import MenuLeft from './MenuLeft/main';
 import MenuRight from './MenuRight/main';
@@ -49,7 +49,15 @@ class App extends Component {
 
         let children = (() => {
             if (this.isLoading)
-                return <Loader content='Loading' />;
+                return (
+                    <Message icon>
+                        <Icon name='circle notched' loading />
+                        <Message.Content>
+                        <Message.Header>Espere un momento</Message.Header>
+                            Estamos cargando el contenido.
+                        </Message.Content>
+                    </Message>
+                );
             return !this.props.children ? <News store={this.props.route.store} />:
                         React.cloneElement(this.props.children, {
                             store: this.props.route.store

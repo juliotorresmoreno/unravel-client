@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Dimmer, Loader, Menu, Segment } from 'semantic-ui-react'
+import { Message, Icon, Menu, Segment } from 'semantic-ui-react'
 
 import ProfileCtrl from './main.ctrl';
 import Basic from './basic';
@@ -41,11 +41,13 @@ export default class Profile extends ProfileCtrl {
             );
         }
         return (
-            <Segment style={{height: '200px', border: 0}}>
-                <Dimmer active inverted style={{border: 0}}>
-                    <Loader inverted content='Loading' />
-                </Dimmer>
-            </Segment>
+            <Message icon>
+                <Icon name='circle notched' loading />
+                <Message.Content>
+                <Message.Header>Espere un momento</Message.Header>
+                    Estamos cargando el contenido.
+                </Message.Content>
+            </Message>
         );
     }
 }
