@@ -14,10 +14,6 @@ export default class MenuRight extends MenuRightCtrl {
         this.props.router.push(href);
     }
     render = () => {
-        const params = this.props.params;
-        const store  = this.props.route.store;
-        const route  = this.props.route;
-        const router = this.props.router;
         const friends = this.props.store.getState().friends || [];
         return (
             <div className="MenuRight" style={{margin:15}}>
