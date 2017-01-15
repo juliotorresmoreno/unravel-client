@@ -5,8 +5,8 @@ import LoginCtrl from './main.ctrl';
 
 export default class Login extends LoginCtrl {
     form = {
-        usuario:'jtorres990',
-        passwd:'123456'
+        usuario:'',
+        passwd:'' 
     }
     constructor(args) {
         super(args);

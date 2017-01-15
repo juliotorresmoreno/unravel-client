@@ -27,13 +27,13 @@ class App extends Component {
     }
     render() {
         var autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized;
-        var usuario = this.props.route.store.getState().usuario;
+        var usuario = this.props.route.store.getState().usuario || {};
         var session = this.props.route.store.getState().session;
         var isLogged = autorized && this.props.route.store.getState().session;
         var user = this.props.params.user;
         var isMe = !user || (session && user === session.usuario);
 
-        if (user && isLogged && (!usuario || usuario.usuario !== user) && session.usuario !== user)
+        if (user && isLogged && usuario.usuario !== user && session.usuario !== user)
         {
             this.isLoading = true;
             this.props.route.store.friends.getUser(user)
@@ -59,7 +59,6 @@ class App extends Component {
         var store  = this.props.route.store;
         var route  = this.props.route;
         var router = this.props.router;
-        var isFriend = store.getState().usuario && store.getState().usuario.estado === "Amigos";
         return (
             <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
                 <Head params={params} route={route} router={router} store={store} />
@@ -73,7 +72,33 @@ class App extends Component {
                                         if (isMe) return children;
                                         return (
                                             <div style={{height: '100%'}}>
-                                                {!isFriend?[<Button key={0} primary onClick={this.agregarAmigo}>Agregar</Button>, <br key={1} />]:null}
+                                                {(() => {
+                                                    switch(usuario.estado) {
+                                                        case "Desconocido":
+                                                            return [
+                                                                <Button key={0} primary onClick={this.agregarAmigo}>
+                                                                    Agregar
+                                                                </Button>, 
+                                                                <br key={1} />
+                                                            ];
+                                                        case "Solicitado":
+                                                            var solicito = usuario.relacion && usuario.relacion.usuario_solicita === session.usuario;
+                                                            var result = [
+                                                                <Button key={1} primary onClick={this.rechazarAmigo}>
+                                                                    {solicito?"Cancelar soliitud": "Rechazar soliitud"}
+                                                                </Button>,
+                                                                <br key={2} />
+                                                            ];
+                                                            if(solicito === false)
+                                                                result.unshift(
+                                                                    <Button key={0} primary onClick={this.agregarAmigo}>
+                                                                        Aceptar
+                                                                    </Button>
+                                                                );
+                                                            return result;
+                                                        default:
+                                                    }
+                                                })()}
                                                 {children}
                                             </div>
                                         );
@@ -91,7 +116,11 @@ class App extends Component {
     }
     agregarAmigo = () => {
         var user = this.props.params.user;
-        this.props.route.store.friends.add(user);
+        this.props.route.store.friends.add(user).then(() => {});
+    }
+    rechazarAmigo = () => {
+        var user = this.props.params.user;
+        this.props.route.store.friends.reject(user).then(() => {});
     }
 }
 

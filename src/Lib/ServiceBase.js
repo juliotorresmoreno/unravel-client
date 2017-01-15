@@ -44,6 +44,14 @@ export default class ServiceBase {
             body: this.arrayToUrlEncode(data)
         });
     }
+    delete = (url, data, headers = {}) => {
+        return fetch(url, {
+            method: "POST",
+            headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
+            credentials: 'same-origin',
+            body: this.arrayToUrlEncode(data)
+        });
+    }
     arrayToUrlEncode = (data) => {
         var r = [];
         for(var i in data)

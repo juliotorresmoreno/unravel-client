@@ -42,11 +42,11 @@ export default class BasicView extends BasicViewCtrl {
         const name = this.props.store.lang.get('login_name');
         const lastname = this.props.store.lang.get('login_lastname');
         const campoComponent = (title, value) => {
-            const nacimiento_pais = this.props.store.lang.get(title);
+            const titulo = this.props.store.lang.get(title);
             if (this.form[value]) {
                 return (
                     <Form.Field>
-                        <label>{nacimiento_pais}</label>
+                        <label>{titulo}</label>
                         {this.form[value]}
                     </Form.Field>
                 );

@@ -51,6 +51,7 @@ export default class Chat extends ServiceBase
                             if(store.getState().chat === undefined)
                                 store.getState().chat = {};
                             store.getState().chats[params.user] = response.data;
+                            store.getState().chats[params.user].reverse();
                             store.setState({updateAt: new Date()});
                             this.secure(resolve)(response);
                         } else {

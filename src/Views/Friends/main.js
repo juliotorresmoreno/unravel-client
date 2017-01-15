@@ -8,10 +8,10 @@ import FriendsCtrl from './main.ctrl';
 export default class Friends extends FriendsCtrl {
     constructor(args) {
         super(args);
-        this.props.store.subscribe(this, ['friends'], "Friends");
+        this.props.store.subscribe(this, ['friends', 'people'], "Friends");
     }
     render = () => {
-        const friends = this.props.store.getState().friends || [];
+        const people = this.props.store.getState().people || this.props.store.getState().friends || [];
         var store = this.props.store;
         var router = this.props.router;
         return (
@@ -21,7 +21,7 @@ export default class Friends extends FriendsCtrl {
                         <Form.Input name="query"/>
                     </Form.Field>
                 </Form>
-                {friends.map(function(value, index){
+                {people.map(function(value, index){
                     return <CardUser key={index} store={store} router={router} user={value} />;
                 })}
             </div>

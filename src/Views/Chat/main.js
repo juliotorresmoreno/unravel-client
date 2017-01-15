@@ -5,13 +5,14 @@ import { Button, Comment } from 'semantic-ui-react'
 import ChatCtrl from './main.ctrl';
 const moment = window.moment;
 
+if(window.attachEvent && !window.addEventListener)
+    window.addEventListener = window.attachEvent;
+else if(!window.addEventListener)
+    window.addEventListener = () => {};
+
+
 (function() {
-    if(window.attachEvent) {
-        window.attachEvent("resize", resizeThrottler, false);
-    } else if(window.addEventListener) {
-        window.addEventListener("resize", resizeThrottler, false);
-    }
-    var resizeTimeout;
+    var resizeTimeout = null;
     function resizeThrottler() {
         if (!resizeTimeout) {
             resizeTimeout = setTimeout(function() {
@@ -27,6 +28,7 @@ const moment = window.moment;
         var el = document.getElementById("conversacion");
         el.style.height = (height - 140) + 'px';
     }
+    window.addEventListener("resize", resizeThrottler, false);
 }());
 
 
@@ -60,11 +62,10 @@ export default class Chat extends ChatCtrl {
         const height = window.innerHeight
                         || document.documentElement.clientHeight
                         || document.body.clientHeight;
-
         return (
             <div style={{border: "1px solid rgba(34,36,38,.15)", height: "100%", display: 'flex', flexDirection: 'column'}}>
                 <div style={{flex:1, margin: 10}}>
-                    <div id="conversacion" style={{height: height - 140, overflowY: 'scroll'}}>
+                    <div id="conversacion" onScroll={this.onScroll} style={{height: height - 140, overflowY: 'scroll'}}>
                         {chats.map((value, index) => {
                             const user = value.usuario === session.usuario ? session: usuario;
                             return (

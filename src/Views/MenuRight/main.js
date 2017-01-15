@@ -18,11 +18,15 @@ export default class MenuRight extends MenuRightCtrl {
         return (
             <div className="MenuRight" style={{margin:15}}>
                 <Menu vertical>
-                    {friends.map((friend, index) => (
-                        <Menu.Item key={index} as="a" onClick={this.handleItemClick} href={"/" + friend.usuario + "/chat"}>
-                            {friend.nombres + ' ' + friend.apellidos}
-                        </Menu.Item>
-                    ))}
+                    {friends.map((friend, index) => {
+                        if (friend.estado !== "Amigos")
+                            return null;
+                        return (
+                            <Menu.Item key={index} as="a" onClick={this.handleItemClick} href={"/" + friend.usuario + "/chat"}>
+                                {friend.nombres + ' ' + friend.apellidos}
+                            </Menu.Item>
+                        );
+                    })}
                 </Menu>
             </div>
         )

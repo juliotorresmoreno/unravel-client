@@ -17,4 +17,8 @@ export default class ChatCtrl extends Component {
         this.form.mensaje = e.target.value;
         this.forceUpdate();
     }
+
+    onScroll = (e, obj) => {
+        console.log(e, obj);
+    }
 }
