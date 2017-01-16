@@ -20,11 +20,11 @@ export default class ViewCtrl extends Component {
         const params = this.props.params || {};
         const galery = params.galery;
         for(let i = 0; i < this.files.length; i++) {
-            this.props.store.galery.uploadFoto({
-                file: this.files[i].src,
-                name: this.files[i].name,
-                galery: galery
-            });
+            var data = new FormData();
+            data.append("name", this.files[i].name);
+            data.append("file", this.file.files[i]);
+            data.append("galery", galery);
+            this.props.store.galery.uploadFoto(data);
         }
     }
 }
