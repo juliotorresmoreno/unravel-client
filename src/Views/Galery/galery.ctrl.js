@@ -13,4 +13,18 @@ export default class ViewCtrl extends Component {
         this.form[obj.name] = obj.value;
         this.forceUpdate();
     }
+    handleSeleccionar = (e, obj) => {
+        this.file.click();
+    }
+    handleSubir = (e, obj) => {
+        const params = this.props.params || {};
+        const galery = params.galery;
+        for(let i = 0; i < this.files.length; i++) {
+            this.props.store.galery.uploadFoto({
+                file: this.files[i].src,
+                name: this.files[i].name,
+                galery: galery
+            });
+        }
+    }
 }

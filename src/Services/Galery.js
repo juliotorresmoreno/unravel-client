@@ -1,6 +1,9 @@
 import ServiceBase from '../Lib/ServiceBase';
 
 const create = "/galery/create";
+const uploadFoto = "/galery/upload";
+const $ = window.$;
+
 
 export default class Galery extends ServiceBase
 {
@@ -21,8 +24,28 @@ export default class Galery extends ServiceBase
                             .catch((error) => this.secure(reject)(error))
                     })
                     .catch((error) => this.secure(reject)(error))
-            })
+            });
         };
+        this.uploadFoto = (data) => {
+            const url = store.getState().config.api + uploadFoto + "?token=" + store.getState().session.token;
+            var params = new FormData();
+            params.append("name", data.name);
+            params.append("file", data.file);
+            params.append("galery", data.galery);
+            return new Promise((resolve, reject) => {
+                this.upload(url, data)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => 
+                                response.ok ?
+                                    this.secure(resolve)(json):
+                                    this.secure(reject)(json)
+                            )
+                            .catch((error) => this.secure(reject)(error))
+                    })
+                    .catch((error) => this.secure(reject)(error));
+            });
+        }
         store.galery = this;
     }
 }

@@ -27,10 +27,7 @@ export default class Connection extends ServiceBase {
             socket.onclose = (e) => {
                 _store.setState({wss: {type: 'close', event: e}});
                 socket = undefined;
-                if(esperar)
-                    setTimeout(() => this.open(token), 3000);
-                else
-                    this.open(token);
+                esperar ? setTimeout(() => this.open(token), 3000): this.open(token);
                 e.preventDefault();
                 e.stopPropagation();
             };

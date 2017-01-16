@@ -4,6 +4,7 @@ import { Button } from 'semantic-ui-react';
 
 import GaleryCtrl from './main.ctrl';
 import Create from './create';
+import View from './galery';
 
 export default class Galery extends GaleryCtrl {
     constructor(args) {
@@ -19,7 +20,7 @@ export default class Galery extends GaleryCtrl {
         const router = this.props.router;
         const galery = this.props.params.galery;
         if (galery) {
-            return <div>sd</div>;
+            return <View params={params} store={store} route={route} router={router} />;
         }
         if (galerias.length === 0) {
             return <Create params={params} store={store} route={route} router={router} />;

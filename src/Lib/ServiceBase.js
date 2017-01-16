@@ -36,6 +36,14 @@ export default class ServiceBase {
             body: this.arrayToUrlEncode(data)
         });
     }
+    upload = (url, data, headers = {}) => {
+        return fetch(url, {
+            method: "POST",
+            headers: Object.assign({'Content-Type': 'multipart/form-data'}, headers),
+            credentials: 'same-origin',
+            body: data
+        });
+    }
     put = (url, data, headers = {}) => {
         return fetch(url, {
             method: "POST",
