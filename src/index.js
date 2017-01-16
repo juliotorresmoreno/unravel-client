@@ -13,6 +13,7 @@ import SAuth from './Services/Auth';
 import SAlert from './Services/Alert';
 import SProfile from './Services/Profile';
 import SFriends from './Services/Friends';
+import SGalery from './Services/Galery';
 import SChat from './Services/Chat';
 import SConnection from './Services/Connection';
 
@@ -31,6 +32,7 @@ store.addService(SAuth);
 store.addService(SAlert);
 store.addService(SProfile);
 store.addService(SFriends);
+store.addService(SGalery);
 store.addService(SChat);
 store.addService(SConnection);
 
@@ -46,6 +48,7 @@ class Index extends Component {
                     <Route autorized={true} path="messages" component={Messages} />
                     <Route autorized={true} path="friends" component={Friends} />
                     <Route autorized={true} path="galery" component={Galery} />
+                    <Route autorized={true} path="galery/:galery" component={Galery} />
                     <Route autorized={true} path="groups" component={Groups} />
                     
                     <Route autorized={true} path=":user/chat" component={Chat} />
@@ -53,6 +56,7 @@ class Index extends Component {
                     <Route autorized={true} path=":user/messages" component={Messages} />
                     <Route autorized={true} path=":user/friends" component={Friends} />
                     <Route autorized={true} path=":user/galery" component={Galery} />
+                    <Route autorized={true} path=":user/galery/:galery" component={Galery} />
                     <Route autorized={true} path=":user/news" component={News} />
                     <Route autorized={true} path=":user/groups" component={Groups} />
                     <Route path="*" component={E404} />

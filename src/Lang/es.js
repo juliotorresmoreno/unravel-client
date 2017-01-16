@@ -36,6 +36,11 @@ export default {
     chat_mensaje_send: "Enviar",
     chat_mensaje_texto: "Escribe tu mensaje",
 
+    // galeria
+    galeria_titulo_crear: "Crear galeria",
+    galeria_nombre: "Nombre de la galeria",
+    galeria_descripcion: "Description",
+
     //app
     app_save: "Guardar",
 

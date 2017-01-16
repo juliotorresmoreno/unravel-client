@@ -1,22 +1,31 @@
 import React from 'react';
 
-import { Form } from 'semantic-ui-react';
-import Permisos from '../../Lib/Permisos';
+import { Button } from 'semantic-ui-react';
 
 import GaleryCtrl from './main.ctrl';
+import Create from './create';
 
 export default class Galery extends GaleryCtrl {
+    constructor(args) {
+        super(args);
+        if(!this.props.store.getState().galeria)
+            this.props.store.getState().galeria = {};
+    }
     render = function() {
-        const save = this.props.store.lang.get('app_save');
-        const permiso = this.props.store.getState().galeria.permiso_galeria;
+        const galerias = this.props.store.getState().galerias || [];
+        const params = this.props.params;
+        const store  = this.props.store;
+        const route  = this.props.route;
+        const router = this.props.router;
+        const galery = this.props.params.galery;
+        if (galery) {
+            return <div>sd</div>;
+        }
+        if (galerias.length === 0) {
+            return <Create params={params} store={store} route={route} router={router} />;
+        }
         return (
-            <Form>
-                <Form.Input label='First name' placeholder='First name' />
-                <Form.TextArea label='About' placeholder='Tell us more about you...' />
-                <Form.Checkbox label='I agree to the Terms and Conditions' />
-                <Form.Button primary>Submit</Form.Button>
-                <Permisos label={save} onClick={this.onHandlerGuardarGaleria} permiso={permiso} />
-            </Form>
+            <Button primary>Crear</Button>
         )
     }
 }
