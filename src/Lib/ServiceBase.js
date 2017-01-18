@@ -39,7 +39,7 @@ export default class ServiceBase {
     upload = (url, data, headers = {}) => {
         return fetch(url, {
             method: "POST",
-            headers: Object.assign({'Content-Type': 'multipart/form-data'}, headers),
+            //headers: Object.assign({'Content-Type': 'multipart/form-data'}, headers),
             credentials: 'same-origin',
             body: data
         });
