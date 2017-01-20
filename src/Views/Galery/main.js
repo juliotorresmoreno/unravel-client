@@ -1,7 +1,6 @@
 import React from 'react';
 
 import GaleryCtrl from './main.ctrl';
-import Create from './create';
 import View from './galery';
 import ListGalerys from './listGalerys';
 import Loading from '../Loading/main';

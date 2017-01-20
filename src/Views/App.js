@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
-import { Button, Message, Icon } from 'semantic-ui-react';
 import Head from './Head/main';
-import MenuLeft from './MenuLeft/main';
-import MenuRight from './MenuRight/main';
+import Loading from './Loading/main';
+import Main from './Main';
 import News from './News/main';
-import Login from './Login/main';
+
 
 class App extends Component {
     isLoading = true;
@@ -31,7 +30,6 @@ class App extends Component {
         var session = this.props.route.store.getState().session;
         var isLogged = autorized && this.props.route.store.getState().session;
         var user = this.props.params.user;
-        var isMe = !user || (session && user === session.usuario);
 
         if (user && isLogged && usuario.usuario !== user && session.usuario !== user)
         {
@@ -39,7 +37,7 @@ class App extends Component {
             this.props.route.store.friends.getUser(user)
                 .then((data) => {
                     this.isLoading = false;
-                    this.forceUpdate();
+                    this.mounted ? this.forceUpdate(): void(0);
                 });
         }
         else if (session !== undefined)
@@ -49,15 +47,7 @@ class App extends Component {
 
         let children = (() => {
             if (this.isLoading)
-                return (
-                    <Message icon>
-                        <Icon name='circle notched' loading />
-                        <Message.Content>
-                        <Message.Header>Espere un momento</Message.Header>
-                            Estamos cargando el contenido.
-                        </Message.Content>
-                    </Message>
-                );
+                return <Loading />;
             return !this.props.children ? <News store={this.props.route.store} />:
                         React.cloneElement(this.props.children, {
                             store: this.props.route.store
@@ -70,65 +60,9 @@ class App extends Component {
         return (
             <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
                 <Head params={params} route={route} router={router} store={store} />
-                {(() => {
-                    if (autorized && this.props.route.store.getState().session)
-                        return (
-                            <div style={{display:'flex',flexDirection:'vertical',height:'100%'}}>
-                                <MenuLeft params={params} route={route} router={router} store={store} />
-                                <div style={{padding:'15px 0',flex:1}}>
-                                    {(() => {
-                                        if (isMe) return children;
-                                        return (
-                                            <div style={{height: '100%'}}>
-                                                {(() => {
-                                                    switch(usuario.estado) {
-                                                        case "Desconocido":
-                                                            return [
-                                                                <Button key={0} primary onClick={this.agregarAmigo}>
-                                                                    Agregar
-                                                                </Button>, 
-                                                                <br key={1} />
-                                                            ];
-                                                        case "Solicitado":
-                                                            var solicito = usuario.relacion && usuario.relacion.usuario_solicita === session.usuario;
-                                                            var result = [
-                                                                <Button key={1} primary onClick={this.rechazarAmigo}>
-                                                                    {solicito?"Cancelar soliitud": "Rechazar soliitud"}
-                                                                </Button>,
-                                                                <br key={2} />
-                                                            ];
-                                                            if(solicito === false)
-                                                                result.unshift(
-                                                                    <Button key={0} primary onClick={this.agregarAmigo}>
-                                                                        Aceptar
-                                                                    </Button>
-                                                                );
-                                                            return result;
-                                                        default:
-                                                    }
-                                                })()}
-                                                {children}
-                                            </div>
-                                        );
-                                    })()}
-                                </div>
-                                <MenuRight params={params} route={route} router={router} store={store} />
-                            </div>
-                        );
-                    if (autorized && !this.isLoading)
-                        return <Login params={params} route={route} router={router} store={store}/>;
-                    return children;
-                })()}
+                <Main params={params} route={route} router={router} store={store} children={children} />
             </div>
         );
-    }
-    agregarAmigo = () => {
-        var user = this.props.params.user;
-        this.props.route.store.friends.add(user).then(() => {});
-    }
-    rechazarAmigo = () => {
-        var user = this.props.params.user;
-        this.props.route.store.friends.reject(user).then(() => {});
     }
 }
 

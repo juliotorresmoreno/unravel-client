@@ -26,7 +26,9 @@ else if(!window.addEventListener)
                         || document.documentElement.clientHeight
                         || document.body.clientHeight;
         var el = document.getElementById("conversacion");
-        el.style.height = (height - 140) + 'px';
+        if (typeof el !== "undefined") {
+            el.style.height = (height - 140) + 'px';
+        }
     }
     window.addEventListener("resize", resizeThrottler, false);
 }());

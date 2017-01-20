@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Image, Button, Header, Grid, Card } from 'semantic-ui-react';
+import { Image, Button, Header, Grid } from 'semantic-ui-react';
 
 import GaleryCtrl from './galery.ctrl';
 
