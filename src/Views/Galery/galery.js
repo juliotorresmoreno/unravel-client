@@ -53,6 +53,6 @@ export default class Galery extends GaleryCtrl {
                     })}
                 </Grid>
             </div>
-        )
+        );
     }
 }
