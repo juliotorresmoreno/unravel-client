@@ -2,6 +2,7 @@ import ServiceBase from '../Lib/ServiceBase';
 
 const create = "/galery/create";
 const listarGalerias = "/galery";
+const listarImagenes = "/galery";
 const uploadFoto = "/galery/upload";
 
 export default class Galery extends ServiceBase
@@ -42,7 +43,9 @@ export default class Galery extends ServiceBase
             });
         }
         this.getGalerys = () => {
-            const url = store.getState().config.api + listarGalerias + "?token=" + store.getState().session.token;
+            const url = store.getState().config.api + 
+                        listarGalerias + 
+                        "?token=" + store.getState().session.token;
             return new Promise((resolve, reject) => {
                 this.get(url)
                     .then((response) => {
@@ -50,6 +53,26 @@ export default class Galery extends ServiceBase
                             .then((json) => {
                                 if (response.ok)
                                     store.setState({galerys: json.data});
+                                response.ok ?
+                                    this.secure(resolve)(json):
+                                    this.secure(reject)(json)
+                            })
+                            .catch((error) => this.secure(reject)(error))
+                    })
+                    .catch((error) => this.secure(reject)(error));
+            });
+        }
+        this.getImages = (galery) => {
+            const url = store.getState().config.api + 
+                        listarImagenes + "/" + galery + 
+                        "?token=" + store.getState().session.token;
+            return new Promise((resolve, reject) => {
+                this.get(url)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => {
+                                if (response.ok)
+                                    store.setState({images: json.data});
                                 response.ok ?
                                     this.secure(resolve)(json):
                                     this.secure(reject)(json)

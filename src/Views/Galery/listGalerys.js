@@ -1,18 +1,26 @@
 import React from 'react';
 
-import { Grid, Image, Card, Icon } from 'semantic-ui-react';
+import { Grid, Image, Card } from 'semantic-ui-react';
 
-import ListCtrl from './list.ctrl';
+import listGalerysCtrl from './listGalerys.ctrl';
 
-export default class List extends ListCtrl {
-    go = (name) => {
-        return (e) => {
-            e.preventDefault();
-            this.props.router.push("/galery/" + encodeURI(name));
-        }
+export default class listGalerys extends listGalerysCtrl {
+    componentWillMount = () => {
+        this.props.store.galery.getGalerys()
+            .then((data) => {
+                this.isLoading = false;
+                this.mounted ? this.forceUpdate(): void(0);
+            })
+            .catch((error) => console.log(error));
+        this.isLoading = true;
+        this.mounted = true;
     }
+    componentWillUnmount = () => {
+        this.mounted = false;
+    }
+    go = (name) => (e) => { e.preventDefault(); this.props.router.push("/galery/" + encodeURI(name)); }
     render = () => {
-        const {galerys} = this.props.store.getState();
+        const galerys = this.props.store.getState().galerys || [];
         return (
             <div>
                 <Grid doubling columns={4}>

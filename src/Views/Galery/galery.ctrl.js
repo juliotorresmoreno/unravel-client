@@ -23,25 +23,27 @@ export default class ViewCtrl extends Component {
         this.mounted = false;
     };
     handleSubir = (e, obj) => {
-        const params = this.props.params || {};
-        const galery = params.galery;
         var progress = this.files.length;
+        const
+            params = this.props.params || {},
+            galery = params.galery,
+            upload = () => {
+                progress--;
+                if (progress === 0) {
+                    this.files = [];
+                    if (this.mounted) {
+                        this.forceUpdate();
+                        this.props.store.galery.getImages(this.props.params.galery);
+                    }
+                }
+            };
         for(let i = 0; i < this.files.length; i++) {
             var data = new FormData();
             data.append("name", this.files[i].name);
             data.append("file", this.file.files[i]);
             data.append("galery", galery);
             this.props.store.galery.uploadFoto(data)
-                .then(() => {
-                    progress--;
-                    console.log(progress);
-                    if (progress === 0) {
-                        this.files = [];
-                        if (this.mounted) {
-                            this.forceUpdate();
-                        }
-                    }
-                });
+                .then(upload);
         }
     }
 }
