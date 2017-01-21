@@ -1,9 +1,9 @@
 import React from 'react';
 
-import GaleryCtrl from './main.ctrl';
+import GaleryCtrl from './index.ctrl';
 import View from './galery';
 import ListGalerys from './listGalerys';
-import Loading from '../Loading/main';
+import Loading from '../Loading';
 
 export default class Galery extends GaleryCtrl {
     constructor(args) {

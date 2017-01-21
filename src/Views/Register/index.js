@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Form, Button } from 'semantic-ui-react';
 
-import RegisterCtrl from './main.ctrl';
+import RegisterCtrl from './index.ctrl';
 
 export default class Register extends RegisterCtrl{
     form = {

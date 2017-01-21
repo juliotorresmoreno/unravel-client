@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router';
 
-import MenuLeftCtrl from './main.ctrl';
+import MenuLeftCtrl from './index.ctrl';
 
 
 export default class MenuLeft extends MenuLeftCtrl {

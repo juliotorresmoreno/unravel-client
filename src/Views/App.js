@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import Head from './Head/main';
-import Loading from './Loading/main';
+import Head from './Head';
+import Loading from './Loading';
 import Main from './Main';
-import News from './News/main';
+import News from './News';
 
 
 class App extends Component {

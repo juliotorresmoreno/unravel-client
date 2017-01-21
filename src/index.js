@@ -4,7 +4,7 @@ import { Router, Route, browserHistory } from 'react-router'
 import React, { Component } from 'react'
 import './index.css';
 import App from './Views/App';
-import E404 from './Views/E404/main';
+import E404 from './Views/E404';
 import Store from './Store/Store';
 import config from './config/config';
 
@@ -17,14 +17,14 @@ import SGalery from './Services/Galery';
 import SChat from './Services/Chat';
 import SConnection from './Services/Connection';
 
-import Register from './Views/Register/main';
-import Profile from './Views/Profile/main';
-import News from './Views/News/main';
-import Messages from './Views/Messages/main';
-import Friends from './Views/Friends/main';
-import Galery from './Views/Galery/main';
-import Groups from './Views/Groups/main';
-import Chat from './Views/Chat/main';
+import Register from './Views/Register';
+import Profile from './Views/Profile';
+import News from './Views/News';
+import Messages from './Views/Messages';
+import Friends from './Views/Friends';
+import Galery from './Views/Galery';
+import Groups from './Views/Groups';
+import Chat from './Views/Chat';
 
 var store = new Store({config:config});
 store.addService(SLang);

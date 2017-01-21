@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Comment } from 'semantic-ui-react'
 
-import ChatCtrl from './main.ctrl';
+import ChatCtrl from './index.ctrl';
 const moment = window.moment;
 
 if(window.attachEvent && !window.addEventListener)

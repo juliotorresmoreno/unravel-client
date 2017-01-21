@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Image, Feed } from 'semantic-ui-react'
-import CardUserCtrl from './main.ctrl';
+import CardUserCtrl from './index.ctrl';
 const moment = window.moment;
 
 export default class CardUser extends CardUserCtrl {

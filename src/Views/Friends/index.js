@@ -3,7 +3,7 @@ import React from 'react';
 import { Form } from 'semantic-ui-react'
 
 import CardUser from './CardUser';
-import FriendsCtrl from './main.ctrl';
+import FriendsCtrl from './index.ctrl';
 
 export default class Friends extends FriendsCtrl {
     constructor(args) {

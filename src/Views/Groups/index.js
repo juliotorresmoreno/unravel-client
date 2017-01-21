@@ -1,13 +1,13 @@
 import React from 'react';
 
-import NewsCtrl from './main.ctrl';
+import GroupsCtrl from './index.ctrl';
 
 
-export default class News extends NewsCtrl {
+export default class Groups extends GroupsCtrl {
     render = function() {
         return (
             <div>
-               News 
+               Groups
             </div>
         )
     }

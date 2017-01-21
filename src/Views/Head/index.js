@@ -2,7 +2,7 @@ import React from 'react';
 
 import Logged from './logged';
 import NoLogged from './nologged';
-import HeadCtrl from './main.ctrl';
+import HeadCtrl from './index.ctrl';
 
 export default class Head extends HeadCtrl{
     constructor(args) {

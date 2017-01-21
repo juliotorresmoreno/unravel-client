@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Message, Icon, Menu, Segment } from 'semantic-ui-react'
 
-import ProfileCtrl from './main.ctrl';
+import ProfileCtrl from './index.ctrl';
 import Basic from './basic';
 import Contact from './contact';
 import Interests from './interests';

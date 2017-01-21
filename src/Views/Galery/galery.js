@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Image, Button, Header, Grid } from 'semantic-ui-react';
 
-import GaleryCtrl from './galery.ctrl';
+import GaleryCtrl from './index.ctrl';
 
 export default class Galery extends GaleryCtrl {
     form = {nombre: ""};

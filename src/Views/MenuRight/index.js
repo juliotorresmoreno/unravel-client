@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 
-import MenuRightCtrl from './main.ctrl';
+import MenuRightCtrl from './index.ctrl';
 
 export default class MenuRight extends MenuRightCtrl {
     state = {};

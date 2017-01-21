@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import Login from '../Login/main';
+import Login from '../Login';
 import MenuTop from '../MenuTop';
-import MenuLeft from '../MenuLeft/main';
-import MenuRight from '../MenuRight/main';
+import MenuLeft from '../MenuLeft';
+import MenuRight from '../MenuRight';
 
 export default class Main extends Component {
     render = () => {

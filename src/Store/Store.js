@@ -1,9 +1,28 @@
+class listaElementos {
+    constructor(elementos) {
+        var _elementos = {};
+        this.elementosUpdate = (index) => {
+            for(let j in elementos)
+            {
+                if(elementos.hasOwnProperty(j))
+                {
+                    if(elementos[j].filter.indexOf(index) + 1 || index === "updateAt")
+                    {
+                        _elementos[j] = elementos[j];
+                    }
+                }
+            }
+        }
+        this.getList = () => _elementos;
+    }
+}
+
 export default class Store {
     constructor(args) {
         var elementos = {};
-        var state = args || {}; 
+        var state = args || {};
         this.setState = (data, update) => {
-            var list = {};
+            var _listaElementos = new listaElementos(elementos);
             state = Object.assign({}, state);
             for(let i in data)
             {
@@ -12,19 +31,11 @@ export default class Store {
                     state[i] = data[i];
                     if(update !== false)
                     {
-                        for(let j in elementos)
-                        {
-                            if(elementos.hasOwnProperty(j))
-                            {
-                                if(elementos[j].filter.indexOf(i) + 1 || i === "updateAt")
-                                {
-                                    list[j] = elementos[j];
-                                }
-                            }
-                        }
+                        _listaElementos.elementosUpdate(i);
                     }
                 }
             }
+            var list = _listaElementos.getList();
             for(let i in list)
             {
                 if(list.hasOwnProperty(i) && list[i].item.mounted)

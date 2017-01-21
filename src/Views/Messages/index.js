@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MessagesCtrl from './main.ctrl';
+import MessagesCtrl from './index.ctrl';
 
 
 export default class Messages extends MessagesCtrl {

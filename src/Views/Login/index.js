@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Form, Button } from 'semantic-ui-react';
 
-import LoginCtrl from './main.ctrl';
+import LoginCtrl from './index.ctrl';
 
 export default class Login extends LoginCtrl {
     form = {
