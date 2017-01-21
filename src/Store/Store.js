@@ -29,7 +29,6 @@ export default class Store {
     }
     setState = (data, update) => {
         var _listaElementos = new listaElementos(this[elementos]);
-        this[state] = Object.assign({}, this[state]);
         for(let i in data)
             if (data.hasOwnProperty(i))
                 this[state][i] !== data[i]
@@ -37,8 +36,8 @@ export default class Store {
                     && update !== false
                         && _listaElementos.elementosUpdate(i);
         const _elementos = _listaElementos.getList();
-        for(let i = 0; i < elementos.length; i++) {
-            let item = _elementos[i];
+        for(let i = 0; i < _elementos.length; i++) {
+            let item = _elementos[i].item;
             if(item.Midlewares && Array.isArray(item.Midlewares))
                 for(let j = 0; j < item.Midlewares.length; j++)
                     if(typeof item.Midlewares[j] === "function")

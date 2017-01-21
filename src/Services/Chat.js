@@ -23,7 +23,7 @@ export default class Chat extends ServiceBase
                 (store, {wss}) => {
                     if (typeof wss !== "object")
                         return;
-                    var { type, data, error } = wss;
+                    var { type, data, error } = wss;;
                     switch(type) {
                         case "message":
                             var usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;

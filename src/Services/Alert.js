@@ -8,12 +8,8 @@ export default class Alert extends ServiceBase
         this.error = (error) => {
             var r = '';
             for (var i in error)
-            {
                 if (error.hasOwnProperty(i) && i !== 'success')
-                {
                     r+= error[i] + "\n";
-                }
-            }
             alert(r);
         };
         store.alert = this;

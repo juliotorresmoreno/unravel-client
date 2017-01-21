@@ -2,7 +2,7 @@
 
 export default class ServiceBase {
     secure = (func) => {
-        return func ? func: () => {};
+        return typeof func === "function" ? func: () => {};
     }
     getJSON = (url) => {
         return new Promise((successHandler, errorHandler) => {
@@ -39,7 +39,6 @@ export default class ServiceBase {
     upload = (url, data, headers = {}) => {
         return fetch(url, {
             method: "POST",
-            //headers: Object.assign({'Content-Type': 'multipart/form-data'}, headers),
             credentials: 'same-origin',
             body: data
         });

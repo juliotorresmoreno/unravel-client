@@ -44,7 +44,8 @@ export default class Galery extends ServiceBase
         }
         this.getGalerys = () => {
             const url = store.getState().config.api + 
-                        listarGalerias;
+                        listarGalerias + 
+                        "?token=" + store.getState().session.token;
             return new Promise((resolve, reject) => {
                 this.get(url)
                     .then((response) => {
