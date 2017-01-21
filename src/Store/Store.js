@@ -1,3 +1,4 @@
+
 class listaElementos {
     constructor(elementos) {
         var _elementos = {};
