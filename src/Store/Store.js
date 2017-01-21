@@ -3,14 +3,11 @@ class listaElementos {
         var _elementos = {};
         this.elementosUpdate = (index) => {
             for(let j in elementos)
-            {
-                if(elementos.hasOwnProperty(j))
-                {
+                if(elementos.hasOwnProperty(j)) {
                     let el = elementos[j];
                     if ((el.filter.indexOf(index) + 1 || index === "updateAt") && el.item.mounted)
                         _elementos[j] = el;
                 }
-            }
         }
         this.getList = () => {
             let r = [];

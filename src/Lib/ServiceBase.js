@@ -63,12 +63,8 @@ export default class ServiceBase {
     arrayToUrlEncode = (data) => {
         var r = [];
         for(var i in data)
-        {
             if (data.hasOwnProperty(i))
-            {
                 r.push(i + '=' + encodeURI(data[i]));
-            }
-        }
         return r.join('&');
     }
 }
