@@ -6,101 +6,90 @@ class listaElementos {
             {
                 if(elementos.hasOwnProperty(j))
                 {
-                    if(elementos[j].filter.indexOf(index) + 1 || index === "updateAt")
-                    {
-                        _elementos[j] = elementos[j];
-                    }
+                    let el = elementos[j];
+                    if ((el.filter.indexOf(index) + 1 || index === "updateAt") && el.item.mounted)
+                        _elementos[j] = el;
                 }
             }
         }
-        this.getList = () => _elementos;
+        this.getList = () => {
+            let r = [];
+            for(let i in _elementos)
+                if(_elementos.hasOwnProperty(i))
+                    r.push(_elementos[i]);
+            return r; 
+        };
     }
 }
 
+var elementos = Symbol("elementos");
+var state = Symbol("state");
+
 export default class Store {
     constructor(args) {
-        var elementos = {};
-        var state = args || {};
-        this.setState = (data, update) => {
-            var _listaElementos = new listaElementos(elementos);
-            state = Object.assign({}, state);
-            for(let i in data)
-            {
-                if(data.hasOwnProperty(i) && state[i] !== data[i])
-                {
-                    state[i] = data[i];
-                    if(update !== false)
-                    {
-                        _listaElementos.elementosUpdate(i);
-                    }
-                }
+        this[state] = args || {};
+        this[elementos] = {};
+    }
+    setState = (data, update) => {
+        var _listaElementos = new listaElementos(this[elementos]);
+        this[state] = Object.assign({}, this[state]);
+        for(let i in data)
+            if (data.hasOwnProperty(i))
+                this[state][i] !== data[i]
+                    && (this[state][i] = data[i] || true)
+                    && update !== false
+                        && _listaElementos.elementosUpdate(i);
+        const _elementos = _listaElementos.getList();
+        for(let i = 0; i < elementos.length; i++) {
+            let item = _elementos[i];
+            if(item.Midlewares && Array.isArray(item.Midlewares))
+                for(let j = 0; j < item.Midlewares.length; j++)
+                    if(typeof item.Midlewares[j] === "function")
+                        item.Midlewares[j](this, data);
+        };
+        for(let i = 0; i < _elementos.length; i++)
+            _elementos[i].item.setState({updateAt:new Date()});
+    }
+    getState = (data) => {
+        return this[state];
+    }
+    subscribe = (elemento, filter, key, root) => {
+        var subscribe = {item: elemento, filter: filter};
+        if(typeof elemento === 'undefined') {
+            return;
+        }
+        if (root !== true) {
+            if(typeof elemento.componentDidMount === 'function') {
+                let componentDidMount = elemento.componentDidMount; 
+                elemento.componentDidMount = function() { 
+                    this.mounted = true;
+                    componentDidMount();
+                }.bind(elemento);
+            } else {
+                elemento.componentDidMount = function() { 
+                    this.mounted = true;
+                }.bind(elemento);
             }
-            var list = _listaElementos.getList();
-            for(let i in list)
-            {
-                if(list.hasOwnProperty(i) && list[i].item.mounted)
-                {
-                    if(list[i].item.Midlewares && Array.isArray(list[i].item.Midlewares))
-                    {
-                        for(var j = 0; j < list[i].item.Midlewares.length; j++)
-                        {
-                            if(typeof list[i].item.Midlewares[j] === "function")
-                            {
-                                list[i].item.Midlewares[j](this, data);
-                            }
-                        }
-                    }
-                }
-            }
-            for(let i in list)
-            {
-                if(list.hasOwnProperty(i) && list[i].item.mounted)
-                {
-                    list[i].item.setState({updateAt:new Date()});
-                }
+            if(typeof elemento.componentWillUnmount === 'function') {
+                let componentWillUnmount = elemento.componentWillUnmount; 
+                elemento.componentWillUnmount = function() { 
+                    this.mounted = false;
+                    this.unsubscribe();
+                    componentWillUnmount();
+                }.bind(elemento);
+            } else {
+                elemento.componentWillUnmount = function() { 
+                    this.mounted = false;
+                    this.unsubscribe();
+                }.bind(elemento);
             }
         }
-        this.getState = (data) => {
-            return state;
-        }
-        this.subscribe = (elemento, filter, key, root) => {
-            var subscribe = {item: elemento, filter: filter};
-            if(typeof elemento === 'undefined') {
-                return;
-            }
-            if (root !== true) {
-                if(typeof elemento.componentDidMount === 'function') {
-                    let componentDidMount = elemento.componentDidMount; 
-                    elemento.componentDidMount = function() { 
-                        this.mounted = true;
-                        componentDidMount();
-                    }.bind(elemento);
-                } else {
-                    elemento.componentDidMount = function() { 
-                        this.mounted = true;
-                    }.bind(elemento);
-                }
-                if(typeof elemento.componentWillUnmount === 'function') {
-                    let componentWillUnmount = elemento.componentWillUnmount; 
-                    elemento.componentWillUnmount = function() { 
-                        this.mounted = false;
-                        this.unsubscribe();
-                        componentWillUnmount();
-                    }.bind(elemento);
-                } else {
-                    elemento.componentWillUnmount = function() { 
-                        this.mounted = false;
-                        this.unsubscribe();
-                    }.bind(elemento);
-                }
-            }
-            elemento.unsubscribe = function() {
-                delete elementos[key];
-            };
-            elementos[key] = subscribe;
-        }
-        this.addService = function (service) {
-            return new service(this);
-        }
+        elemento.unsubscribe = () => {
+            delete this[elementos][key];
+        };
+        this[elementos][key] = subscribe;
+    }
+    addService = function (service) {
+        return new service(this);
     }
 }
