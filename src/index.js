@@ -48,6 +48,7 @@ class Index extends Component {
                     <Route autorized={true} path="messages" component={Messages} />
                     <Route autorized={true} path="friends" component={Friends} />
                     <Route autorized={true} path="galery" component={Galery} />
+                    <Route autorized={true} path="galery/create" component={Galery} />
                     <Route autorized={true} path="galery/:galery" component={Galery} />
                     <Route autorized={true} path="groups" component={Groups} />
                     
@@ -57,6 +58,7 @@ class Index extends Component {
                     <Route autorized={true} path=":user/friends" component={Friends} />
                     <Route autorized={true} path=":user/galery" component={Galery} />
                     <Route autorized={true} path=":user/galery/:galery" component={Galery} />
+                    <Route autorized={true} path=":user/galery/create" component={Galery} />
                     <Route autorized={true} path=":user/news" component={News} />
                     <Route autorized={true} path=":user/groups" component={Groups} />
                     <Route path="*" component={E404} />

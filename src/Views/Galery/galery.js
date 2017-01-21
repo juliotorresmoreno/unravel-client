@@ -52,11 +52,9 @@ export default class Galery extends GaleryCtrl {
             <div>
                 <div>
                     <Header as="h2">{galery}</Header>
-                    {(() => {
-                        if (this.files.length === 0)
-                            return <Button primary onClick={this.handleSeleccionar}>Selecciona</Button>;
-                        return <Button primary onClick={this.handleSubir}>Subir</Button>;
-                    })()}
+                    {this.files.length === 0 ?
+                        <Button primary onClick={this.handleSeleccionar}>Selecciona</Button>:
+                        <Button primary onClick={this.handleSubir}>Subir</Button>}
                 </div>
                 <br />
                 <Grid doubling columns={3}>

@@ -7,6 +7,9 @@ import CreateCtrl from './create.ctrl';
 
 export default class Create extends CreateCtrl {
     form = {nombre: ""}
+    componentWillMount() {
+        this.props.store.getState().galeria = {permiso_galeria:"public"};
+    }
     render = function() {
         const save = this.props.store.lang.get('app_save');
         const permiso = this.props.store.getState().galeria.permiso_galeria;

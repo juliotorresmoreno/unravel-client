@@ -24,6 +24,14 @@ class App extends Component {
             this.session = this.props.route.store.getState().session;
         }
     }
+    getChildren() {
+        const {store} = this.props.route;
+        if (this.isLoading)
+            return <Loading />;
+        if (this.props.children)
+            return React.cloneElement(this.props.children, { store: store });
+        return <News store={store} />;
+    }
     render() {
         var autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized;
         var usuario = this.props.route.store.getState().usuario || {};
@@ -45,14 +53,7 @@ class App extends Component {
             this.isLoading = false;
         }
 
-        let children = (() => {
-            if (this.isLoading)
-                return <Loading />;
-            return !this.props.children ? <News store={this.props.route.store} />:
-                        React.cloneElement(this.props.children, {
-                            store: this.props.route.store
-                        });
-        })();
+        let children = this.getChildren();
         var params = this.props.params;
         var store  = this.props.route.store;
         var route  = this.props.route;
@@ -60,7 +61,9 @@ class App extends Component {
         return (
             <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
                 <Head params={params} route={route} router={router} store={store} />
-                <Main params={params} route={route} router={router} store={store} children={children} />
+                <Main params={params} route={route} router={router} store={store}>
+                    {children}
+                </Main>
             </div>
         );
     }

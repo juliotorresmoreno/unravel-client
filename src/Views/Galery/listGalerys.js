@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Image, Card } from 'semantic-ui-react';
+import { Grid, Image, Card, Button } from 'semantic-ui-react';
 
 import listGalerysCtrl from './listGalerys.ctrl';
 
@@ -23,6 +23,10 @@ export default class listGalerys extends listGalerysCtrl {
         const galerys = this.props.store.getState().galerys || [];
         return (
             <div>
+                <div>
+                    {<Button primary as="a" href="/galery/create" onClick={this.go("create")}>Crear</Button>}
+                </div>
+                <br />
                 <Grid doubling columns={4}>
                     {galerys.map((galeria, index) => {
                         return (
