@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Image, Button, Header, Grid } from 'semantic-ui-react';
 
-import GaleryCtrl from './index.ctrl';
+import GaleryCtrl from './galery.ctrl';
 
 export default class Galery extends GaleryCtrl {
     form = {nombre: ""};
@@ -43,6 +43,12 @@ export default class Galery extends GaleryCtrl {
         this.mounted = false;
         this.props.store.getState().images = [];
     }
+    go(href) {
+        return (e) => {
+            e.preventDefault();
+            this.props.router.push(href);
+        }
+    }
     render = () => {
         const params = this.props.params || {};
         const galery = params.galery;
@@ -69,8 +75,9 @@ export default class Galery extends GaleryCtrl {
                 <br />
                 <Grid doubling columns={3}>
                     {images.map((value, index) => {
+                        const url = "/galery/" + galery + "/" + value;
                         return (
-                            <Grid.Column as="a" onClick={(e) => e.preventDefault()} href={"/galery/" + galery + "/" + value} key={index}>
+                            <Grid.Column as="a" onClick={this.go(url)} href={url} key={index}>
                                 <Image src={api + "/galery/" + galery + "/" + value} />
                             </Grid.Column>
                         );

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import GaleryCtrl from './index.ctrl';
-import View from './galery';
+import GaleryView from './galery';
+import ImageView from './image';
 import Create from './create';
 import ListGalerys from './listGalerys';
 import Loading from '../Loading';
@@ -15,11 +16,13 @@ export default class Galery extends GaleryCtrl {
         const {params, store, route, router} = this.props;
         switch (route.path) {
             case "galery":
-                return <ListGalerys params={params} store={store} route={route} router={router}/>;
+                return <ListGalerys params={params} store={store} route={route} router={router} />;
             case "galery/create":
-                return <Create params={params} store={store} route={route} router={router}/>;
+                return <Create params={params} store={store} route={route} router={router} />;
             case "galery/:galery":
-                return <View params={params} store={store} route={route} router={router} />;
+                return <GaleryView params={params} store={store} route={route} router={router} />;
+            case "galery/:galery/:image":
+                return <ImageView params={params} store={store} route={route} router={router} />;
             default:
                 return <Loading />;
         }

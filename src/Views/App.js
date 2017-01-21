@@ -37,19 +37,16 @@ class App extends Component {
         var usuario = this.props.route.store.getState().usuario || {};
         var session = this.props.route.store.getState().session;
         var isLogged = autorized && this.props.route.store.getState().session;
-        var user = this.props.params.user;
+        var { user } = this.props.params;
 
-        if (user && isLogged && usuario.usuario !== user && session.usuario !== user)
-        {
+        if (user && isLogged && usuario.usuario !== user && session.usuario !== user) {
             this.isLoading = true;
             this.props.route.store.friends.getUser(user)
                 .then((data) => {
                     this.isLoading = false;
                     this.mounted ? this.forceUpdate(): void(0);
                 });
-        }
-        else if (session !== undefined)
-        {
+        } else if (session !== undefined) {
             this.isLoading = false;
         }
 

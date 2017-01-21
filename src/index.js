@@ -50,6 +50,7 @@ class Index extends Component {
                     <Route autorized={true} path="galery" component={Galery} />
                     <Route autorized={true} path="galery/create" component={Galery} />
                     <Route autorized={true} path="galery/:galery" component={Galery} />
+                    <Route autorized={true} path="galery/:galery/:image" component={Galery} />
                     <Route autorized={true} path="groups" component={Groups} />
                     
                     <Route autorized={true} path=":user/chat" component={Chat} />

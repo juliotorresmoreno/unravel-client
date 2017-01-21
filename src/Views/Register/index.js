@@ -12,23 +12,20 @@ export default class Register extends RegisterCtrl{
         passwd:'123456',
         passwdConfirm:'123456'
     }
-    constructor(args) {
-        super(args);
-        this.render = this.render.bind(this);
-    }
-    render = function() {
-        const title = this.props.store.lang.get('login_title_register');
-        const name = this.props.store.lang.get('login_name');
-        const lastname = this.props.store.lang.get('login_lastname');
-        const email = this.props.store.lang.get('login_email');
-        const username = this.props.store.lang.get('login_username');
-        const password = this.props.store.lang.get('login_password');
-        const confirm = this.props.store.lang.get('login_confirm_password');
+    render = () => {
+        const store = this.props.store;
+        const title = store.lang.get('login_title_register');
+        const name = store.lang.get('login_name');
+        const lastname = store.lang.get('login_lastname');
+        const email = store.lang.get('login_email');
+        const username = store.lang.get('login_username');
+        const password = store.lang.get('login_password');
+        const confirm = store.lang.get('login_confirm_password');
         return (
             <Container text>
                 <br/>
                 <div style={{maxWidth:350,width:'100%',marginLeft:'50%',transform:'translateX(-50%)'}}>
-                    <Form onSubmit={this.onRegister}>
+                    <Form onSubmit={this.onRegister} method="post">
                         <h2 style={{textAlign:'center'}}>{title}</h2>
                         <br/>
                         <Form.Field>

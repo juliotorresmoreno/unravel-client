@@ -22,7 +22,7 @@ export default class Login extends LoginCtrl {
                 <br/>
                 <div style={{maxWidth:350,width:'100%',marginLeft:'50%',transform:'translateX(-50%)'}}>
                     <h2 style={{color:'red',display:displayE}}>{this.state.error}</h2>
-                    <Form onSubmit={this.onLogin}>
+                    <Form onSubmit={this.onLogin} method="post">
                         <h2 style={{textAlign:'center'}}>{title}</h2>
                         <br/>
                         <Form.Field>
