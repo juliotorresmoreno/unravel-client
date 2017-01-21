@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Image, Button, Header, Grid } from 'semantic-ui-react';
 
-import GaleryCtrl from './galery.ctrl';
+import GaleryViewCtrl from './galeryView.ctrl';
 
-export default class Galery extends GaleryCtrl {
+export default class GaleryView extends GaleryViewCtrl {
     form = {nombre: ""};
     files = [];
     constructor(args) {
@@ -41,7 +41,6 @@ export default class Galery extends GaleryCtrl {
     }
     componentWillUnmount = () => {
         this.mounted = false;
-        this.props.store.getState().images = [];
     }
     go(href) {
         return (e) => {
@@ -50,10 +49,12 @@ export default class Galery extends GaleryCtrl {
         }
     }
     render = () => {
+        const store  = this.props.store;
         const params = this.props.params || {};
         const galery = params.galery;
-        const images = this.props.store.getState().images || [];
-        const api = this.props.store.getState().config.api;
+        const images = store.getState().images && store.getState().images.galery === galery ? 
+                        store.getState().images.items: [];
+        const api = store.getState().config.api;
         return (
             <div>
                 <div>

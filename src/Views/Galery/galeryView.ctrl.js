@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component } = React;
 
-export default class ViewCtrl extends Component {
+export default class GaleryViewCtrl extends Component {
     onHandlerGuardarGaleria = (e, obj, permiso) => {
         this.form.permiso = permiso;
         this.props.store.galery.create(this.form)

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import GaleryCtrl from './index.ctrl';
-import GaleryView from './galery';
-import ImageView from './image';
+import GaleryView from './galeryView';
+import ImageView from './imageView';
 import Create from './create';
 import ListGalerys from './listGalerys';
 import Loading from '../Loading';
