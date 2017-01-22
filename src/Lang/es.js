@@ -40,9 +40,13 @@ export default {
     galeria_titulo_crear: "Crear galeria",
     galeria_nombre: "Nombre de la galeria",
     galeria_descripcion: "Description",
+    galeria_selecciona: "Selecciona",
+    galeria_subir: "Subir",
+    galeria_establecer: "Establecer como foto de perfil",
 
     //app
     app_save: "Guardar",
+    app_cancel: "Cancelar",
 
     json_invalid: 'La respuesta del servidor no es valida'
 };

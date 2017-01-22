@@ -11,6 +11,7 @@
     "mf-semantic-ui-calendar": "^0.2.11",
     "moment": "^2.17.1",
     "react": "^15.4.1",
+    "react-avatar-editor": "^7.1.0",
     "react-dom": "^15.4.1",
     "react-router": "^3.0.0",
     "semantic-ui-css": "^2.2.4",

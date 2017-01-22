@@ -7,29 +7,24 @@ import GaleryViewCtrl from './galeryView.ctrl';
 export default class GaleryView extends GaleryViewCtrl {
     form = {nombre: ""};
     files = [];
-    constructor(args) {
-        super(args);
-        var file = document.createElement("input");
-        file.type   = "file";
-        file.accept = ".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*";
-        file.multiple = true;
-        file.onchange = (e) => {
+    componentWillMount = () => {
+        this.file = document.createElement("input");
+        this.file.type   = "file";
+        this.file.accept = ".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*";
+        this.file.multiple = true;
+        this.file.onchange = (e) => {
             var files = [];
-            for (let i = 0; i < file.files.length; i++) {
+            for (let i = 0; i < this.file.files.length; i++) {
                 let reader = new FileReader();
                 reader.onload = (() => (e) => {
-                    files.push({name: file.files[i].name, src: e.target.result});
-                    if (files.length === file.files.length) {
-                        this.files = files;
+                    files.push({name: this.file.files[i].name, src: e.target.result});
+                    if (files.length === this.file.files.length) {
                         this.forceUpdate();
                     }
                 })();
-                reader.readAsDataURL(file.files[i]);
+                reader.readAsDataURL(this.file.files[i]);
             }
         }
-        this.file = file;
-    }
-    componentWillMount = () => {
         this.props.store.galery.getImages(this.props.params.galery)
             .then((data) => {
                 this.isLoading = false;
@@ -55,13 +50,15 @@ export default class GaleryView extends GaleryViewCtrl {
         const images = store.getState().images && store.getState().images.galery === galery ? 
                         store.getState().images.items: [];
         const api = store.getState().config.api;
+        const selecciona = store.lang.get("galeria_selecciona");
+        const subir = store.lang.get("galeria_subir");
         return (
             <div>
                 <div>
                     <Header as="h2">{galery}</Header>
                     {this.files.length === 0 ?
-                        <Button primary onClick={this.handleSeleccionar}>Selecciona</Button>:
-                        <Button primary onClick={this.handleSubir}>Subir</Button>}
+                        <Button primary onClick={this.handleSeleccionar}>{selecciona}</Button>:
+                        <Button primary onClick={this.handleSubir}>{subir}</Button>}
                 </div>
                 <br />
                 <Grid doubling columns={3}>
