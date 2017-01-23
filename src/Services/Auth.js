@@ -48,7 +48,8 @@ export default class Auth extends ServiceBase
         };
         this.getSession = () => {
             return new Promise((resolve, reject) => {
-                this.get(store.getState().config.api + session)
+                var auth = store.getState().session ? "?token=" + store.getState().session.token: '';
+                this.get(store.getState().config.api + session + auth)
                     .then((response) => {
                         response.json()
                             .then((json) => {

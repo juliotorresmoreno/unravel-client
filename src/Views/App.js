@@ -18,7 +18,10 @@ class App extends Component {
                     this.session = this.props.route.store.getState().session;
                     this.isLoading = false;
                     this.mounted ? this.forceUpdate(): void(0);
-                    this.session ? this.props.route.store.friends.find(): void(0);
+                    if (this.session) {
+                        this.props.route.store.friends.friends();
+                        this.props.route.store.connection.open(this.props.route.store.getState().session.token);
+                    }
                 });
         } else {
             this.session = this.props.route.store.getState().session;

@@ -74,9 +74,11 @@ export default class GaleryView extends GaleryViewCtrl {
                 <Grid doubling columns={3}>
                     {images.map((value, index) => {
                         const url = "/galery/" + galery + "/" + value;
+                        const src = api + "/galery/" + galery + "/" + value +
+                                "?token=" + store.getState().session.token;
                         return (
                             <Grid.Column as="a" onClick={this.go(url)} href={url} key={index}>
-                                <Image src={api + "/galery/" + galery + "/" + value} />
+                                <Image src={src} />
                             </Grid.Column>
                         );
                     })}

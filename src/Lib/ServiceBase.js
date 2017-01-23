@@ -25,21 +25,24 @@ export default class ServiceBase {
     get = (url) => {
         return fetch(url, {
             method: "GET",
-            credentials: 'same-origin'
+            credentials: 'same-origin', 
+            mode: 'cors' 
         });
     }
     post = (url, data, headers = {}) => {
         return fetch(url, {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
-            credentials: 'same-origin',
+            credentials: 'same-origin', 
+            mode: 'cors',
             body: this.arrayToUrlEncode(data)
         });
     }
     upload = (url, data, headers = {}) => {
         return fetch(url, {
             method: "POST",
-            credentials: 'same-origin',
+            credentials: 'include', 
+            mode: 'cors',
             body: data
         });
     }
@@ -47,7 +50,8 @@ export default class ServiceBase {
         return fetch(url, {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
-            credentials: 'same-origin',
+            credentials: 'include', 
+            mode: 'cors',
             body: this.arrayToUrlEncode(data)
         });
     }
@@ -55,7 +59,8 @@ export default class ServiceBase {
         return fetch(url, {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
-            credentials: 'same-origin',
+            credentials: 'include', 
+            mode: 'cors',
             body: this.arrayToUrlEncode(data)
         });
     }

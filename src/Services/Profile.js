@@ -10,9 +10,9 @@ export default class Profile extends ServiceBase
     {
         super();
         this.update = (data) => {
-            const url = store.getState().config.api + register;
+            const url = store.getState().config.api + register + "?token=" + store.getState().session.token;;
             return new Promise((resolve, reject) => {
-                this.put(url + "?token=" + store.getState().session.token, data)
+                this.put(url, data)
                     .then((response) => {
                         response.json()
                             .then((json) => {
@@ -35,9 +35,9 @@ export default class Profile extends ServiceBase
             });
         };
         this.load = (usuario) => {
-            const url = store.getState().config.api + consulta;
+            const url = store.getState().config.api + consulta + "?token=" + store.getState().session.token;;
             return new Promise((resolve, reject) => {
-                this.get(url + (usuario ? '/' + usuario: '') + "?token=" + store.getState().session.token)
+                this.get(url + (usuario ? '/' + usuario: ''))
                     .then((response) => {
                         response.json()
                             .then((json) => {
