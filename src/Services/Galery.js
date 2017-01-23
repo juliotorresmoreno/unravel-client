@@ -4,6 +4,7 @@ const create = "/galery/create";
 const listarGalerias = "/galery";
 const listarImagenes = "/galery";
 const uploadFoto = "/galery/upload";
+const fotoPerfil = "/galery/fotoPerfil";
 
 export default class Galery extends ServiceBase
 {
@@ -28,6 +29,22 @@ export default class Galery extends ServiceBase
         };
         this.uploadFoto = (data) => {
             const url = store.getState().config.api + uploadFoto + "?token=" + store.getState().session.token;
+            return new Promise((resolve, reject) => {
+                this.upload(url, data)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => 
+                                response.ok ?
+                                    this.secure(resolve)(json):
+                                    this.secure(reject)(json)
+                            )
+                            .catch((error) => this.secure(reject)(error))
+                    })
+                    .catch((error) => this.secure(reject)(error));
+            });
+        }
+        this.establecerFotoPerfil = (data) => {
+            const url = store.getState().config.api + fotoPerfil + "?token=" + store.getState().session.token;
             return new Promise((resolve, reject) => {
                 this.upload(url, data)
                     .then((response) => {
@@ -87,6 +104,7 @@ export default class Galery extends ServiceBase
                     .catch((error) => this.secure(reject)(error));
             });
         }
+        this.store = store;
         store.galery = this;
     }
 }

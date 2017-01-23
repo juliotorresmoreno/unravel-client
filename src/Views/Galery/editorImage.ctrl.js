@@ -172,17 +172,17 @@ export default class EditorImageCtrl extends Component {
         var context = this.ctx;
         var tamano = this.getTamano();
         this.clearSelection();
+        this.editar = false;
         canvas.width = tamano;
         canvas.height = tamano;
         canvas.style.width = tamano + "px";
         canvas.style.height = tamano + "px";
-        setTimeout(() => {
-            canvas.toBlob(() => {
-                console.log("image64");
-            });
-        }, 1000);
         context.drawImage(this.image, this.left, this.top, tamano, tamano, 0, 0, tamano, tamano);
-        this.editar = false;
+        canvas.toBlob((blob, type) => {
+            var form = new FormData();
+            form.append('file', blob);
+            this.props.store.galery.establecerFotoPerfil(form);
+        });
     }
     getTamano() {
         return this.tamano || 300;
