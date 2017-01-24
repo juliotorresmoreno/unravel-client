@@ -26,7 +26,7 @@ else if(!window.addEventListener)
                         || document.documentElement.clientHeight
                         || document.body.clientHeight;
         var el = document.getElementById("conversacion");
-        if (typeof el !== "undefined") {
+        if (el !== null && el !== undefined) {
             el.style.height = (height - 140) + 'px';
         }
     }

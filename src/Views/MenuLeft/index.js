@@ -31,7 +31,6 @@ export default class MenuLeft extends MenuLeftCtrl {
         const url = store.getState().config.api + "/galery/fotoPerfil" + prev +
                     "?token=" + store.getState().session.token +
                     "&t=" + random;
-                    
         return (
             <div className="MenuLeft" style={{margin:15}}>
                 <Menu vertical>

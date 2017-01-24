@@ -168,8 +168,8 @@ export default class EditorImageCtrl extends Component {
         this.ctxO.stroke();
     }
     handlerUpload = () => {
-        var canvas = this.canvas;
-        var context = this.ctx;
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
         var tamano = this.getTamano();
         this.clearSelection();
         this.editar = false;
@@ -197,6 +197,7 @@ export default class EditorImageCtrl extends Component {
         const tamano = this.getTamano();
         const editar = this.props.editar;
         var img = new Image();
+        img.crossOrigin="anonymous";
         img.onload = () => {
             var iheight = img.height;
             var iwidth  = img.width;
@@ -207,6 +208,7 @@ export default class EditorImageCtrl extends Component {
             this.canvasO.width = iwidth;
             this.canvas.style.height = (iheight / iwidth * cwidth) + "px";
             this.canvasO.style.height = (iheight / iwidth * cwidth) + "px";
+            this.canvasO.style.width = cwidth + "px";
 
             var cheight  = this.canvas.clientHeight || this.canvas.innerHeight;
             this.ctx.drawImage(img, 0, 0, iwidth, iheight);

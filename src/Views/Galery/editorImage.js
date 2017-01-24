@@ -28,7 +28,6 @@ export default class EditorImage extends EditorImageCtrl {
         this.drawComponent();
     }
     render = function() {
-        console.log(this.props.editar);
         const store    = this.props.store;
         const guardar  = store.lang.get("app_save");
         const cancelar = store.lang.get("app_cancel");
