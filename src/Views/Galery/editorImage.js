@@ -4,28 +4,37 @@ import { Button } from 'semantic-ui-react';
 import EditorImageCtrl from './editorImage.ctrl';
 
 export default class EditorImage extends EditorImageCtrl {
-    componentDidMount = () => {
+    componentWillMount = () => {
         this.editar = this.props.editar;
+    }
+    componentWillUnmount = () => {
+        this.mounted = false;
+    }
+    componentDidMount = () => {
         this.canvas = document.getElementById("canvas");
         this.canvasO = document.getElementById("canvasO");
         this.ctx = this.canvas.getContext('2d');
         this.ctxO = this.canvasO.getContext('2d');
-        this.drawComponent();            
+        this.drawComponent();
+        this.mounted = true;
+    }
+    componentWillUpdate = (data) => {
+        this.editar = data.editar;
     }
     componentDidUpdate = () => {
-        if(this.props.editar === false) {
+        if(this.props.editar === false)
             this.clearSelection();
-        } else {
-            this.drawComponent();
-        }
+        this.editar = this.props.editar;
+        this.drawComponent();
     }
     render = function() {
+        console.log(this.props.editar);
         const store    = this.props.store;
         const guardar  = store.lang.get("app_save");
         const cancelar = store.lang.get("app_cancel");
         return (
             <div>
-                {this.props.editar?<div>
+                {this.editar?<div>
                     <Button primary onClick={this.handlerUpload}>{guardar}</Button>
                     <Button primary onClick={this.props.onCancel}>{cancelar}</Button>
                 </div>:null}
