@@ -10,7 +10,7 @@ export default class Main extends Component {
         const
             autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized,
             {params, store, route, router,children} = this.props;
-        if (autorized && this.props.route.store.getState().session)
+        if (autorized && store.getState().session)
             return (
                 <div style={{display:'flex',flexDirection:'vertical',height:'100%'}}>
                     <MenuLeft params={params} route={route} router={router} store={store} />

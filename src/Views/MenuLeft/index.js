@@ -27,8 +27,8 @@ export default class MenuLeft extends MenuLeftCtrl {
         const store = this.props.store;
         const fullname = session.nombres + ' ' + session.apellidos;
         const prev = session !== this.session ? '/' + session.usuario: '';
-        const random = Math.random() * 9000 + 1000;
-        const url = store.getState().config.api + "/galery/fotoPerfil" + prev +
+        const random = parseInt(Math.random() * 9000 + 1000, 10);
+        const url = store.getState().config.api + "/" + session.usuario + "/galery/fotoPerfil" +
                     "?token=" + store.getState().session.token +
                     "&t=" + random;
         return (
