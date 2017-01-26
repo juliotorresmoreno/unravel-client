@@ -13,14 +13,15 @@ export default class Interests extends InterestsCtrl {
     form = {};
     constructor(args) {
         super(args);
-        this.session = (() => {
-            if (this.props.params.user && this.props.store.getState().usuario)
-                return this.props.store.getState().usuario;
-            return this.props.store.getState().session;
-        })();
+        this.session = this.getSession();
         if(this.props.store.getState().profile) {
             this.form = Object.assign(this.props.store.getState().profile, this.form);
         }
+    }
+    getSession = () => {
+        if (this.props.params.user && this.props.store.getState().usuario)
+            return this.props.store.getState().usuario;
+        return this.props.store.getState().session;
     }
     render() {
         const session = this.session;
