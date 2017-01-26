@@ -6,4 +6,13 @@ export default class NewsCtrl extends Component {
         this.form[obj.name] = obj.value;
         this.forceUpdate();
     }
+    onHandlerPublicar = (e, obj, permiso) => {
+        const store = this.props.store;
+        const session = this.getSession();
+        store.news.publicar({
+            usuario: session.usuario,
+            noticia: this.form.noticia,
+            permiso: permiso
+        });
+    }
 }

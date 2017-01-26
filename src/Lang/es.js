@@ -44,6 +44,10 @@ export default {
     galeria_subir: "Subir",
     galeria_establecer: "Establecer como foto de perfil",
 
+    // noticias
+    noticias_publicar: "Publicar",
+    noticias_label: "Publica tu comentario o noticia",
+
     //app
     app_save: "Guardar",
     app_cancel: "Cancelar",

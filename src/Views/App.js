@@ -29,11 +29,14 @@ class App extends Component {
     }
     getChildren() {
         const {store} = this.props.route;
+        const {params, route, router} = this.props;
         if (this.isLoading)
             return <Loading />;
         if (this.props.children)
-            return React.cloneElement(this.props.children, { store: store });
-        return <News store={store} />;
+            return React.cloneElement(this.props.children, {
+                params:params, route:route, router:router, store:store
+            });
+        return <News params={params} route={route} router={router} store={store} />;
     }
     render() {
         var autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized;

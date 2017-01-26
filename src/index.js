@@ -14,6 +14,7 @@ import SAlert from './Services/Alert';
 import SProfile from './Services/Profile';
 import SFriends from './Services/Friends';
 import SGalery from './Services/Galery';
+import SNews from './Services/News';
 import SChat from './Services/Chat';
 import SConnection from './Services/Connection';
 
@@ -34,6 +35,7 @@ store.addService(SProfile);
 store.addService(SFriends);
 store.addService(SGalery);
 store.addService(SChat);
+store.addService(SNews);
 store.addService(SConnection);
 
 
