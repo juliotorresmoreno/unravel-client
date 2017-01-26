@@ -8,6 +8,7 @@ export default class GaleryView extends GaleryViewCtrl {
     form = {nombre: ""};
     files = [];
     componentWillMount = () => {
+        const session = this.getSession();
         this.file = document.createElement("input");
         this.file.type   = "file";
         this.file.accept = ".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*";
@@ -25,7 +26,7 @@ export default class GaleryView extends GaleryViewCtrl {
                 reader.readAsDataURL(this.file.files[i]);
             }
         }
-        this.props.store.galery.getImages(this.props.params.galery)
+        this.props.store.galery.getImages(session.usuario, this.props.params.galery)
             .then((data) => {
                 this.isLoading = false;
                 this.mounted ? this.forceUpdate(): void(0);
@@ -43,6 +44,11 @@ export default class GaleryView extends GaleryViewCtrl {
             this.props.router.push(href);
         }
     }
+    getSession = () => {
+        if (this.props.params.user && this.props.store.getState().usuario)
+            return this.props.store.getState().usuario;
+        return this.props.store.getState().session;
+    }
     render = () => {
         const store  = this.props.store;
         const params = this.props.params || {};
@@ -52,13 +58,19 @@ export default class GaleryView extends GaleryViewCtrl {
         const api = store.getState().config.api;
         const selecciona = store.lang.get("galeria_selecciona");
         const subir = store.lang.get("galeria_subir");
+        const session = this.getSession();
+        const isMe = session.usuario === store.getState().session.usuario;
+        const luser = !isMe ? '/' + session.usuario: '';
+        const actions = isMe ?
+            this.files.length === 0 ?
+                <Button primary onClick={this.handleSeleccionar}>{selecciona}</Button>:
+                <Button primary onClick={this.handleSubir}>{subir}</Button>:
+            null;
         return (
             <div>
                 <div>
                     <Header as="h2">{galery}</Header>
-                    {this.files.length === 0 ?
-                        <Button primary onClick={this.handleSeleccionar}>{selecciona}</Button>:
-                        <Button primary onClick={this.handleSubir}>{subir}</Button>}
+                    {actions}
                 </div>
                 <br />
                 <Grid doubling columns={3}>
@@ -73,9 +85,12 @@ export default class GaleryView extends GaleryViewCtrl {
                 <br />
                 <Grid doubling columns={3}>
                     {images.map((value, index) => {
-                        const url = "/galery/" + galery + "/" + value;
-                        const src = api + "/galery/" + galery + "/" + value +
-                                "?token=" + store.getState().session.token;
+                        const url = luser 
+                                    + "/galery"
+                                    + "/" + galery
+                                    + "/" + value
+                                    + "?token=" + store.getState().session.token;
+                        const src = api + url;
                         return (
                             <Grid.Column as="a" onClick={this.go(url)} href={url} key={index}>
                                 <Image src={src} />

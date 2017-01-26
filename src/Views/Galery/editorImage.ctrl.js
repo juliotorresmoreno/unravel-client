@@ -185,7 +185,8 @@ export default class EditorImageCtrl extends Component {
             form.append('file', blob);
             this.props.store.galery.establecerFotoPerfil(form)
                 .then(() => {
-                    this.props.store.setState({fotoPerfil: true});
+                    const random = parseInt(Math.random() * 9000 + 1000, 10);
+                    this.props.store.setState({fotoPerfil: random});
                 });
         });
     }

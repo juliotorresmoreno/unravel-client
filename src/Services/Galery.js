@@ -79,10 +79,10 @@ export default class Galery extends ServiceBase
                     .catch((error) => this.secure(reject)(error));
             });
         }
-        this.getImages = (galery, reload = true) => {
-            const url = store.getState().config.api + 
-                        listarImagenes + "/" + galery + 
-                        "?token=" + store.getState().session.token;
+        this.getImages = (usuario, galery, reload = true) => {
+            const url = store.getState().config.api
+                        + "/" + usuario + listarImagenes + "/" + galery
+                        + "?token=" + store.getState().session.token;
             return new Promise((resolve, reject) => {
                 const images = store.getState().images;
                 if (reload === false && images && images.galery === galery) {
