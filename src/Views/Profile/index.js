@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Message, Icon, Menu, Segment } from 'semantic-ui-react'
 
+import Loading from '../Loading';
 import ProfileCtrl from './index.ctrl';
 import Basic from './basic';
 import Contact from './contact';
@@ -25,29 +26,19 @@ export default class Profile extends ProfileCtrl {
     render() {
         const { activeItem } = this.state;
         const activeView = Views[activeItem](this.props);
-        if (!this.state.isLoading)
-        {
-            return (
-                <div>
-                    <Menu pointing secondary>
-                        <Menu.Item name='Basico' active={activeItem === 'Basico'} onClick={this.handleItemClick} />
-                        <Menu.Item name='Contacto' active={activeItem === 'Contacto'} onClick={this.handleItemClick} />
-                        <Menu.Item name='Intereses' active={activeItem === 'Intereses'} onClick={this.handleItemClick} />
-                    </Menu>
-                    <Segment>
-                        {activeView}
-                    </Segment>
-                </div>
-            );
-        }
+        if (this.state.isLoading)
+            return <Loading />;
         return (
-            <Message icon>
-                <Icon name='circle notched' loading />
-                <Message.Content>
-                <Message.Header>Espere un momento</Message.Header>
-                    Estamos cargando el contenido.
-                </Message.Content>
-            </Message>
+            <div>
+                <Menu pointing secondary>
+                    <Menu.Item name='Basico' active={activeItem === 'Basico'} onClick={this.handleItemClick} />
+                    <Menu.Item name='Contacto' active={activeItem === 'Contacto'} onClick={this.handleItemClick} />
+                    <Menu.Item name='Intereses' active={activeItem === 'Intereses'} onClick={this.handleItemClick} />
+                </Menu>
+                <Segment>
+                    {activeView}
+                </Segment>
+            </div>
         );
     }
 }

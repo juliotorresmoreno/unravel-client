@@ -5,7 +5,8 @@ import { Grid, Image, Card, Button } from 'semantic-ui-react';
 import listGalerysCtrl from './listGalerys.ctrl';
 
 export default class listGalerys extends listGalerysCtrl {
-    componentWillMount = () => {
+    constructor(args) {
+        super(args);
         var session = this.getSession();
         this.props.store.galery.getGalerys(session.usuario)
             .then((data) => {
@@ -14,6 +15,8 @@ export default class listGalerys extends listGalerysCtrl {
             })
             .catch((error) => console.log(error));
         this.isLoading = true;
+    }
+    componentDidMount = () => {
         this.mounted = true;
     }
     componentWillUnmount = () => {

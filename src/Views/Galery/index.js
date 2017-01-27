@@ -14,7 +14,8 @@ export default class Galery extends GaleryCtrl {
     }
     render = () => {
         const {params, store, route, router} = this.props;
-        switch (route.path) {
+        const path = this.props.routes[1].path;
+        switch (path) {
             case "galery/create":
                 return <Create params={params} store={store} route={route} router={router} />;
             case "galery": case ":user/galery":
