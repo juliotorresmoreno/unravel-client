@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Comment } from 'semantic-ui-react'
+import { Form, Icon } from 'semantic-ui-react'
 
 import Comentario from './comentario';
 import Permisos from '../../Lib/Permisos';
@@ -21,7 +21,7 @@ export default class News extends NewsCtrl {
         return this.props.store.getState().session;
     }
     render = function() {
-        const store = this.props.store;
+        const {store, router} = this.props;
         const publicar = store.lang.get('noticias_publicar');
         const label = store.lang.get('noticias_label');
         const news = store.getState().news || [];
@@ -36,7 +36,7 @@ export default class News extends NewsCtrl {
                     <Permisos label={publicar} onClick={this.onHandlerPublicar} />
                 </Form>
                 <br />
-                {news.map((noticia, index) => <Comentario key={index} store={store} noticia={noticia} />)}
+                {news.map((noticia, index) => <Comentario key={index} store={store} router={router} noticia={noticia} />)}
             </div>
         )
     }

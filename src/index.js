@@ -27,6 +27,8 @@ import Galery from './Views/Galery';
 import Groups from './Views/Groups';
 import Chat from './Views/Chat';
 
+const moment = window.moment;
+
 var store = new Store({config:config});
 store.addService(SLang);
 store.addService(SAuth);
@@ -37,7 +39,7 @@ store.addService(SGalery);
 store.addService(SChat);
 store.addService(SNews);
 store.addService(SConnection);
-
+moment.locale("es");
 
 class Index extends Component {
     render() {

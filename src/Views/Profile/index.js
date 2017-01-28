@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Message, Icon, Menu, Segment } from 'semantic-ui-react'
+import { Menu, Segment } from 'semantic-ui-react'
 
 import Loading from '../Loading';
 import ProfileCtrl from './index.ctrl';

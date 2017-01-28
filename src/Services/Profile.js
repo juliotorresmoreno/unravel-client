@@ -35,9 +35,11 @@ export default class Profile extends ServiceBase
             });
         };
         this.load = (usuario) => {
-            const url = store.getState().config.api + consulta + "?token=" + store.getState().session.token;;
+            const url = store.getState().config.api + 
+                            consulta + (usuario ? '/' + usuario: '') + 
+                            "?token=" + store.getState().session.token;;
             return new Promise((resolve, reject) => {
-                this.get(url + (usuario ? '/' + usuario: ''))
+                this.get(url)
                     .then((response) => {
                         response.json()
                             .then((json) => {
