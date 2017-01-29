@@ -5,6 +5,8 @@ import ComentarioCtrl from './comentario.ctrl';
 
 const moment = window.moment;
 
+const styleIcon = {width:16,height:16};
+
 export default class Comentario extends ComentarioCtrl {
     go = (e) => {
         e.preventDefault();
@@ -30,8 +32,10 @@ export default class Comentario extends ComentarioCtrl {
                         <Comment.Text>{noticia.noticia}</Comment.Text>
                         <Comment.Actions>
                             <Comment.Action>
-                                <Image src="/static/svg/like-1.svg" />
-                            </Comment.Action>
+                                <Image style={styleIcon}
+                                        onClick={this.onHandlerLike(noticia)}
+                                        src="/static/svg/like-1.svg" />
+                            </Comment.Action>&nbsp; {noticia.likes.length} likes
                         </Comment.Actions>
                     </Comment.Content>
                 </Comment>

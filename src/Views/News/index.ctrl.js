@@ -8,9 +8,11 @@ export default class NewsCtrl extends Component {
     }
     onHandlerPublicar = (e, obj, permiso) => {
         const store = this.props.store;
-        store.news.publicar({
-            noticia: this.form.noticia,
-            permiso: permiso
-        });
+        const data = { noticia: this.form.noticia, permiso: permiso };
+        store.news.publicar(data)
+            .then(() => {
+                this.form = {noticia:''};
+                this.props.store.news.consultar(this.getSession().usuario);
+            });
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Icon } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 import Comentario from './comentario';
 import Permisos from '../../Lib/Permisos';
@@ -32,7 +32,8 @@ export default class News extends NewsCtrl {
                         onChange={this.onHandlerChange}
                         style={TextAreaStyle}
                         name="noticia"
-                        placeholder={label} />
+                        placeholder={label}
+                        value={this.form.noticia} />
                     <Permisos label={publicar} onClick={this.onHandlerPublicar} />
                 </Form>
                 <br />

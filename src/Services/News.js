@@ -1,5 +1,6 @@
 import ServiceBase from '../Lib/ServiceBase';
 
+const like      = "/news/like";
 const publicar  = "/news/public";
 const consultar = "/news";
 
@@ -17,7 +18,23 @@ export default class Galery extends ServiceBase
                             .then((json) => {
                                 response.ok ?
                                     this.secure(resolve)(json):
-                                    this.secure(reject)(json)
+                                    this.secure(reject)(json);
+                            })
+                            .catch((error) => this.secure(reject)(error))
+                    })
+                    .catch((error) => this.secure(reject)(error));
+            });
+        };
+        this.like = (data) => {
+            const url = store.getState().config.api + like + "?token=" + store.getState().session.token;
+            return new Promise((resolve, reject) => {
+                this.post(url, data)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => {
+                                response.ok ?
+                                    this.secure(resolve)(json):
+                                    this.secure(reject)(json);
                             })
                             .catch((error) => this.secure(reject)(error))
                     })
@@ -34,7 +51,7 @@ export default class Galery extends ServiceBase
                                 store.setState({news: json.data});
                                 response.ok ?
                                     this.secure(resolve)(json):
-                                    this.secure(reject)(json)
+                                    this.secure(reject)(json);
                             })
                             .catch((error) => this.secure(reject)(error))
                     })
