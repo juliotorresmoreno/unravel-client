@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Comment, Image } from 'semantic-ui-react'
+import { Button, Form, Comment, Image } from 'semantic-ui-react'
 import ComentarioCtrl from './comentario.ctrl';
 
 const moment = window.moment;
 
-const styleIcon = {width:16,height:16};
+const styleIcon = {width:16,height:16,display:"inline"};
 
 export default class Comentario extends ComentarioCtrl {
     go = (e) => {
@@ -13,33 +13,41 @@ export default class Comentario extends ComentarioCtrl {
         this.props.router.push(e.target.href.replace(/http(s){0,1}:\/\/[^\/]*/, ''));
     }
     render = () => {
-        const noticia = this.props.noticia || {};
-        const store = this.props.store;
-        const url = store.getState().config.api + "/" + noticia.usuario + "/galery/fotoPerfil?token=" + this.props.store.getState().session.token;
-        const href = "/" + noticia.usuario + "/profile";
-        const fecha = moment(noticia.create_at).format("MMM Do YYYY h:mm:ss a");
+        const noticia   = this.props.noticia || {};
+        const store     = this.props.store;
+        const url       = store.getState().config.api + "/" + noticia.usuario + "/galery/fotoPerfil?token=" + this.props.store.getState().session.token;
+        const href      = "/" + noticia.usuario + "/profile";
+        const fecha     = moment(noticia.create_at).format("MMM Do YYYY h:mm:ss a");
+        const responder = store.lang.get("noticias_responder");
         return (
-            <Comment.Group>
-                <Comment>
-                    <Comment.Avatar src={url} />
-                    <Comment.Content>
-                        <Comment.Author as='a' href={href} onClick={this.go}>
-                            {noticia.nombres + " " + noticia.apellidos}
-                        </Comment.Author>
-                        <Comment.Metadata>
-                            <div>{fecha}</div>
-                        </Comment.Metadata>
-                        <Comment.Text>{noticia.noticia}</Comment.Text>
-                        <Comment.Actions>
-                            <Comment.Action>
-                                <Image style={styleIcon}
-                                        onClick={this.onHandlerLike(noticia)}
-                                        src="/static/svg/like-1.svg" />
-                            </Comment.Action>&nbsp; {noticia.likes.length} likes
-                        </Comment.Actions>
-                    </Comment.Content>
-                </Comment>
-            </Comment.Group>
+            <div>
+                <Comment.Group>
+                    <Comment>
+                        <Comment.Avatar src={url} />
+                        <Comment.Content>
+                            <Comment.Author as='a' href={href} onClick={this.go}>
+                                {noticia.nombres + " " + noticia.apellidos}
+                            </Comment.Author>
+                            <Comment.Metadata>
+                                <div>{fecha}</div>
+                            </Comment.Metadata>
+                            <Comment.Text>{noticia.noticia}</Comment.Text>
+                            <Comment.Actions>
+                                <Comment.Action onClick={this.onHandlerLike(noticia)}>
+                                    <Image style={styleIcon} src="/static/svg/like-1.svg" />
+                                    <Comment.Metadata>
+                                        {noticia.likes.length} likes
+                                    </Comment.Metadata>
+                                </Comment.Action>
+                                <Comment.Action>
+                                    {responder}
+                                </Comment.Action>
+                            </Comment.Actions>
+                            <Form.Input style={{width: 300}} />
+                        </Comment.Content>
+                    </Comment>
+                </Comment.Group>
+            </div>
         )
     }
 }

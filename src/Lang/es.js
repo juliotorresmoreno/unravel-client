@@ -47,6 +47,7 @@ export default {
     // noticias
     noticias_publicar: "Publicar",
     noticias_label: "Publica tu comentario o noticia",
+    noticias_responder: "Responder",
 
     //app
     app_save: "Guardar",

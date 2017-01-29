@@ -32,10 +32,12 @@ export default class Store {
         var _listaElementos = new listaElementos(this[elementos]);
         for(let i in data)
             if (data.hasOwnProperty(i))
-                (this[state][i] !== data[i] || data[i] === true)
-                    && (this[state][i] = data[i] || true)
-                    && update !== false
-                        && _listaElementos.elementosUpdate(i);
+                if (this[state][i] !== data[i] || data[i] === true) {
+                    if (data[i] !== true)
+                        this[state][i] = data[i]
+                    if (update !== false)
+                        _listaElementos.elementosUpdate(i);
+                }
         const _elementos = _listaElementos.getList();
         for(let i = 0; i < _elementos.length; i++) {
             let item = _elementos[i].item;

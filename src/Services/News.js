@@ -32,6 +32,13 @@ export default class Galery extends ServiceBase
                     .then((response) => {
                         response.json()
                             .then((json) => {
+                                for(let i = 0; i < store.getState().news.length; i++) {
+                                    if (store.getState().news[i].ID === json.data.ID) {
+                                        store.getState().news[i].likes = json.data.likes;
+                                        break;
+                                    }
+                                }
+                                store.setState({news: true});
                                 response.ok ?
                                     this.secure(resolve)(json):
                                     this.secure(reject)(json);
