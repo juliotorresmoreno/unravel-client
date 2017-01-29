@@ -12,6 +12,7 @@ export default class PublicacionCtrl extends Component {
         const noticia = this.props.noticia || {};
         const store = this.props.store;
         const data = { noticia: noticia.ID, comentario: this.comentario };
+        this.comentario = "";
         store.news.comentar(data);
     }
     onHandlerLike = (e, obj) => {
@@ -19,6 +20,14 @@ export default class PublicacionCtrl extends Component {
         const store = this.props.store;
         const data = { noticia: noticia.ID };
         store.news.like(data);
+    }
+    onHandlerComents = (e, obj) => {
+        this.comentarios = !this.comentarios;
+        this.forceUpdate();
+    }
+    onHandlerResponder = (e, obj, comentario) => {
+        this.comentario = comentario.nombres + " " + comentario.apellidos + ": ";
+        this.forceUpdate();
     }
     onHandlerReply = (e, obj) => {
         const noticia = this.props.noticia || {};

@@ -9,6 +9,7 @@ const moment = window.moment;
 const styleIcon = {width:16,height:16,display:"inline"};
 
 export default class Publicacion extends PublicacionCtrl {
+    comentarios = false;
     comentario = "";
     go = (e) => {
         e.preventDefault();
@@ -21,7 +22,7 @@ export default class Publicacion extends PublicacionCtrl {
         const href = "/" + noticia.usuario + "/profile";
         const fecha = moment(noticia.create_at).format("MMM Do YYYY h:mm:ss a");
         const responder = store.lang.get("noticias_responder");
-        const comentarios = noticia.comentarios || [];
+        const comentarios = this.comentarios ? noticia.comentarios || []: [];
         return (
             <div>
                 <Comment.Group>
@@ -42,11 +43,23 @@ export default class Publicacion extends PublicacionCtrl {
                                         {noticia.likes.length} likes
                                     </Comment.Metadata>
                                 </Comment.Action>
+                                <Comment.Action onClick={this.onHandlerComents}>
+                                    <Image style={styleIcon} src="/static/svg/reading.svg" />
+                                    <Comment.Metadata>
+                                        {noticia.comentarios.length} Comentarios
+                                    </Comment.Metadata>
+                                </Comment.Action>
                                 <Comment.Action onClick={this.onHandlerReply}>
                                     {responder}
                                 </Comment.Action>
                             </Comment.Actions>
-                            {comentarios.map((comentario, index) => <Comentario store={store} comentario={comentario} key={index} />)}
+                            {comentarios.map((comentario, index) =>
+                                <Comentario
+                                    onResponder={this.onHandlerResponder}
+                                    comentario={comentario}
+                                    store={store}
+                                    key={index} />
+                            )}
                             <Form.Input name="comentario" 
                                 onChange={this.onHandlerChange}
                                 onKeyPress={this.onHandlerKeyPress}

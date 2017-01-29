@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { Form, Comment, Image } from 'semantic-ui-react'
+import { Comment } from 'semantic-ui-react'
 import ComentarioCtrl from './comentario.ctrl';
 
 const moment = window.moment;
 
-const styleIcon = {width:16,height:16,display:"inline"};
-
 export default class Comentario extends ComentarioCtrl {
     render = () => {
-const noticia = this.props.noticia || {};
+        const noticia = this.props.noticia || {};
         const store = this.props.store;
         const comentario = this.props.comentario || {};
         const href = "/" + noticia.usuario + "/profile";
@@ -17,7 +15,7 @@ const noticia = this.props.noticia || {};
         const fecha = moment(noticia.create_at).format("MMM Do YYYY h:mm:ss a");
         const responder = store.lang.get("noticias_responder");
         return (
-            <Comment.Group>
+            <Comment.Group style={{padding:0}}>
                 <Comment>
                     <Comment.Avatar src={url} />
                     <Comment.Content>
@@ -29,7 +27,7 @@ const noticia = this.props.noticia || {};
                         </Comment.Metadata>
                         <Comment.Text>{comentario.comentarios}</Comment.Text>
                         <Comment.Actions>
-                            <Comment.Action>{responder}</Comment.Action>
+                            <Comment.Action onClick={this.onHandlerReply}>{responder}</Comment.Action>
                         </Comment.Actions>
                     </Comment.Content>
                 </Comment>
