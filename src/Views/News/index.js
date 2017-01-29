@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Form } from 'semantic-ui-react'
 
-import Comentario from './comentario';
+import Publicacion from './publicacion';
 import Permisos from '../../Lib/Permisos';
 import NewsCtrl from './index.ctrl';
 const TextAreaStyle = {height: 50};
@@ -37,7 +37,8 @@ export default class News extends NewsCtrl {
                     <Permisos label={publicar} onClick={this.onHandlerPublicar} />
                 </Form>
                 <br />
-                {news.map((noticia, index) => <Comentario key={index} store={store} router={router} noticia={noticia} />)}
+                {news.map((noticia, index) => <Publicacion key={index} store={store} router={router} noticia={noticia} />)}
+                <br />
             </div>
         )
     }
