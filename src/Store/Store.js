@@ -46,8 +46,9 @@ export default class Store {
                     if(typeof item.Midlewares[j] === "function")
                         item.Midlewares[j](this, data);
         };
-        for(let i = 0; i < _elementos.length; i++)
+        for(let i = 0; i < _elementos.length; i++) {
             _elementos[i].item.setState({updateAt:new Date()});
+        }
     }
     getState = (data) => {
         return this[state];

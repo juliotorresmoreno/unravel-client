@@ -3,12 +3,28 @@ import React from 'react';
 import { Form, Header } from 'semantic-ui-react';
 import Permisos from '../../Lib/Permisos';
 
-import CreateCtrl from './create.ctrl';
+import FormularioCtrl from './formulario.ctrl';
 
-export default class Create extends CreateCtrl {
-    form = {nombre: ""}
+export default class Formulario extends FormularioCtrl {
+    form = {nombre: "", descripcion: ""};
     componentWillMount() {
-        this.props.store.getState().galeria = {permiso_galeria:"public"};
+        let {routes,params} = this.props;
+        this.props.store.getState().galeria = {permiso_galeria: "public"};
+        if (routes[1].path === "galery/:galery/editar") {
+            if (this.props.store.getState().galeria.nombre === params.galery) {
+                this.form = this.props.store.getState().galeria;
+            } else {
+                this.props.store.galery.describe(params.galery);
+            }
+        }
+    }
+    componentWillUpdate() {
+        let {routes,params} = this.props;
+        if (routes[1].path === "galery/:galery/editar") {
+            if (this.props.store.getState().galeria.nombre === params.galery) {
+                this.form = this.props.store.getState().galeria;
+            }
+        }
     }
     render = () => {
         const save = this.props.store.lang.get('app_save');
