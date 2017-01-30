@@ -17,6 +17,10 @@ export default class ImageView extends ImageViewCtrl {
         this.isLoading = true;
         this.mounted = true;
     }
+    go = (e, obj) => {
+        e.preventDefault();
+        this.props.router.push(e.target.href.replace(/^http(s){0,1}:\/\/[^\/]*/, ""));
+    }
     render = () => {
         const
             store  = this.props.store,
@@ -28,13 +32,16 @@ export default class ImageView extends ImageViewCtrl {
         const url = api + "/galery/" + galery + "/" + image + "?token=" + store.getState().session.token;
         return (
             <div>
-                <Header as="h2">{galery}</Header>
+                <Header as="h2">
+                    <a href={"/galery/" + galery} onClick={this.go}>{galery}</a>
+                </Header>
                 {!this.editar?<Button primary onClick={this.handleEstablecer}>{establecer}</Button>:null}
                 <EditorImage
                     store={store}
                     onUpload={this.handlerUpload}
                     onCancel={this.handleCancelar}
                     editar={this.editar} url={url} />
+                <br />
             </div>
         );
     }

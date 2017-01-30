@@ -17,14 +17,9 @@ export default class MenuLeft extends MenuLeftCtrl {
         e.preventDefault();
         this.props.router.push(href);
     }
-    getSession = () => {
-        if (this.props.params.user && this.props.store.getState().usuario)
-            return this.props.store.getState().usuario;
-        return this.props.store.getState().session;
-    }
     render = function() {
-        const session = this.getSession();
         const store = this.props.store;
+        const session = this.props.store.location.getSession(this.props.params.user);
         const fullname = session.nombres + ' ' + session.apellidos;
         const prev = session !== this.session ? '/' + session.usuario: '';
         const url = store.getState().config.api + "/" + session.usuario + "/galery/fotoPerfil" +

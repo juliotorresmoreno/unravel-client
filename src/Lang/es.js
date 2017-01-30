@@ -41,6 +41,7 @@ export default {
     galeria_nombre: "Nombre de la galeria",
     galeria_descripcion: "Description",
     galeria_selecciona: "Selecciona",
+    galeria_editar: "Editar",
     galeria_subir: "Subir",
     galeria_establecer: "Establecer como foto de perfil",
 
@@ -51,7 +52,7 @@ export default {
 
     //app
     app_save: "Guardar",
-    app_cancel: "Cancelar",
+    app_cancel: "Terminar",
 
     json_invalid: 'La respuesta del servidor no es valida'
 };

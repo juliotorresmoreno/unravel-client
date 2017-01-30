@@ -13,6 +13,7 @@ export default class PublicacionCtrl extends Component {
         const store = this.props.store;
         const data = { noticia: noticia.ID, comentario: this.comentario };
         this.comentario = "";
+        this.comentarios = true;
         store.news.comentar(data);
     }
     onHandlerLike = (e, obj) => {

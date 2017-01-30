@@ -8,7 +8,7 @@ export default class GaleryView extends GaleryViewCtrl {
     form = {nombre: ""};
     files = [];
     componentWillMount = () => {
-        const session = this.getSession();
+        const session = this.props.store.location.getSession(this.props.params.user);
         this.file = document.createElement("input");
         this.file.type   = "file";
         this.file.accept = ".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*";
@@ -45,10 +45,22 @@ export default class GaleryView extends GaleryViewCtrl {
             this.props.router.push(href);
         }
     }
-    getSession = () => {
-        if (this.props.params.user && this.props.store.getState().usuario)
-            return this.props.store.getState().usuario;
-        return this.props.store.getState().session;
+    getActions = () => {
+        const session = this.props.store.location.getSession(this.props.params.user);
+        const store  = this.props.store;
+        const isMe = session.usuario === store.getState().session.usuario;
+        const selecciona = store.lang.get("galeria_selecciona");
+        const editar = store.lang.get("galeria_editar");
+        const subir = store.lang.get("galeria_subir");
+        if (isMe === false) {
+            return null;
+        }
+        if (this.files.length > 0)
+            return <Button primary onClick={this.handleSubir}>{subir}</Button>;
+        return [
+            <Button primary key={0} onClick={this.handleSeleccionar}>{selecciona}</Button>,
+            <Button primary key={1} onClick={this.handleEditar}>{editar}</Button>
+        ];
     }
     render = () => {
         const store  = this.props.store;
@@ -57,22 +69,15 @@ export default class GaleryView extends GaleryViewCtrl {
         const images = store.getState().images && store.getState().images.galery === galery ? 
                         store.getState().images.items: [];
         const api = store.getState().config.api;
-        const selecciona = store.lang.get("galeria_selecciona");
-        const subir = store.lang.get("galeria_subir");
-        const session = this.getSession();
+        const session = this.props.store.location.getSession(this.props.params.user);
         const isMe = session.usuario === store.getState().session.usuario;
         const luser = !isMe ? '/' + session.usuario: '';
-        const token = store.getState().session.token
-        const actions = isMe ?
-            this.files.length === 0 ?
-                <Button primary onClick={this.handleSeleccionar}>{selecciona}</Button>:
-                <Button primary onClick={this.handleSubir}>{subir}</Button>:
-            null;
+        const token = store.getState().session.token;
         return (
             <div>
                 <div>
                     <Header as="h2">{galery}</Header>
-                    {actions}
+                    {this.getActions()}
                 </div>
                 <br />
                 <Grid doubling columns={3}>
@@ -87,8 +92,8 @@ export default class GaleryView extends GaleryViewCtrl {
                 <br />
                 <Grid doubling columns={3}>
                     {images.map((value, index) => {
-                        const url = luser + "/galery"+ "/" + galery+ "/" + value+ "?token=" + token;
-                        const src = api + url + "&mini=1";
+                        const url = luser + "/galery"+ "/" + galery+ "/" + value;
+                        const src = api + url + "?mini=1&token=" + token;
                         return (
                             <Grid.Column as="a" onClick={this.go(url)} href={url} key={index}>
                                 <Image src={src} />
@@ -96,6 +101,7 @@ export default class GaleryView extends GaleryViewCtrl {
                         );
                     })}
                 </Grid>
+                <br />
             </div>
         );
     }

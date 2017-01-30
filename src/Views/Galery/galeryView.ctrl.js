@@ -22,6 +22,9 @@ export default class GaleryViewCtrl extends Component {
     componentWillUnmount = () => { 
         this.mounted = false;
     };
+    handleEditar = (e, obj) => {
+        
+    }
     handleSubir = (e, obj) => {
         var progress = this.files.length;
         const

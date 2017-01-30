@@ -7,7 +7,7 @@ import listGalerysCtrl from './listGalerys.ctrl';
 export default class listGalerys extends listGalerysCtrl {
     constructor(args) {
         super(args);
-        var session = this.getSession();
+        const session = this.props.store.location.getSession(this.props.params.user);
         this.props.store.galery.getGalerys(session.usuario)
             .then((data) => {
                 this.isLoading = false;
@@ -26,13 +26,8 @@ export default class listGalerys extends listGalerysCtrl {
         e.preventDefault();
         this.props.router.push((luser ? "/" + luser: "") + "/galery/" + encodeURI(name));
     }
-    getSession = () => {
-        if (this.props.params.user && this.props.store.getState().usuario)
-            return this.props.store.getState().usuario;
-        return this.props.store.getState().session;
-    }
     render = () => {
-        const session = this.getSession();
+        const session = this.props.store.location.getSession(this.props.params.user);
         const store = this.props.store;
         const galerys = store.getState().galerys || [];
         const isMe = session.usuario === store.getState().session.usuario;

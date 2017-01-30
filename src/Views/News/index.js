@@ -12,13 +12,8 @@ export default class News extends NewsCtrl {
     constructor(args) {
         super(args);
         this.props.store.subscribe(this, ['news'], "News");
-        const session = this.getSession();
+        const session = this.props.store.location.getSession(this.props.params.user);
         this.props.store.news.consultar(session.usuario);
-    }
-    getSession = () => {
-        if (this.props.params.user && this.props.store.getState().usuario)
-            return this.props.store.getState().usuario;
-        return this.props.store.getState().session;
     }
     render = function() {
         const {store, router} = this.props;
@@ -37,7 +32,8 @@ export default class News extends NewsCtrl {
                     <Permisos label={publicar} onClick={this.onHandlerPublicar} />
                 </Form>
                 <br />
-                {news.map((noticia, index) => <Publicacion key={index} store={store} router={router} noticia={noticia} />)}
+                {news.map((noticia, index) => 
+                    <Publicacion key={index} store={store} router={router} noticia={noticia} />)}
                 <br />
             </div>
         )
