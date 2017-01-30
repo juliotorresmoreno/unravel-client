@@ -20,7 +20,8 @@ export default class GaleryView extends GaleryViewCtrl {
                 reader.onload = (() => (e) => {
                     files.push({name: this.file.files[i].name, src: e.target.result});
                     if (files.length === this.file.files.length) {
-                        this.forceUpdate();
+                        this.files = files;
+                        this.forceUpdate();                        
                     }
                 })();
                 reader.readAsDataURL(this.file.files[i]);
@@ -61,6 +62,7 @@ export default class GaleryView extends GaleryViewCtrl {
         const session = this.getSession();
         const isMe = session.usuario === store.getState().session.usuario;
         const luser = !isMe ? '/' + session.usuario: '';
+        const token = store.getState().session.token
         const actions = isMe ?
             this.files.length === 0 ?
                 <Button primary onClick={this.handleSeleccionar}>{selecciona}</Button>:
@@ -85,12 +87,8 @@ export default class GaleryView extends GaleryViewCtrl {
                 <br />
                 <Grid doubling columns={3}>
                     {images.map((value, index) => {
-                        const url = luser 
-                                    + "/galery"
-                                    + "/" + galery
-                                    + "/" + value
-                                    + "?token=" + store.getState().session.token;
-                        const src = api + url;
+                        const url = luser + "/galery"+ "/" + galery+ "/" + value+ "?token=" + token;
+                        const src = api + url + "&mini=1";
                         return (
                             <Grid.Column as="a" onClick={this.go(url)} href={url} key={index}>
                                 <Image src={src} />

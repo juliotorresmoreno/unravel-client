@@ -60,7 +60,8 @@ export default class Galery extends ServiceBase
             });
         }
         this.getGalerys = (usuario) => {
-            const url = store.getState().config.api + "/" + usuario +
+            const url = store.getState().config.api +
+                        (usuario !== undefined ? "/" + usuario: "") +
                         listarGalerias + 
                         "?token=" + store.getState().session.token;
             return new Promise((resolve, reject) => {
@@ -81,7 +82,8 @@ export default class Galery extends ServiceBase
         }
         this.getImages = (usuario, galery, reload = true) => {
             const url = store.getState().config.api
-                        + "/" + usuario + listarImagenes + "/" + galery
+                        + (usuario !== undefined ? "/" + usuario: "") 
+                        + listarImagenes + "/" + galery
                         + "?token=" + store.getState().session.token;
             return new Promise((resolve, reject) => {
                 const images = store.getState().images;

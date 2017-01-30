@@ -24,7 +24,7 @@ export default class listGalerys extends listGalerysCtrl {
     }
     go = (name, luser) => (e) => {
         e.preventDefault();
-        this.props.router.push(luser + "/galery/" + encodeURI(name));
+        this.props.router.push((luser ? "/" + luser: "") + "/galery/" + encodeURI(name));
     }
     getSession = () => {
         if (this.props.params.user && this.props.store.getState().usuario)
@@ -56,9 +56,6 @@ export default class listGalerys extends listGalerysCtrl {
                                         <Card.Header>
                                             {galeria.name}
                                         </Card.Header>
-                                        <Card.Description>
-                                            {galeria.descripcion}
-                                        </Card.Description>
                                     </Card.Content>
                                 </Card>
                             </Grid.Column>

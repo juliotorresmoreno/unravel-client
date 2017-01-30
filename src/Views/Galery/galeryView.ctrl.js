@@ -26,15 +26,13 @@ export default class GaleryViewCtrl extends Component {
         var progress = this.files.length;
         const
             params = this.props.params || {},
+            usuario = this.props.store.getState().session.usuario,
             galery = params.galery,
             upload = () => {
                 progress--;
                 if (progress === 0) {
                     this.files = [];
-                    if (this.mounted) {
-                        this.forceUpdate();
-                        this.props.store.galery.getImages(this.props.params.galery);
-                    }
+                    this.props.store.galery.getImages(usuario, galery);
                 }
             };
         for(let i = 0; i < this.files.length; i++) {
