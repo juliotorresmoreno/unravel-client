@@ -10,12 +10,14 @@ export default class Create extends CreateCtrl {
     componentWillMount() {
         this.props.store.getState().galeria = {permiso_galeria:"public"};
     }
-    render = function() {
+    render = () => {
         const save = this.props.store.lang.get('app_save');
         const permiso = this.props.store.getState().galeria.permiso_galeria;
         const nombre = this.props.store.lang.get('galeria_nombre');
         const descripcion = this.props.store.lang.get('galeria_descripcion');
-        const titulo = this.props.store.lang.get('galeria_titulo_crear');
+        const path = this.props.routes[1].path;
+        const action = path === "galery/create" ? 'galeria_titulo_crear': 'galeria_titulo_editar';
+        const titulo = this.props.store.lang.get(action);
         return (
             <Form onSubmit={(e) => e.preventDefault()}>
                 <Header as="h2">{titulo}</Header>

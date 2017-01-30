@@ -23,7 +23,9 @@ export default class GaleryViewCtrl extends Component {
         this.mounted = false;
     };
     handleEditar = (e, obj) => {
-        
+        const params = this.props.params || {};
+        const galery = params.galery;
+        this.props.router.push("/galery/" + galery + "/editar");
     }
     handleSubir = (e, obj) => {
         var progress = this.files.length;

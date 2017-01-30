@@ -13,17 +13,17 @@ export default class Galery extends GaleryCtrl {
         this.props.store.subscribe(this, ['galery', 'images'], "Galery");
     }
     render = () => {
-        const {params, store, route, router} = this.props;
+        const {params, store, route, router, routes} = this.props;
         const path = this.props.routes[1].path;
         switch (path) {
-            case "galery/create":
-                return <Create params={params} store={store} route={route} router={router} />;
+            case "galery/create": case "galery/:galery/editar":
+                return <Create params={params} store={store} routes={routes} route={route} router={router} />;
             case "galery": case ":user/galery":
-                return <ListGalerys params={params} store={store} route={route} router={router} />;
+                return <ListGalerys params={params} store={store} routes={routes} route={route} router={router} />;
             case "galery/:galery": case ":user/galery/:galery":
-                return <GaleryView params={params} store={store} route={route} router={router} />;
+                return <GaleryView params={params} store={store} routes={routes} route={route} router={router} />;
             case "galery/:galery/:image": case ":user/galery/:galery/:image":
-                return <ImageView params={params} store={store} route={route} router={router} />;
+                return <ImageView params={params} store={store} routes={routes} route={route} router={router} />;
             default:
                 return <Loading />;
         }

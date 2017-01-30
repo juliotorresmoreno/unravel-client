@@ -38,6 +38,7 @@ export default {
 
     // galeria
     galeria_titulo_crear: "Crear galeria",
+    galeria_titulo_editar: "Editar galeria",
     galeria_nombre: "Nombre de la galeria",
     galeria_descripcion: "Description",
     galeria_selecciona: "Selecciona",
