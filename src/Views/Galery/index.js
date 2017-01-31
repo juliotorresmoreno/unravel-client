@@ -5,6 +5,7 @@ import GaleryView from './galeryView';
 import ImageView from './imageView';
 import Formulario from './formulario';
 import ListGalerys from './listGalerys';
+import TomarFoto from './tomarFoto';
 import Loading from '../Loading';
 
 export default class Galery extends GaleryCtrl {
@@ -16,6 +17,8 @@ export default class Galery extends GaleryCtrl {
         const {params, store, route, router, routes} = this.props;
         const path = this.props.routes[1].path;
         switch (path) {
+            case "galery/:galery/tomarFoto":
+                return <TomarFoto params={params} store={store} routes={routes} route={route} router={router} />;
             case "galery/create": case "galery/:galery/editar":
                 return <Formulario params={params} store={store} routes={routes} route={route} router={router} />;
             case "galery": case ":user/galery":
