@@ -30,12 +30,12 @@ export default class EditorImage extends EditorImageCtrl {
     render = function() {
         const store    = this.props.store;
         const guardar  = store.lang.get("app_save");
-        const cancelar = store.lang.get("app_cancel");
+        const terminar = store.lang.get("app_terminar");
         return (
             <div>
                 {this.editar?<div>
                     <Button primary onClick={this.handlerUpload}>{guardar}</Button>
-                    <Button primary onClick={this.props.onCancel}>{cancelar}</Button>
+                    <Button primary onClick={this.props.onCancel}>{terminar}</Button>
                 </div>:null}
                 <br />
                 <canvas onMouseMove={this.onmousemove} onMouseDown={this.onmousedown}

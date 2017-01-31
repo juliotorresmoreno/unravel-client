@@ -50,6 +50,7 @@ export default class GaleryView extends GaleryViewCtrl {
         const store  = this.props.store;
         const isMe = session.usuario === store.getState().session.usuario;
         const selecciona = store.lang.get("galeria_selecciona");
+        const tomar_foto = store.lang.get("galeria_tomar_foto");
         const editar = store.lang.get("galeria_editar");
         const subir = store.lang.get("galeria_subir");
         if (isMe === false) {
@@ -59,7 +60,8 @@ export default class GaleryView extends GaleryViewCtrl {
             return <Button primary onClick={this.handleSubir}>{subir}</Button>;
         return [
             <Button primary key={0} onClick={this.handleSeleccionar}>{selecciona}</Button>,
-            <Button primary key={1} onClick={this.handleEditar}>{editar}</Button>
+            <Button primary key={1} onClick={this.handleTomarFoto}>{tomar_foto}</Button>,
+            <Button primary key={2} onClick={this.handleEditar}>{editar}</Button>
         ];
     }
     render = () => {

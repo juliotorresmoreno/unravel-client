@@ -4,7 +4,6 @@ import { Menu } from 'semantic-ui-react';
 import MenuRightCtrl from './index.ctrl';
 
 export default class MenuRight extends MenuRightCtrl {
-    state = {};
     constructor(args) {
         super(args);
         this.props.store.subscribe(this, ['friends'], "MenuRight");

@@ -19,11 +19,11 @@ export default class Galery extends ServiceBase
                 this.post(url, data)
                     .then((response) => {
                         response.json()
-                            .then((json) => 
+                            .then((json) => {
                                 response.ok ?
                                     this.secure(resolve)(json):
-                                    this.secure(reject)(json)
-                            )
+                                    this.secure(reject)(json.error)
+                            })
                             .catch((error) => this.secure(reject)(error))
                     })
                     .catch((error) => this.secure(reject)(error))

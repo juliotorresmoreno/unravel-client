@@ -3,10 +3,6 @@ import { Button, Dropdown } from 'semantic-ui-react'
 
 export default class Permisos extends Component {
     state = {isLoading: false};
-    constructor(args) {
-        super(args);
-        this.permiso = this.props.permiso !== undefined ? this.props.permiso: 'public';
-    }
     onHandlerClick = (e, obj) => {
         if (typeof obj.name !== 'undefined')
         {
@@ -27,21 +23,22 @@ export default class Permisos extends Component {
                 </Button.Group>
             );
         }
+        var permiso = this.props.permiso !== undefined ? this.props.permiso: 'public';
         return (
             <Button.Group>
                 <Button primary onClick={this.onHandlerClick}>{this.props.label}</Button>
                 <Dropdown floating button className='icon'>
                 <Dropdown.Menu>
                     <Dropdown.Item
-                        active={this.permiso==="public"}
+                        active={permiso==="public"}
                         name="public" text='Publico'
                         onClick={this.onHandlerClick} />
                     <Dropdown.Item
-                        active={this.permiso==="friends"}
+                        active={permiso==="friends"}
                         name='friends' text='Amigos'
                         onClick={this.onHandlerClick} />
                     <Dropdown.Item
-                        active={this.permiso==="private"}
+                        active={permiso==="private"}
                         name='private' text='Solo yo'
                         onClick={this.onHandlerClick} />
                 </Dropdown.Menu>

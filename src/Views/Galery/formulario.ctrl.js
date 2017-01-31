@@ -3,11 +3,16 @@ const { Component } = React;
 
 export default class FormularioCtrl extends Component {
     onHandlerGuardarGaleria = (e, obj, permiso) => {
+        const store = this.props.store;
+        const router = this.props.router;
         this.form.permiso = permiso;
-        this.props.store.galery.save(this.form)
-            .then((response) => {
-                this.props.router.push('/galery/' + encodeURI(this.form.nombre));
-            });
+        store.galery.save(this.form)
+            .then((response) => router.push('/galery/' + encodeURI(response.galeria)))
+            .catch((error) => store.setState({error: error}));
+    }
+    onHandlerCancelar = (e, obj) => {
+        this.props.router.push('/galery/' + this.form.ID);
+        e.preventDefault();
     }
     onHandlerChange = (e, obj) => {
         this.form[obj.name] = obj.value;

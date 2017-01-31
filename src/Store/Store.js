@@ -30,21 +30,28 @@ export default class Store {
     }
     setState = (data, update) => {
         var _listaElementos = new listaElementos(this[elementos]);
-        for(let i in data)
-            if (data.hasOwnProperty(i))
+        for(let i in data) {
+            if (data.hasOwnProperty(i)) {
                 if (this[state][i] !== data[i] || data[i] === true) {
-                    if (data[i] !== true)
-                        this[state][i] = data[i]
-                    if (update !== false)
+                    if (data[i] !== true) {
+                        this[state][i] = data[i];
+                    }
+                    if (update !== false) {
                         _listaElementos.elementosUpdate(i);
+                    }
                 }
+            }
+        }
         const _elementos = _listaElementos.getList();
         for(let i = 0; i < _elementos.length; i++) {
             let item = _elementos[i].item;
-            if(item.Midlewares && Array.isArray(item.Midlewares))
-                for(let j = 0; j < item.Midlewares.length; j++)
-                    if(typeof item.Midlewares[j] === "function")
+            if(item.Midlewares && Array.isArray(item.Midlewares)) {
+                for(let j = 0; j < item.Midlewares.length; j++) {
+                    if(typeof item.Midlewares[j] === "function") {
                         item.Midlewares[j](this, data);
+                    }
+                }
+            }
         };
         for(let i = 0; i < _elementos.length; i++) {
             _elementos[i].item.setState({updateAt:new Date()});

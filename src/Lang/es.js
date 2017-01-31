@@ -45,6 +45,7 @@ export default {
     galeria_editar: "Editar",
     galeria_subir: "Subir",
     galeria_establecer: "Establecer como foto de perfil",
+    galeria_tomar_foto: "Tomar foto",
 
     // noticias
     noticias_publicar: "Publicar",
@@ -53,7 +54,9 @@ export default {
 
     //app
     app_save: "Guardar",
-    app_cancel: "Terminar",
+    app_cancel: "Cancelar",
+    app_aceptar: "Aceptar",
+    app_terminar: "Terminar",
 
     json_invalid: 'La respuesta del servidor no es valida'
 };
