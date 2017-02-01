@@ -38,7 +38,7 @@ export default class EditorImage extends EditorImageCtrl {
                     <Button primary onClick={this.props.onCancel}>{terminar}</Button>
                 </div>:null}
                 <br />
-                <canvas onMouseMove={this.onmousemove} onMouseDown={this.onmousedown}
+                <canvas onClick={this.onclick} onMouseMove={this.onmousemove} onMouseDown={this.onmousedown}
                     style={{position: "absolute", zIndex: 200}} 
                     id="canvasO"></canvas>
                 <canvas id="canvas" style={{width: "870px"}} />

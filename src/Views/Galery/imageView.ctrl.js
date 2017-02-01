@@ -14,7 +14,40 @@ export default class ImageViewCtrl extends Component {
         this.editar = false;
         this.forceUpdate();
     }
-    handlerUpload = (e, image) => {
-        
+    handleNext = (e, obj) => {
+        var image = this.props.params.image;
+        var galeria = this.props.params.galery;
+        var images = this.props.store.getState().images;
+        if (images.galery !== galeria)
+            return;
+        var items = images.items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i] !== image)
+                continue;
+            if (i === items.length - 1) {
+                this.props.router.push("/galery/" + galeria + "/" + items[0]);
+                return;
+            }
+            this.props.router.push("/galery/" + galeria + "/" + items[i + 1]);
+            return;
+        }
+    }
+    handlePrev = (e, obj) => {
+        var image = this.props.params.image;
+        var galeria = this.props.params.galery;
+        var images = this.props.store.getState().images;
+        if (images.galery !== galeria)
+            return;
+        var items = images.items;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i] !== image)
+                continue;
+            if (i === 0) {
+                this.props.router.push("/galery/" + galeria + "/" + items[items.length - 1]);
+                return;
+            }
+            this.props.router.push("/galery/" + galeria + "/" + items[i - 1]);
+            return;
+        }       
     }
 }

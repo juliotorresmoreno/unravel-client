@@ -30,6 +30,7 @@ export default class Galery extends ServiceBase
             });
         };
         this.describe = (galery) => {
+            console.log("describe");
             const token = store.getState().session.token;
             const url = store.getState().config.api + describe + "/" + galery + "/describe?token=" + token;
             return new Promise((resolve, reject) => {
@@ -65,6 +66,7 @@ export default class Galery extends ServiceBase
             });
         }
         this.establecerFotoPerfil = (data) => {
+            console.log("establecerFotoPerfil");
             const url = store.getState().config.api + fotoPerfil + "?token=" + store.getState().session.token;
             return new Promise((resolve, reject) => {
                 this.upload(url, data)
@@ -81,6 +83,7 @@ export default class Galery extends ServiceBase
             });
         }
         this.getGalerys = (usuario) => {
+            console.log("getGalerys");
             const token = store.getState().session.token;
             const url = store.getState().config.api +
                         (usuario !== undefined ? "/" + usuario: "") +
@@ -103,6 +106,7 @@ export default class Galery extends ServiceBase
             });
         }
         this.getImages = (usuario, galery, reload = true) => {
+            console.log("getImages");
             const token = store.getState().session.token;
             const url = store.getState().config.api
                         + (usuario !== undefined ? "/" + usuario: "") 

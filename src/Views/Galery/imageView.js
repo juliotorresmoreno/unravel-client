@@ -8,7 +8,8 @@ import EditorImage from './editorImage';
 export default class ImageView extends ImageViewCtrl {
     editar = false;
     componentWillMount = () => {
-        this.props.store.galery.getImages(this.props.params.galery, false)
+        var session = this.props.store.location.getSession(this.props.params.user);
+        this.props.store.galery.getImages(session.usuario, this.props.params.galery)
             .then((data) => {
                 this.isLoading = false;
                 this.mounted ? this.forceUpdate(): void(0);
@@ -37,9 +38,11 @@ export default class ImageView extends ImageViewCtrl {
                 </Header>
                 {!this.editar?<Button primary onClick={this.handleEstablecer}>{establecer}</Button>:null}
                 <EditorImage
-                    store={store}
+                    store={store} params={params}
                     onUpload={this.handlerUpload}
                     onCancel={this.handleCancelar}
+                    onNext={this.handleNext}
+                    onPrev={this.handlePrev}
                     editar={this.editar} url={url} />
                 <br />
             </div>

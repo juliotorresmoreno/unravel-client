@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component } = React;
 
-
+var _action = "";
 
 export default class EditorImageCtrl extends Component {
     tamanoLinea = 20;
@@ -83,11 +83,8 @@ export default class EditorImageCtrl extends Component {
             dtop = ntop - tamano;
             increment = Math.abs(dtop) > Math.abs(dleft) ? Math.abs(dtop): Math.abs(nleft);
             operation = Math.abs(dtop) > Math.abs(dleft) ? dtop / -increment: dleft / -increment;
-            //this.tamano = this.tamano + increment * operation * -1;
-            //this.tamano = this.tamano < 200 ? 200: this.tamano;
             this.top = top - tamano;
             this.left = left - tamano;
-            //console.log(parseInt(top), parseInt(left));
         }
         this.fillSelection();
         return true;
@@ -110,11 +107,41 @@ export default class EditorImageCtrl extends Component {
         this.top = ptop < limitY ? ptop: limitY;
         this.fillSelection();
     }
-    onmouseup = (e) => {
-    } 
+    paginator = (e) => {
+        if(e.buttons !== 0 || this.props.editar === true)
+            return;
+        var {left} = this.getLocation(e);
+        var iwidth = this.canvas.width;
+        var iheight = this.canvas.height;
+        var min = iwidth * 0.2;
+        var max = iwidth - min;
+        this.ctxO.clearRect(0, 0, iwidth, iheight);
+        this.canvasO.style.cursor = '';
+        _action = "";
+        if (left <= min) {
+            this.ctxO.fillStyle = "rgba(100, 100, 100, .2)"
+            this.ctxO.fillRect(0, 0, min, iheight);
+            this.canvasO.style.cursor = 'pointer';
+            _action = "prev";
+        }
+        if (left >= max) {
+            this.ctxO.fillStyle = "rgba(100, 100, 100, .2)"
+            this.ctxO.fillRect(max, 0, min, iheight);
+            this.canvasO.style.cursor = 'pointer';
+            _action = "next";
+        }
+    }
+    onclick = (e) => {
+        if (_action === "next" && typeof this.props.onNext === "function") {
+            this.props.onNext(e, this);
+        }
+        if (_action === "prev" && typeof this.props.onPrev === "function") {
+            this.props.onPrev(e, this);
+        }
+    }
     onmousemove = (e) => {
-        //if (this.resize(e) === false)
         this.move(e);
+        this.paginator(e);
     }
     clearSelection() {
         var iwidth = this.canvas.width,
@@ -198,7 +225,7 @@ export default class EditorImageCtrl extends Component {
         const tamano = this.getTamano();
         const editar = this.props.editar;
         var img = new Image();
-        img.crossOrigin="anonymous";
+        img.crossOrigin = "anonymous";
         img.onload = () => {
             var iheight = img.height;
             var iwidth  = img.width;
