@@ -26,7 +26,7 @@ export default class Friends extends ServiceBase
                     }
                 } 
                 const url = store.getState().config.api + consulta;
-                this.get(url + "?u=" + encodeURI(usuario) + "&token=" + store.getState().session.token)
+                this.get(url + "?u=" + encodeURI(usuario))
                     .then((response) => {
                         response.json()
                             .then((json) => {
@@ -78,7 +78,7 @@ export default class Friends extends ServiceBase
         {
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + rechazar;
-                this.delete(url + "?token=" + store.getState().session.token, {user: user})
+                this.delete(url, {user: user})
                     .then((response) => {
                         if (response.ok) actualizarEstado(user, "Desconocido");
                         response.json()
@@ -97,7 +97,7 @@ export default class Friends extends ServiceBase
         {
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + agregar;
-                this.put(url + "?token=" + store.getState().session.token, {user: user})
+                this.put(url, {user: user})
                     .then((response) => {
                         if (response.ok) {
                             response.json()
@@ -115,7 +115,7 @@ export default class Friends extends ServiceBase
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + consultaFriends;
                 const query = data && data.query ? "?q=" + encodeURI(data.query): "?";
-                this.get(url + query + "&token=" + store.getState().session.token)
+                this.get(url)
                     .then((response) => {
                         response.json()
                             .then((json) => {
@@ -138,7 +138,7 @@ export default class Friends extends ServiceBase
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + consulta;
                 const query = data && data.query ? "?q=" + encodeURI(data.query): "?";
-                this.get(url + query + "&token=" + store.getState().session.token)
+                this.get(url)
                     .then((response) => {
                         response.json()
                             .then((json) => {

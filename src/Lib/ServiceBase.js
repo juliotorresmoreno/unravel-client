@@ -4,28 +4,10 @@ export default class ServiceBase {
     secure = (func) => {
         return typeof func === "function" ? func: () => {};
     }
-    getJSON = (url) => {
-        return new Promise((successHandler, errorHandler) => {
-            var xhr = typeof XMLHttpRequest !== 'undefined'
-                ? new XMLHttpRequest()
-                : new window.ActiveXObject('Microsoft.XMLHTTP');
-            xhr.open('get', url, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        successHandler && successHandler(JSON.parse(xhr.responseText));
-                    } else {
-                        errorHandler && errorHandler(xhr.status);
-                    }
-                }
-            };
-            xhr.send();
-        });
-    };
     get = (url) => {
         return fetch(url, {
             method: "GET",
-            credentials: 'same-origin', 
+            credentials: 'include', 
             mode: 'cors' 
         });
     }
@@ -33,7 +15,7 @@ export default class ServiceBase {
         return fetch(url, {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
-            credentials: 'same-origin', 
+            credentials: 'include', 
             mode: 'cors',
             body: this.arrayToUrlEncode(data)
         });
@@ -41,7 +23,7 @@ export default class ServiceBase {
     upload = (url, data, headers = {}) => {
         return fetch(url, {
             method: "POST",
-            credentials: 'same-origin', 
+            credentials: 'include', 
             mode: 'cors',
             body: data
         });
@@ -50,7 +32,7 @@ export default class ServiceBase {
         return fetch(url, {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
-            credentials: 'same-origin', 
+            credentials: 'include', 
             mode: 'cors',
             body: this.arrayToUrlEncode(data)
         });
@@ -59,7 +41,7 @@ export default class ServiceBase {
         return fetch(url, {
             method: "POST",
             headers: Object.assign({'Content-Type': 'application/x-www-form-urlencoded'}, headers),
-            credentials: 'same-origin', 
+            credentials: 'include', 
             mode: 'cors',
             body: this.arrayToUrlEncode(data)
         });

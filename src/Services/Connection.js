@@ -12,7 +12,7 @@ export default class Connection extends ServiceBase {
         if(typeof socket !== 'undefined' || !token)
             return;
         if(typeof socket === 'undefined' && token) {
-            var url = _store.getState().config.servidorwss + '?token=' + token;
+            var url = _store.getState().config.servidorwss;
             socket = new WebSocket(url);
             socket.onopen = () => _store.setState({wss: {type: 'open'}});
             socket.onmessage = (request) => {

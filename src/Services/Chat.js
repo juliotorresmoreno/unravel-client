@@ -45,8 +45,7 @@ export default class Chat extends ServiceBase
             return new Promise((resolve, reject) => {
                 var url = store.getState().config.api + consultar + '/' + params.user + "?"
                                 + (params.antesDe ? "antesDe=" + encodeURI(params.antesDe) + "&": "")
-                                + (params.despuesDe ? "despuesDe=" + encodeURI(params.despuesDe) + "&": "")
-                                + "token=" + store.getState().session.token;;
+                                + (params.despuesDe ? "despuesDe=" + encodeURI(params.despuesDe) + "&": "");
                 this.get(url)
                     .then((response) => response.json())
                     .then((response) => {
@@ -78,7 +77,7 @@ export default class Chat extends ServiceBase
         }.bind(this);
         this.mensaje = function(user, mensaje) {
             return new Promise((resolve, reject) => {
-                var url = store.getState().config.api + enviar + "?token=" + store.getState().session.token;
+                var url = store.getState().config.api + enviar;
                 var data = { tipo: 'usuario', usuario: user, mensaje: mensaje };
                 this.post(url, data)
                     .then((response) => response.json())

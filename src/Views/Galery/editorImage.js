@@ -4,6 +4,7 @@ import { Button } from 'semantic-ui-react';
 import EditorImageCtrl from './editorImage.ctrl';
 
 export default class EditorImage extends EditorImageCtrl {
+    action = "";
     componentWillMount = () => {
         this.editar = this.props.editar;
     }
@@ -22,7 +23,7 @@ export default class EditorImage extends EditorImageCtrl {
         this.editar = data.editar;
     }
     componentDidUpdate = () => {
-        if(this.props.editar === false)
+        if(this.props.editar === false && this.action === "")
             this.clearSelection();
         this.editar = this.props.editar;
         this.drawComponent();
@@ -38,7 +39,11 @@ export default class EditorImage extends EditorImageCtrl {
                     <Button primary onClick={this.props.onCancel}>{terminar}</Button>
                 </div>:null}
                 <br />
-                <canvas onClick={this.onclick} onMouseMove={this.onmousemove} onMouseDown={this.onmousedown}
+                <canvas
+                    onClick={this.onclick} 
+                    onMouseMove={this.onmousemove}
+                    onMouseDown={this.onmousedown}
+                    onMouseLeave={this.onmouseleave}
                     style={{position: "absolute", zIndex: 200}} 
                     id="canvasO"></canvas>
                 <canvas id="canvas" style={{width: "870px"}} />

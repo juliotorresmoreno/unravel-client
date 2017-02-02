@@ -41,7 +41,7 @@ export default class listGalerys extends listGalerysCtrl {
                 <br />
                 <Grid doubling columns={4}>
                     {galerys.map((galeria, index) => {
-                        const url = api + "/" + session.usuario + "/galery/" + galeria.name + "/preview?token=" + store.getState().session.token;
+                        const url = api + "/" + session.usuario + "/galery/" + galeria.name + "/preview";
                         const href = luser + "/galery/" + encodeURI(galeria.name);
                         return (
                             <Grid.Column as="a" onClick={this.go(galeria.name, luser)} href={href} key={index}>

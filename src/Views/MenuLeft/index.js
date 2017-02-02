@@ -23,8 +23,7 @@ export default class MenuLeft extends MenuLeftCtrl {
         const fullname = session.nombres + ' ' + session.apellidos;
         const prev = session !== this.session ? '/' + session.usuario: '';
         const url = store.getState().config.api + "/" + session.usuario + "/galery/fotoPerfil" +
-                    "?token=" + store.getState().session.token +
-                    "&t=" + (store.getState().fotoPerfil || 'default');
+                    "?t=" + (store.getState().fotoPerfil || 'default');
         return (
             <div className="MenuLeft" style={{margin:15}}>
                 <Menu vertical>

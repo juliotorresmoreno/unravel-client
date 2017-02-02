@@ -11,7 +11,7 @@ export default class Galery extends ServiceBase
     {
         super();
         this.comentar = (data) => {
-            const url = store.getState().config.api + comentar + "?token=" + store.getState().session.token;
+            const url = store.getState().config.api + comentar;
             return new Promise((resolve, reject) => {
                 this.post(url, data)
                     .then((response) => {
@@ -34,7 +34,7 @@ export default class Galery extends ServiceBase
             });
         };
         this.publicar = (data) => {
-            const url = store.getState().config.api + publicar + "?token=" + store.getState().session.token;
+            const url = store.getState().config.api + publicar;
             return new Promise((resolve, reject) => {
                 this.post(url, data)
                     .then((response) => {
@@ -50,7 +50,7 @@ export default class Galery extends ServiceBase
             });
         };
         this.like = (data) => {
-            const url = store.getState().config.api + like + "?token=" + store.getState().session.token;
+            const url = store.getState().config.api + like;
             return new Promise((resolve, reject) => {
                 this.post(url, data)
                     .then((response) => {
@@ -73,7 +73,7 @@ export default class Galery extends ServiceBase
             });
         };
         this.consultar = (usuario) => {
-            const url = store.getState().config.api + consultar + "?token=" + store.getState().session.token;
+            const url = store.getState().config.api + consultar;
             return new Promise((resolve, reject) => {
                 this.get(url)
                     .then((response) => {

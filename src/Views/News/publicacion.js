@@ -18,7 +18,7 @@ export default class Publicacion extends PublicacionCtrl {
     render = () => {
         const noticia = this.props.noticia || {};
         const store = this.props.store;
-        const url = store.getState().config.api + "/" + noticia.usuario + "/galery/fotoPerfil?token=" + this.props.store.getState().session.token;
+        const url = store.getState().config.api + "/" + noticia.usuario + "/galery/fotoPerfil";
         const href = "/" + noticia.usuario + "/profile";
         const fecha = moment(noticia.create_at).format("MMM Do YYYY h:mm:ss a");
         const responder = store.lang.get("noticias_responder");

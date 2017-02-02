@@ -74,7 +74,6 @@ export default class GaleryView extends GaleryViewCtrl {
         const session = this.props.store.location.getSession(this.props.params.user);
         const isMe = session.usuario === store.getState().session.usuario;
         const luser = !isMe ? '/' + session.usuario: '';
-        const token = store.getState().session.token;
         return (
             <div>
                 <div>
@@ -95,7 +94,7 @@ export default class GaleryView extends GaleryViewCtrl {
                 <Grid doubling columns={3}>
                     {images.map((value, index) => {
                         const url = luser + "/galery/" + galery+ "/" + value;
-                        const src = api + url + "?mini=1&token=" + token;
+                        const src = api + url + "?mini=1";
                         return (
                             <Grid.Column as="a" onClick={this.go(url)} href={url} key={index}>
                                 <Image src={src} />

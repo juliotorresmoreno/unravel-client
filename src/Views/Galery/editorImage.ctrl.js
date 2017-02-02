@@ -1,8 +1,6 @@
 import React from 'react';
 const { Component } = React;
 
-var _action = "";
-
 export default class EditorImageCtrl extends Component {
     tamanoLinea = 20;
     getLocation = (e) => {
@@ -117,27 +115,31 @@ export default class EditorImageCtrl extends Component {
         var max = iwidth - min;
         this.ctxO.clearRect(0, 0, iwidth, iheight);
         this.canvasO.style.cursor = '';
-        _action = "";
+        this.action = "";
         if (left <= min) {
             this.ctxO.fillStyle = "rgba(100, 100, 100, .2)"
             this.ctxO.fillRect(0, 0, min, iheight);
             this.canvasO.style.cursor = 'pointer';
-            _action = "prev";
+            this.action = "prev";
         }
         if (left >= max) {
             this.ctxO.fillStyle = "rgba(100, 100, 100, .2)"
             this.ctxO.fillRect(max, 0, min, iheight);
             this.canvasO.style.cursor = 'pointer';
-            _action = "next";
+            this.action = "next";
         }
     }
     onclick = (e) => {
-        if (_action === "next" && typeof this.props.onNext === "function") {
+        if (this.action === "next" && typeof this.props.onNext === "function") {
             this.props.onNext(e, this);
         }
-        if (_action === "prev" && typeof this.props.onPrev === "function") {
+        if (this.action === "prev" && typeof this.props.onPrev === "function") {
             this.props.onPrev(e, this);
         }
+    }
+    onmouseleave = (e) => {
+        this.action = "";
+        this.clearSelection();
     }
     onmousemove = (e) => {
         this.move(e);
@@ -225,7 +227,6 @@ export default class EditorImageCtrl extends Component {
         const tamano = this.getTamano();
         const editar = this.props.editar;
         var img = new Image();
-        img.crossOrigin = "anonymous";
         img.onload = () => {
             var iheight = img.height;
             var iwidth  = img.width;

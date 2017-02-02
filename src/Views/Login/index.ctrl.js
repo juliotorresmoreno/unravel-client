@@ -10,7 +10,7 @@ export default class LoginCtrl extends Component {
         store.auth.login(this.form)
             .then(() => {
                 store.friends.friends();
-                store.connection.open(store.getState().session.token);
+                store.connection.open(true);
             })
             .catch((error) => {
                 if (error.error && error.error.stack) {
