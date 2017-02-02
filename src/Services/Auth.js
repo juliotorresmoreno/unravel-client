@@ -12,7 +12,7 @@ export default class Auth extends ServiceBase
         super();
         const resolve = (url, data) => {
             return (resolve, reject) => {
-                (() => data !== undefined ? this.post(url, data): fetch(url))()
+                (() => data !== undefined ? this.post(url, data): this.get(url))()
                     .then((response) => {
                         response.json()
                             .then((json) => {
@@ -70,7 +70,7 @@ export default class Auth extends ServiceBase
         this.logout = () => 
         {
             return new Promise((resolve, reject) => {
-                fetch(store.getState().config.api + logout)
+                this.get(store.getState().config.api + logout)
                     .then((response) => {
                         if(response.ok)
                         {

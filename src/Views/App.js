@@ -5,7 +5,7 @@ import Head from './Head';
 import Loading from './Loading';
 import Main from './Main';
 import News from './News';
-
+import Login from './Login';
 
 class App extends Component {
     isLoading = true;
@@ -31,8 +31,11 @@ class App extends Component {
     getChildren() {
         const {store} = this.props.route;
         const {params, route, router} = this.props;
+        const autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized;
         if (this.isLoading)
             return <Loading />;
+        if (autorized && !store.getState().session)
+            return <Login params={params} route={route} router={router} store={store}/>;
         if (this.props.children)
             return React.cloneElement(this.props.children, {
                 params:params, route:route, router:router, store:store
@@ -54,8 +57,6 @@ class App extends Component {
                     this.isLoading = false;
                     this.mounted ? this.forceUpdate(): void(0);
                 });
-        } else if (session !== undefined) {
-            this.isLoading = false;
         }
 
         let children = this.getChildren();

@@ -12,7 +12,7 @@ export default class MenuTop extends Component {
             user = this.props.params.user;
         const estados = {
             Desconocido: {label: "Agregar", handler: this.agregarAmigo},
-            Solicitado: {label: solicito ? "Cancelar soliitud": "Rechazar soliitud", handler: this.rechazarAmigo}
+            Solicitado: {label: solicito ? "Cancelar solicitud": "Rechazar solicitud", handler: this.rechazarAmigo}
         }
         if (!user || (session && user === session.usuario) || typeof estados[usuario.estado] === "undefined")
             return null;
@@ -28,10 +28,10 @@ export default class MenuTop extends Component {
     }
     agregarAmigo = () => {
         var user = this.props.params.user;
-        this.props.store.friends.add(user).then(() => {});
+        this.props.store.friends.add(user);
     }
     rechazarAmigo = () => {
         var user = this.props.params.user;
-        this.props.store.friends.reject(user).then(() => {});
+        this.props.store.friends.reject(user);
     }
 }

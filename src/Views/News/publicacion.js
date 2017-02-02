@@ -24,7 +24,7 @@ export default class Publicacion extends PublicacionCtrl {
         const responder = store.lang.get("noticias_responder");
         const comentarios = this.comentarios ? noticia.comentarios || []: [];
         return (
-            <div>
+            <div style={{marginBottom: 15}}>
                 <Comment.Group>
                     <Comment>
                         <Comment.Avatar src={url} />
@@ -64,7 +64,7 @@ export default class Publicacion extends PublicacionCtrl {
                                 onChange={this.onHandlerChange}
                                 onKeyPress={this.onHandlerKeyPress}
                                 value={this.comentario}
-                                style={{width: 300}} />
+                                style={{width: 300, marginTop: 8}} />
                         </Comment.Content>
                     </Comment>
                 </Comment.Group>

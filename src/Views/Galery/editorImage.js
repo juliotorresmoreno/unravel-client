@@ -51,5 +51,3 @@ export default class EditorImage extends EditorImageCtrl {
         );
     }
 }
-
-//onMouseUp={this.onmouseup} 

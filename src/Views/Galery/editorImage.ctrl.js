@@ -130,6 +130,8 @@ export default class EditorImageCtrl extends Component {
         }
     }
     onclick = (e) => {
+        if(this.props.editar === true)
+            return;
         if (this.action === "next" && typeof this.props.onNext === "function") {
             this.props.onNext(e, this);
         }
@@ -138,8 +140,7 @@ export default class EditorImageCtrl extends Component {
         }
     }
     onmouseleave = (e) => {
-        this.action = "";
-        this.clearSelection();
+        if (this.props.editar === false) this.clearSelection();
     }
     onmousemove = (e) => {
         this.move(e);
@@ -227,6 +228,7 @@ export default class EditorImageCtrl extends Component {
         const tamano = this.getTamano();
         const editar = this.props.editar;
         var img = new Image();
+        img.crossOrigin = "use-credentials";
         img.onload = () => {
             var iheight = img.height;
             var iwidth  = img.width;

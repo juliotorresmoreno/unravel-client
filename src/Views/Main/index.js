@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 
-import Login from '../Login';
 import MenuTop from '../MenuTop';
 import MenuLeft from '../MenuLeft';
 import MenuRight from '../MenuRight';
 
 export default class Main extends Component {
     render = () => {
-        const
-            autorized = this.props.router.routes[this.props.router.routes.length - 1].autorized,
-            {params, store, route, router,children} = this.props;
-        if (autorized && store.getState().session)
+        const {params, store, route, router, children} = this.props;
+        if (store.getState().session)
             return (
                 <div style={{display:'flex',flexDirection:'vertical',height:'100%'}}>
                     <MenuLeft params={params} route={route} router={router} store={store} />
@@ -23,8 +20,6 @@ export default class Main extends Component {
                     <MenuRight params={params} route={route} router={router} store={store} />
                 </div>
             );
-        if (autorized && !this.isLoading)
-            return <Login params={params} route={route} router={router} store={store}/>;
         return children;
     }
 }

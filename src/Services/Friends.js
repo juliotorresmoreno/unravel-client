@@ -114,8 +114,8 @@ export default class Friends extends ServiceBase
         {
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + consultaFriends;
-                const query = data && data.query ? "?q=" + encodeURI(data.query): "?";
-                this.get(url)
+                const query = data && data.query ? "?q=" + encodeURI(data.query): "";
+                this.get(url + query)
                     .then((response) => {
                         response.json()
                             .then((json) => {
@@ -137,8 +137,8 @@ export default class Friends extends ServiceBase
         {
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + consulta;
-                const query = data && data.query ? "?q=" + encodeURI(data.query): "?";
-                this.get(url)
+                const query = data && data.query ? "?q=" + encodeURI(data.query): "";
+                this.get(url + query)
                     .then((response) => {
                         response.json()
                             .then((json) => {
