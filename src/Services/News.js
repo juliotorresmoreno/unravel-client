@@ -72,14 +72,24 @@ export default class Galery extends ServiceBase
                     .catch((error) => this.secure(reject)(error));
             });
         };
-        this.consultar = (usuario) => {
-            const url = store.getState().config.api + consultar;
+        this.consultar = (data) => {
+            var usuario = data.usuario || store.getState().session.usuario;
+            var url = store.getState().config.api + (data.usuario ? "/" + data.usuario: '') + consultar;
+            url+= data.antesDe ? "?antesDe=" + data.antesDe: "";
+            var reload = typeof data.antesDe === "undefined"
+                            || usuario !== data.usuario 
+                            || usuario !== store.getState().news.usuario;
             return new Promise((resolve, reject) => {
                 this.get(url)
                     .then((response) => {
                         response.json()
                             .then((json) => {
-                                store.setState({news: json.data});
+                                if (reload) {
+                                    store.setState({ news: { usuario: usuario, data: json.data } });
+                                } else {
+                                    var news = store.getState().news.data.concat(json.data);
+                                    store.setState({ news: { usuario: usuario, data: news } });
+                                }
                                 response.ok ?
                                     this.secure(resolve)(json):
                                     this.secure(reject)(json);
