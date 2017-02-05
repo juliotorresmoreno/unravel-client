@@ -21,11 +21,21 @@ export default class NewsCtrl extends Component {
         const store = this.props.store;
         const news = this.getNews();
         const session = this.props.store.location.getSession(this.props.params.user);
-        if (news.length > 0) {
-            var antesDe = news[news.length - 1].create_at;
-            store.news.consultar({usuario: session.usuario, antesDe: antesDe});
+        var antesDe;
+        if (this.props.router.routes.length === 1) {
+            if (news.length > 0) {
+                antesDe = news[news.length - 1].create_at;
+                store.news.consultar({usuario: session.usuario, antesDe: antesDe});
+                return;
+            }
+            store.news.consultar({usuario: session.usuario});
             return;
         }
-        store.news.consultar({usuario: session.usuario});
+        if (news.length > 0) {
+            antesDe = news[news.length - 1].create_at;
+            store.news.consultar({antesDe: antesDe});
+            return;
+        }
+        store.news.consultar();
     }
 }
