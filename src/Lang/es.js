@@ -33,6 +33,11 @@ export default {
     profile_creencias_politicas: "Creencias politicas",
 
     // chat
+    chat_videollamada: "Videollamada",
+    chat_llamada: "Llamada",
+    chat_mensaje_videollamada_envia: "Haz hecho una videollamada.",
+    chat_mensaje_videollamada_recive: "Tienes una videollamada.",
+    chat_mensaje_videollamada_rechazada: "Haz cancelado/rechazado una videollamada.",
     chat_mensaje_send: "Enviar",
     chat_mensaje_texto: "Escribe tu mensaje",
 
@@ -56,6 +61,7 @@ export default {
     app_save: "Guardar",
     app_cancel: "Cancelar",
     app_aceptar: "Aceptar",
+    app_rechazar: "Rechazar",
     app_terminar: "Terminar",
 
     json_invalid: 'La respuesta del servidor no es valida'

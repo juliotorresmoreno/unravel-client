@@ -19,7 +19,11 @@ export default class ChatCtrl extends Component {
         this.form.mensaje = e.target.value;
         this.forceUpdate();
     }
-
+    onHandlerVideollamada = (e) => {
+        this.props.store.chat.videollamada(this.props.params.user);
+    }
+    onHandlerLlamada = (e) => {
+    }
     onScroll = (e, obj) => {
         if(e.target.scrollTop === 0 && consultable) {
             const chats = this.props.store.getState().chats[this.props.params.user] || [];

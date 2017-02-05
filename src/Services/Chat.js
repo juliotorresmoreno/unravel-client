@@ -23,20 +23,28 @@ export default class Chat extends ServiceBase
                 (store, {wss}) => {
                     if (typeof wss !== "object")
                         return;
-                    var { type, data, error } = wss;;
-                    switch(type) {
-                        case "message":
-                            var usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
-                            if(store.getState().chats === undefined)
-                                store.getState().chats = {};
-                            if(store.getState().chats[usuario] === undefined)
-                                store.getState().chats[usuario] = [];
-                            store.getState().chats[usuario].push(data);
-                            break;
-                        case "error":
-                            console.log(error);
-                            break;
-                        default:
+                    var { type, data } = wss;
+                    if (type === "message") {
+                        switch(data.action) {
+                            case "mensaje":
+                                var usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
+                                if(store.getState().chats === undefined)
+                                    store.getState().chats = {};
+                                if(store.getState().chats[usuario] === undefined)
+                                    store.getState().chats[usuario] = [];
+                                store.getState().chats[usuario].push(data);
+                                break;
+                            case "connect":
+                                var friends = store.getState().friends || [];
+                                for (let i = 0; i < friends.length; i++) {
+                                    if (friends[i].usuario === data.usuario) {
+                                        friends[i].conectado = true;
+                                        store.setState({friends: true});
+                                        break;
+                                    }
+                                }
+                                break;
+                        }
                     }
                 }
             ]

@@ -1,15 +1,21 @@
 import React from 'react';
 
-import { Button, Comment } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
+import VideoLlamada from './videollamada';
+import Comentario from './comentario';
 import ChatCtrl from './index.ctrl';
-const moment = window.moment;
 
 if(window.attachEvent && !window.addEventListener)
     window.addEventListener = window.attachEvent;
 else if(!window.addEventListener)
     window.addEventListener = () => {};
 
+var getHeight = function() {
+    return (window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight) - 180;
+};
 
 (function() {
     var resizeTimeout = null;
@@ -22,12 +28,9 @@ else if(!window.addEventListener)
         }
     }
     function actualResizeHandler() {
-        const height = window.innerHeight
-                        || document.documentElement.clientHeight
-                        || document.body.clientHeight;
         var el = document.getElementById("conversacion");
         if (el !== null && el !== undefined) {
-            el.style.height = (height - 140) + 'px';
+            el.style.height = getHeight() + 'px';
         }
     }
     window.addEventListener("resize", resizeThrottler, false);
@@ -66,35 +69,33 @@ export default class Chat extends ChatCtrl {
     }
 
     render = () => {
-        const session = this.props.store.getState().session;
-        const usuario = this.props.store.getState().usuario;
         const store = this.props.store;
+        const session = store.getState().session;
+        const usuario = store.getState().usuario;
         const send = store.lang.get('chat_mensaje_send');
         const label = store.lang.get('chat_mensaje_texto');
+        const llamada = store.lang.get('chat_llamada');
+        const videollamada = store.lang.get('chat_videollamada');
         const chats = store.getState().chats[this.props.params.user] || [];
-        const height = window.innerHeight
-                        || document.documentElement.clientHeight
-                        || document.body.clientHeight;
         return (
             <div style={{border: "1px solid rgba(34,36,38,.15)", height: "100%", display: 'flex', flexDirection: 'column'}}>
                 <div style={{flex:1, margin: 10}}>
-                    <div id="conversacion" onMouseDown={this.onMouseDown} onScroll={this.onScroll} style={{height: height - 140, overflowY: 'scroll'}}>
+                    <div style={{marginBottom: 10}}>
+                        <Button primary onClick={this.onHandlerVideollamada}>{videollamada}</Button>
+                        <Button primary>{llamada}</Button>
+                    </div>
+                    <div id="conversacion" onMouseDown={this.onMouseDown} onScroll={this.onScroll} style={{height: getHeight(), overflowY: 'scroll'}}>
                         {chats.map((value, index) => {
                             const user = value.usuario === session.usuario ? session: usuario;
-                            return (
-                                <Comment.Group key={index}>
-                                    <Comment>
-                                        <Comment.Avatar src='/static/svg/user-3.svg' />
-                                        <Comment.Content>
-                                            <Comment.Author as='a'>{user.nombres} {user.apellidos}</Comment.Author>
-                                            <Comment.Metadata>
-                                                <div>{moment(value.fecha).format("MMM Do YYYY h:mm:ss a")}</div>
-                                            </Comment.Metadata>
-                                            <Comment.Text>{value.mensaje}</Comment.Text>
-                                        </Comment.Content>
-                                    </Comment>
-                                </Comment.Group>
-                            );
+                            const foto = store.getState().config.api + '/' + value.usuario + '/galery/fotoPerfil';
+                            switch (value.action) {
+                                case "mensaje":
+                                    return <Comentario key={index} foto={foto} user={user} comentario={value} />;
+                                case "videollamada":
+                                    return <VideoLlamada key={index} foto={foto} user={user} comentario={value} store={store} />;
+                                default:
+                                    return null;
+                            }
                         })}
                     </div>
                 </div>
