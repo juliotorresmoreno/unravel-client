@@ -34,16 +34,22 @@ export default class Chat extends ServiceBase
                                     store.getState().chats[usuario] = [];
                                 store.getState().chats[usuario].push(data);
                                 break;
-                            case "connect":
+                            case "connect": case "disconnect":
                                 var friends = store.getState().friends || [];
+                                var conectado = data.action === "connect";
+                                if (store.getState().usuario && store.getState().usuario.usuario === data.usuario)
+                                {
+                                    store.getState().usuario.conectado = conectado;
+                                }
                                 for (let i = 0; i < friends.length; i++) {
                                     if (friends[i].usuario === data.usuario) {
-                                        friends[i].conectado = true;
-                                        store.setState({friends: true});
+                                        friends[i].conectado = conectado;
+                                        store.setState({friends: true, usuario: true});
                                         break;
                                     }
                                 }
                                 break;
+                            default:
                         }
                     }
                 }

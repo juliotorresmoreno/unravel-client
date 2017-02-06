@@ -41,7 +41,7 @@ export default class Chat extends ChatCtrl {
     form = {mensaje: ""}
     constructor(args) {
         super(args);
-        this.props.store.subscribe(this, ['wss'], "Chat");
+        this.props.store.subscribe(this, ['wss', 'friends'], "Chat");
 
         const chats = this.props.store.getState().chats[this.props.params.user] || [{}];
         if (chats.length > 0) {
@@ -81,8 +81,12 @@ export default class Chat extends ChatCtrl {
             <div style={{border: "1px solid rgba(34,36,38,.15)", height: "100%", display: 'flex', flexDirection: 'column'}}>
                 <div style={{flex:1, margin: 10}}>
                     <div style={{marginBottom: 10}}>
-                        <Button primary onClick={this.onHandlerVideollamada}>{videollamada}</Button>
-                        <Button primary>{llamada}</Button>
+                        <Button primary disabled={!usuario.conectado} onClick={this.onHandlerVideollamada}>
+                            {videollamada}
+                        </Button>
+                        <Button primary disabled={!usuario.conectado}>
+                            {llamada}
+                        </Button>
                     </div>
                     <div id="conversacion" onMouseDown={this.onMouseDown} onScroll={this.onScroll} style={{height: getHeight(), overflowY: 'scroll'}}>
                         {chats.map((value, index) => {
