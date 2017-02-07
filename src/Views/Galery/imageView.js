@@ -30,6 +30,7 @@ export default class ImageView extends ImageViewCtrl {
             image  = params.image;
         const api = store.getState().config.api;
         const establecer = store.lang.get("galeria_establecer");
+        const eliminar = store.lang.get("app_eliminar");
         const url = api + "/galery/" + galery + "/" + image;
         return (
             <div>
@@ -37,6 +38,7 @@ export default class ImageView extends ImageViewCtrl {
                     <a href={"/galery/" + galery} onClick={this.go}>{galery}</a>
                 </Header>
                 {!this.editar ? <Button primary onClick={this.handleEstablecer}>{establecer}</Button>: null}
+                {!this.editar ? <Button primary onClick={this.handleEliminar}>{eliminar}</Button>: null}
                 <EditorImage
                     store={store} params={params}
                     onUpload={this.handlerUpload}

@@ -12,9 +12,8 @@ export default class VideoLlamada extends VideoLlamadaCtrl {
         const aceptar = store.lang.get('app_aceptar');
         const rechazar = store.lang.get('app_rechazar');
         const cancelar = store.lang.get('app_cancel');
-        
         var mensaje, options;
-        if (this.state.rechazado) {
+        if (value.estado === "rechazada") {
             mensaje = store.lang.get("chat_mensaje_videollamada_rechazada");
             options = null;
         } else {
@@ -53,7 +52,6 @@ export default class VideoLlamada extends VideoLlamadaCtrl {
                         <Comment.Text>
                             <div>{mensaje}</div>
                             {options}
-                            <div>{JSON.stringify(value)}</div>
                         </Comment.Text>
                     </Comment.Content>
                 </Comment>

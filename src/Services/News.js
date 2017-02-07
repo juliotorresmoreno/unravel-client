@@ -17,9 +17,9 @@ export default class Galery extends ServiceBase
                     .then((response) => {
                         response.json()
                             .then((json) => {
-                                for(let i = 0; i < store.getState().news.length; i++) {
-                                    if (store.getState().news[i].ID === json.data.ID) {
-                                        store.getState().news[i].comentarios = json.data.comentarios;
+                                for(let i = 0; i < store.getState().news.data.length; i++) {
+                                    if (store.getState().news.data[i].ID === json.data.ID) {
+                                        store.getState().news.data[i].comentarios = json.data.comentarios;
                                         break;
                                     }
                                 }
@@ -56,9 +56,9 @@ export default class Galery extends ServiceBase
                     .then((response) => {
                         response.json()
                             .then((json) => {
-                                for(let i = 0; i < store.getState().news.length; i++) {
-                                    if (store.getState().news[i].ID === json.data.ID) {
-                                        store.getState().news[i].likes = json.data.likes;
+                                for(let i = 0; i < store.getState().news.data.length; i++) {
+                                    if (store.getState().news.data[i].ID === json.data.ID) {
+                                        store.getState().news.data[i].likes = json.data.likes;
                                         break;
                                     }
                                 }
@@ -72,7 +72,7 @@ export default class Galery extends ServiceBase
                     .catch((error) => this.secure(reject)(error));
             });
         };
-        this.consultar = (data) => {
+        this.consultar = (data = {}) => {
             var usuario = data.usuario || store.getState().session.usuario;
             var url = store.getState().config.api + (data.usuario ? "/" + data.usuario: '') + consultar;
             url+= data.antesDe ? "?antesDe=" + data.antesDe: "";
@@ -92,7 +92,10 @@ export default class Galery extends ServiceBase
                                     this.secure(resolve)(json):
                                     this.secure(reject)(json);
                             })
-                            .catch((error) => this.secure(reject)(error))
+                            .catch((error) => {
+                                console.log(error);
+                                //this.secure(reject)(error)
+                            })
                     })
                     .catch((error) => this.secure(reject)(error));
             });

@@ -2,7 +2,8 @@ import ServiceBase from '../Lib/ServiceBase';
 const
     consultar = "/chats",
     enviar = "/chats/mensaje",
-    videollamada = "/chats/videollamada";
+    videollamada = "/chats/videollamada",
+    rechazarvideollamada = "/chats/rechazarvideollamada";
 
 export default class Chat extends ServiceBase
 {
@@ -25,9 +26,20 @@ export default class Chat extends ServiceBase
                         return;
                     var { type, data } = wss;
                     if (type === "message") {
+                        var usuario = "";
                         switch(data.action) {
-                            case "mensaje":
-                                var usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
+                            case "rechazarvideollamada":
+                                usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
+                                if(store.getState().chats === undefined)
+                                    store.getState().chats = {};
+                                if(store.getState().chats[usuario] === undefined)
+                                    store.getState().chats[usuario] = [];
+                                for(let i = 0; i < store.getState().chats[usuario].length; i++)
+                                    if (store.getState().chats[usuario][i].action === "videollamada")
+                                        store.getState().chats[usuario][i].estado = "rechazada";
+                                break;
+                            case "mensaje": case "videollamada": case "llamada":
+                                usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
                                 if(store.getState().chats === undefined)
                                     store.getState().chats = {};
                                 if(store.getState().chats[usuario] === undefined)
@@ -38,16 +50,13 @@ export default class Chat extends ServiceBase
                                 var friends = store.getState().friends || [];
                                 var conectado = data.action === "connect";
                                 if (store.getState().usuario && store.getState().usuario.usuario === data.usuario)
-                                {
                                     store.getState().usuario.conectado = conectado;
-                                }
-                                for (let i = 0; i < friends.length; i++) {
+                                for (let i = 0; i < friends.length; i++)
                                     if (friends[i].usuario === data.usuario) {
                                         friends[i].conectado = conectado;
                                         store.setState({friends: true, usuario: true});
                                         break;
                                     }
-                                }
                                 break;
                             default:
                         }
@@ -111,6 +120,24 @@ export default class Chat extends ServiceBase
             return new Promise((resolve, reject) => {
                 var url = store.getState().config.api + videollamada;
                 var data = { tipo: 'usuario', usuario: user };
+                this.post(url, data)
+                    .then((response) => response.json())
+                    .then((response) => {
+                        if(response.success) {
+                            this.secure(resolve)(response);
+                        } else {
+                            this.secure(reject)(response);
+                        }
+                    })
+                    .catch((error) => {
+                        this.secure(reject)(error);
+                    });
+            });
+        }.bind(this);
+        this.rechazarvideollamada = function(user) {
+            return new Promise((resolve, reject) => {
+                var url = store.getState().config.api + rechazarvideollamada;
+                var data = { usuario: user };
                 this.post(url, data)
                     .then((response) => response.json())
                     .then((response) => {

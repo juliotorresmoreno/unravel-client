@@ -6,6 +6,14 @@ export default class ImageViewCtrl extends Component {
         this.editar = true;
         this.forceUpdate();
     }
+    handleEliminar = (e, obj) => {
+        var {galery, image} = this.props.params;
+        var store = this.props.store;
+        store.galery.eliminar({image: image, galery: galery})
+            .then(() => {
+                this.props.router.push("/galery/" + galery);
+            });
+    }
     handleEstablecer = (e, obj) => {
         this.editar = true;
         this.forceUpdate();

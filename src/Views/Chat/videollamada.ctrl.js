@@ -8,6 +8,7 @@ export default class VideoLlamadaCtrl extends Component {
     }
     onHandlerRechazar = (e, obj) => {
         e.preventDefault();
-        this.setState({rechazado: true});
+        var store = this.props.store;
+        store.chat.rechazarvideollamada(this.props.store.getState().usuario.usuario);
     }
 }

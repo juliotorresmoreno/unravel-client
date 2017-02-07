@@ -13,7 +13,11 @@ export default class News extends NewsCtrl {
         store.subscribe(this, ['news'], "News");
         const session = store.location.getSession(params.user);
         store.getState().news = {};
-        store.news.consultar({usuario: session.usuario});
+        if (typeof params.user !== "undefined") {
+            store.news.consultar({usuario: params.user});
+            return;
+        }
+        store.news.consultar();
     }
     getNews = function() {
         const {store} = this.props;
