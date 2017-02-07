@@ -38,7 +38,7 @@ export default class ImageView extends ImageViewCtrl {
                     <a href={"/galery/" + galery} onClick={this.go}>{galery}</a>
                 </Header>
                 {!this.editar ? <Button primary onClick={this.handleEstablecer}>{establecer}</Button>: null}
-                {!this.editar ? <Button primary onClick={this.handleEliminar}>{eliminar}</Button>: null}
+                {!this.editar ? <Button negative onClick={this.handleEliminar}>{eliminar}</Button>: null}
                 <EditorImage
                     store={store} params={params}
                     onUpload={this.handlerUpload}

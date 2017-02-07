@@ -62,7 +62,6 @@ class App extends Component {
                 .then((data) => {
                     this.isLoading = false;
                     this.mounted ? this.forceUpdate(): void(0);
-                    console.log(route.store.getState().usuario);
                 });
         }
 

@@ -12,17 +12,12 @@ export default class Contact extends ContactCtrl {
     form = {};
     constructor(args) {
         super(args);
-        this.session = (() => {
-            if (this.props.params.user && this.props.store.getState().usuario)
-                return this.props.store.getState().usuario;
-            return this.props.store.getState().session;
-        })();
         if(this.props.store.getState().profile) {
             this.form = Object.assign(this.props.store.getState().profile, this.form);
         }
     }
     render() {
-        const session = this.session;
+        const session = this.props.store.location.getSession(this.props.params.user);
         if (session !== this.props.store.getState().session)
         {
             let params = this.props.params;

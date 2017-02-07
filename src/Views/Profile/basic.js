@@ -39,13 +39,9 @@ export default class Basic extends BasicCtrl {
     form = {}
     constructor(args) {
         super(args);
-        this.session = (() => {
-            if (this.props.params.user && this.props.store.getState().usuario)
-                return this.props.store.getState().usuario;
-            return this.props.store.getState().session;
-        })();
-        this.form.nombres = this.session.nombres;
-        this.form.apellidos = this.session.apellidos;
+        const session = this.props.store.location.getSession(this.props.params.user);
+        this.form.nombres = session.nombres;
+        this.form.apellidos = session.apellidos;
         if(this.props.store.getState().profile) {
             this.form = Object.assign(this.props.store.getState().profile, this.form);
             if(this.form.nacimiento_mes)
@@ -53,7 +49,7 @@ export default class Basic extends BasicCtrl {
         }
     }
     render() {
-        const session = this.session;
+        const session = this.props.store.location.getSession(this.props.params.user);
         if (session !== this.props.store.getState().session)
         {
             let params = this.props.params;

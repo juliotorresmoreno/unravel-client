@@ -8,8 +8,9 @@ export default class Location extends ServiceBase
         this.getSession = (user) => {
             var usuario = store.getState().usuario;
             var session = store.getState().session;
-            if (user && usuario && usuario.usuario === session.usuario)
+            if (user && usuario && usuario.usuario !== session.usuario) {
                 return usuario;
+            }
             return session;
         };
         this.store = store;

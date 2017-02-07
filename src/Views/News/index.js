@@ -9,9 +9,8 @@ const TextAreaStyle = {height: 50};
 export default class News extends NewsCtrl {
     form = {noticia: ""}
     componentWillMount() {
-        const {store,params} = this.props;
+        const {store, params} = this.props;
         store.subscribe(this, ['news'], "News");
-        const session = store.location.getSession(params.user);
         store.getState().news = {};
         if (typeof params.user !== "undefined") {
             store.news.consultar({usuario: params.user});
