@@ -1,61 +1,42 @@
 import React from 'react';
-import { Comment } from 'semantic-ui-react'
-import VideoLlamadaCtrl from './videollamada.ctrl';
-const moment = window.moment;
+import VideoLLamadaCtrl from './videollamada.ctrl';
+const SimpleWebRTC = window.SimpleWebRTC;
+var webrtc;
 
-export default class VideoLlamada extends VideoLlamadaCtrl {
-    state = {rechazado: false};
-    render = () => {
-        const {user, foto, store} = this.props;
-        const session = store.getState().session;
-        const value = this.props.comentario;
-        const aceptar = store.lang.get('app_aceptar');
-        const rechazar = store.lang.get('app_rechazar');
-        const cancelar = store.lang.get('app_cancel');
-        var mensaje, options;
-        if (value.estado === "rechazada") {
-            mensaje = store.lang.get("chat_mensaje_videollamada_rechazada");
-            options = null;
+export default class VideoLLamada extends VideoLLamadaCtrl {
+    componentDidMount = () => {
+        const usuario = this.props.store.getState().usuario;
+        const session = this.props.store.getState().session;
+        var room;
+        if (session.usuario > usuario.usuario) {
+            room = "room_" + session.usuario + "_" + usuario.usuario;
         } else {
-            if (user.usuario === session.usuario) {
-                mensaje = store.lang.get('chat_mensaje_videollamada_envia');;
-                options = (
-                    <div>
-                        <a href="" onClick={this.onHandlerRechazar}>
-                            {cancelar}
-                        </a>
-                    </div>
-                );
-            } else {
-                mensaje = store.lang.get('chat_mensaje_videollamada_recive');;
-                options = (
-                    <div>
-                        <a href="" onClick={this.onHandlerAceptar}>
-                            {aceptar}
-                        </a>/
-                        <a href="" onClick={this.onHandlerRechazar}>
-                            {rechazar}
-                        </a>
-                    </div>
-                );
-            }
+            room = "room_" + usuario.usuario + "_" + session.usuario;
         }
+        if (typeof webrtc === "undefined") {
+            webrtc = new SimpleWebRTC({
+                localVideoEl: 'localVideo',
+                remoteVideosEl: 'remoteVideos',
+                autoRequestMedia: true,
+                media: {
+                    video: true,
+                    audio: false
+                },
+            });
+            webrtc.on('readyToCall', function () {
+                webrtc.joinRoom(room);
+            });
+            return;
+        }
+        webrtc.joinRoom(room);
+    }
+    render = () => {
         return (
-            <Comment.Group>
-                <Comment>
-                    <Comment.Avatar src={foto} />
-                    <Comment.Content>
-                        <Comment.Author as='a'>{user.nombres} {user.apellidos}</Comment.Author>
-                        <Comment.Metadata>
-                            <div>{moment(value.fecha).format("MMM Do YYYY h:mm:ss a")}</div>
-                        </Comment.Metadata>
-                        <Comment.Text>
-                            <div>{mensaje}</div>
-                            {options}
-                        </Comment.Text>
-                    </Comment.Content>
-                </Comment>
-            </Comment.Group>
+            <div>
+                <div id="remoteVideos"></div>
+            </div>
         )
     }
 }
+
+//<video id="localVideo" controls></video>

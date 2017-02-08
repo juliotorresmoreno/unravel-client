@@ -3,6 +3,6 @@ const { Component } = React;
 
 
 
-export default class VideoLLamadaCtrl extends Component {
+export default class ConversacionCtrl extends Component {
   
 }

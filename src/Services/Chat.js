@@ -38,7 +38,13 @@ export default class Chat extends ServiceBase
                                     if (store.getState().chats[usuario][i].action === "videollamada")
                                         store.getState().chats[usuario][i].estado = "rechazada";
                                 break;
-                            case "mensaje": case "videollamada": case "llamada":
+                            case "videollamada": case "llamada":
+                                if (data.tipo === "confirmacion") {
+                                    store.getState().usuario.videollamada = true;
+                                    store.setState({chats: true});
+                                    break;
+                                }
+                            case "mensaje":
                                 usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
                                 if(store.getState().chats === undefined)
                                     store.getState().chats = {};
@@ -79,15 +85,15 @@ export default class Chat extends ServiceBase
                             if(!chat) {
                                 store.getState().chats[params.user] = response.data;
                                 store.getState().chats[params.user].reverse();
-                                store.setState({updateAt: new Date()});
+                                store.setState({chats: true});
                             } else if (response.data.length > 0 && chat.length > 0) {
                                 response.data.reverse();
                                 if(chat[0].fecha > response.data[response.data.length - 1].fecha) {
                                     store.getState().chats[params.user] = response.data.concat(chat);
-                                    store.setState({updateAt: new Date()});
+                                    store.setState({chats: true});
                                 } else if (chat[chat.length - 1].fecha < response.data[0].fecha) {
                                     store.getState().chats[params.user] = chat.concat(response.data);
-                                    store.setState({updateAt: new Date()});
+                                    store.setState({chats: true});
                                 }
                             }
                             this.secure(resolve)(response);
@@ -98,6 +104,29 @@ export default class Chat extends ServiceBase
                     .catch((error) => this.secure(reject)(error));
             });
         }.bind(this);
+        this.callVideoLlamada = function(user) {
+            if (!store.getState().usuario || store.getState().usuario.usuario !== user) {
+                return;
+            }
+            return new Promise((resolve, reject) => {
+                var url = store.getState().config.api + videollamada;
+                var data = { tipo: 'confirmacion', usuario: user };
+                this.post(url, data)
+                    .then((response) => response.json())
+                    .then((response) => {
+                        if(response.success) {
+                            store.getState().usuario.videollamada = true;
+                            store.setState({chats: true});
+                            this.secure(resolve)(response);
+                        } else {
+                            this.secure(reject)(response);
+                        }
+                    })
+                    .catch((error) => {
+                        this.secure(reject)(error);
+                    });
+            });
+        };
         this.mensaje = function(user, mensaje) {
             return new Promise((resolve, reject) => {
                 var url = store.getState().config.api + enviar;
@@ -119,7 +148,7 @@ export default class Chat extends ServiceBase
         this.videollamada = function(user) {
             return new Promise((resolve, reject) => {
                 var url = store.getState().config.api + videollamada;
-                var data = { tipo: 'usuario', usuario: user };
+                var data = { tipo: 'peticion', usuario: user };
                 this.post(url, data)
                     .then((response) => response.json())
                     .then((response) => {
