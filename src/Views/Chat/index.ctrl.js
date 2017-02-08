@@ -8,7 +8,8 @@ export default class ChatCtrl extends Component {
         this.props.store.chat.mensaje(this.props.params.user, this.form.mensaje)
             .then(() => {
                 this.form.mensaje = "";
-                this.forceUpdate();
+                if (this.mounted)
+                    this.forceUpdate();
             });
     }
     onHandlerKeyPressEnviar = (e, obj) => {

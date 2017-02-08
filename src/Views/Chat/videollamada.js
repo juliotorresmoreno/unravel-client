@@ -20,7 +20,7 @@ export default class VideoLLamada extends VideoLLamadaCtrl {
                 autoRequestMedia: true,
                 media: {
                     video: true,
-                    audio: false
+                    audio: true
                 },
             });
             webrtc.on('readyToCall', function () {

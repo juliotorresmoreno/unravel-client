@@ -57,6 +57,11 @@ export default {
     noticias_label: "Publica tu comentario o noticia",
     noticias_responder: "Responder",
 
+    //grupos
+    grupos_mis_grupos: "Mis grupos",
+    grupos_todos_grupos: "Todos",
+    grupos_crear_grupos: "Crear grupo",
+
     //app
     app_save: "Guardar",
     app_cancel: "Cancelar",
