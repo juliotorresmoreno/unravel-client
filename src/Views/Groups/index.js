@@ -3,22 +3,28 @@ import React from 'react';
 import {Menu, Segment} from 'semantic-ui-react';
 
 import GroupsCtrl from './index.ctrl';
+import Grupo from './grupo';
 import MisGrupos from './misgrupos';
 import TodosGrupos from './todosgrupos';
 
 export default class Groups extends GroupsCtrl {
     state = { activeItem: 'home' };
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+    handleItemClick = (e, { name }) => {
+        this.props.router.push('/groups');
+        this.setState({ activeItem: name });
+    };
     componentDidMount() {
         this.props.store.subscribe(this, ['groups'], "Groups");
-    }
+    };
     getContent() {
-        const { store } = this.props;
+        const { store, router, routes } = this.props;
         const { activeItem } = this.state;
+        if (routes[1].path === "groups/create")
+            return <Grupo store={store} router={router} />;
         if (activeItem === 'home')
-            return <MisGrupos store={store} />;
+            return <MisGrupos store={store} router={router} />;
         if (activeItem === 'todos')
-            return <TodosGrupos store={store} />;
+            return <TodosGrupos store={store} router={router} />;
     }
     render = function() {
         const { store } = this.props;

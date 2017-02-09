@@ -9,7 +9,7 @@ export default class MisGrupos extends MisGruposCtrl {
         const crear_grupos = store.lang.get("grupos_crear_grupos");
         return (
             <div style={{minHeight: '100%'}}>
-                <Button primary>{crear_grupos}</Button>
+                <Button primary onClick={this.handlerCreate}>{crear_grupos}</Button>
             </div>
         )
     }

@@ -61,6 +61,8 @@ export default {
     grupos_mis_grupos: "Mis grupos",
     grupos_todos_grupos: "Todos",
     grupos_crear_grupos: "Crear grupo",
+    grupos_nombre: "Nombre",
+    grupos_descripcion: "Descripcion",
 
     //app
     app_save: "Guardar",

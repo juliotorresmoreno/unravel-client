@@ -1,6 +1,6 @@
 import React from 'react';
 import VideoLLamadaCtrl from './videollamada.ctrl';
-const SimpleWebRTC = window.SimpleWebRTC;
+import SimpleWebRTC from "simplewebrtc";
 var webrtc;
 
 export default class VideoLLamada extends VideoLLamadaCtrl {
