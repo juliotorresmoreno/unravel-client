@@ -3,8 +3,7 @@ import React from 'react';
 import { Form, Comment, Image } from 'semantic-ui-react'
 import Comentario from './comentario';
 import PublicacionCtrl from './publicacion.ctrl';
-
-const moment = window.moment;
+import moment from 'moment';
 
 const styleIcon = {width:16,height:16,display:"inline"};
 

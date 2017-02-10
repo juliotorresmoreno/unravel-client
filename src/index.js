@@ -15,6 +15,7 @@ import SProfile from './Services/Profile';
 import SFriends from './Services/Friends';
 import SGalery from './Services/Galery';
 import SLocation from './Services/Location';
+import SGroups from './Services/Groups';
 import SNews from './Services/News';
 import SChat from './Services/Chat';
 import SConnection from './Services/Connection';
@@ -27,8 +28,7 @@ import Friends from './Views/Friends';
 import Galery from './Views/Galery';
 import Groups from './Views/Groups';
 import Chat from './Views/Chat';
-
-const moment = window.moment;
+import moment from 'moment';
 
 var store = new Store({config:config});
 store.addService(SLang);
@@ -38,6 +38,7 @@ store.addService(SProfile);
 store.addService(SFriends);
 store.addService(SGalery);
 store.addService(SLocation);
+store.addService(SGroups);
 store.addService(SChat);
 store.addService(SNews);
 store.addService(SConnection);
@@ -61,6 +62,7 @@ class Index extends Component {
                     <Route autorized={true} path="galery/:galery/:image" component={Galery} />
                     <Route autorized={true} path="groups" component={Groups} />
                     <Route autorized={true} path="groups/create" component={Groups} />
+                    <Route autorized={true} path="groups/:group" component={Groups} />
                     
                     <Route autorized={true} path=":user/chat" component={Chat} />
                     <Route autorized={true} path=":user/profile" component={Profile} />

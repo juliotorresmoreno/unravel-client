@@ -3,7 +3,7 @@ import React from 'react';
 import {Menu, Segment} from 'semantic-ui-react';
 
 import GroupsCtrl from './index.ctrl';
-import Grupo from './grupo';
+import Formulario from './formulario';
 import MisGrupos from './misgrupos';
 import TodosGrupos from './todosgrupos';
 
@@ -17,10 +17,12 @@ export default class Groups extends GroupsCtrl {
         this.props.store.subscribe(this, ['groups'], "Groups");
     };
     getContent() {
-        const { store, router, routes } = this.props;
+        const { store, router, routes, params } = this.props;
         const { activeItem } = this.state;
-        if (routes[1].path === "groups/create")
-            return <Grupo store={store} router={router} />;
+        if ("groups/create" === routes[1].path)
+            return <Formulario store={store} router={router} />;
+        if ("groups/:group" === routes[1].path)
+            return <Formulario store={store} router={router} params={params} routes={routes} />;
         if (activeItem === 'home')
             return <MisGrupos store={store} router={router} />;
         if (activeItem === 'todos')

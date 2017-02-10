@@ -2,7 +2,7 @@ import React from 'react';
 import ConversacionCtrl from './conversacion.ctrl';
 import PeticionVideoLlamada from './peticionVideollamada';
 import Comentario from './comentario';
-const $ = window.$;
+import $ from 'jquery';
 
 
 if(window.attachEvent && !window.addEventListener)
