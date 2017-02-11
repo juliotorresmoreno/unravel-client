@@ -13,8 +13,9 @@ export default class Groups extends GroupsCtrl {
         this.props.router.push('/groups');
         this.setState({ activeItem: name });
     };
-    componentDidMount() {
-        this.props.store.subscribe(this, ['groups'], "Groups");
+    
+    componentWillMount() {
+        this.props.store.subscribe(this, ['groups', 'group'], "Groups");
     };
     getContent() {
         const { store, router, routes, params } = this.props;

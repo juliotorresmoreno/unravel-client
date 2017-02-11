@@ -1,6 +1,7 @@
 import ServiceBase from '../Lib/ServiceBase';
 
 const save = "/groups";
+const describe = "/groups";
 
 export default class Groups extends ServiceBase
 {
@@ -31,6 +32,23 @@ export default class Groups extends ServiceBase
                         response.json()
                             .then((json) => {
                                 store.setState({groups: json.data});
+                                response.ok ?
+                                    this.secure(resolve)(json):
+                                    this.secure(reject)(json.error);
+                            })
+                            .catch((error) => this.secure(reject)(error))
+                    })
+                    .catch((error) => this.secure(reject)(error))
+            });
+        };
+        this.describe = (group) => {
+            const url = store.getState().config.api + describe + '/' + group;
+            return new Promise((resolve, reject) => {
+                this.get(url)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => {
+                                store.setState({group: json.data});
                                 response.ok ?
                                     this.secure(resolve)(json):
                                     this.secure(reject)(json.error);

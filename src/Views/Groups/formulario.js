@@ -7,33 +7,47 @@ import { Header, Form } from 'semantic-ui-react';
 export default class Formulario extends FormularioCtrl {
     form = {
         nombre: "",
-        descripcion: ""
+        descripcion: "",
+        permiso: "public"
     }
     componentDidMount = () => {
-        const {params} = this.props;
+        const { params, store } = this.props;
         if (typeof params.group !== "undefined") {
-            
+            store.groups.describe(params.group);
         }
     }
     render = () => {
-        const {store, routes} = this.props;
+        const {store, routes, params} = this.props;
         const crear  = store.lang.get("grupos_crear_grupos");
         const editar = store.lang.get("grupos_editar_grupos");
         const titulo = routes[1].path === "groups/create" ? crear: editar;
         const save = this.props.store.lang.get('app_save');
         const nombre = this.props.store.lang.get('grupos_nombre');
         const descripcion = this.props.store.lang.get('grupos_descripcion');
+        const group = params.group || '';
+        const grupo = store.getState().group || {};
+        if (group !== '' && grupo.nombre === group) {
+            this.form = store.getState().group;
+        }
         return (
             <div style={{minHeight: '100%'}}>
                 <Header as="h2">{titulo}</Header>
                 <Form onSubmit={(e) => e.preventDefault()}>
                     <Form.Field>
-                        <Form.Input onChange={this.onHandlerChange} label={nombre} name="nombre" />
+                        <Form.Input 
+                            onChange={this.onHandlerChange} 
+                            label={nombre} 
+                            value={this.form.nombre} 
+                            name="nombre" />
                     </Form.Field>
                     <Form.Field>
-                        <Form.TextArea onChange={this.onHandlerChange} label={descripcion} name="descripcion" />
+                        <Form.TextArea 
+                            onChange={this.onHandlerChange} 
+                            label={descripcion} 
+                            value={this.form.descripcion} 
+                            name="descripcion" />
                     </Form.Field>
-                    <Permisos label={save} onClick={this.onHandlerGuardar} permiso='public' />
+                    <Permisos label={save} onClick={this.onHandlerGuardar} permiso={this.form.permiso} />
                 </Form>
             </div>
         )

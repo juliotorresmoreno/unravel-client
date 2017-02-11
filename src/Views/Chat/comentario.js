@@ -1,7 +1,7 @@
 import React from 'react';
 import { Comment } from 'semantic-ui-react'
 import ComentarioCtrl from './comentario.ctrl';
-const moment = window.moment;
+import moment from 'moment';
 
 export default class Comentario extends ComentarioCtrl {
     render = () => {

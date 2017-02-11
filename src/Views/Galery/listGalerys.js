@@ -22,9 +22,9 @@ export default class listGalerys extends listGalerysCtrl {
     componentWillUnmount = () => {
         this.mounted = false;
     }
-    go = (name, luser) => (e) => {
+    handlerGo = url => e => {
         e.preventDefault();
-        this.props.router.push((luser ? "/" + luser: "") + "/galery/" + encodeURI(name));
+        this.props.router.push(url);
     }
     render = () => {
         const session = this.props.store.location.getSession(this.props.params.user);
@@ -33,18 +33,27 @@ export default class listGalerys extends listGalerysCtrl {
         const isMe = session.usuario === store.getState().session.usuario;
         const api = store.getState().config.api;
         const luser = !isMe ? '/' + session.usuario: '';
+        const urlCrear = "/galery/create";
+        var divCrear = null;
+        if (isMe) {
+            divCrear = (
+                <div>
+                    <div>
+                        <Button primary as="a" href={urlCrear} onClick={this.handlerGo(urlCrear)}>Crear</Button>
+                    </div>
+                    <br />
+                </div>
+            );
+        }
         return (
             <div>
-                <div>
-                    {<Button primary as="a" href="/galery/create" onClick={this.go("create")}>Crear</Button>}
-                </div>
-                <br />
+                {divCrear}
                 <Grid doubling columns={4}>
                     {galerys.map((galeria, index) => {
                         const url = api + "/" + session.usuario + "/galery/" + galeria.name + "/preview";
                         const href = luser + "/galery/" + encodeURI(galeria.name);
                         return (
-                            <Grid.Column as="a" onClick={this.go(galeria.name, luser)} href={href} key={index}>
+                            <Grid.Column as="a" onClick={this.handlerGo(href)} href={href} key={index}>
                                 <Card>
                                     <Image src={url} />
                                     <Card.Content>

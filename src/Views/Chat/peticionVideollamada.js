@@ -1,7 +1,7 @@
 import React from 'react';
 import { Comment } from 'semantic-ui-react'
 import PeticionVideoLlamadaCtrl from './peticionVideollamada.ctrl';
-const moment = window.moment;
+import moment from 'moment';
 
 export default class PeticionVideoLlamada extends PeticionVideoLlamadaCtrl {
     state = {rechazado: false};

@@ -10,7 +10,7 @@ class listaElementos {
                         _elementos[j] = el;
                 }
         }
-        this.getList = () => {
+        this.getElementos = () => {
             let r = [];
             for(let i in _elementos)
                 if(_elementos.hasOwnProperty(i))
@@ -42,7 +42,7 @@ export default class Store {
                 }
             }
         }
-        const _elementos = _listaElementos.getList();
+        const _elementos = _listaElementos.getElementos();
         for(let i = 0; i < _elementos.length; i++) {
             let item = _elementos[i].item;
             if(item.Midlewares && Array.isArray(item.Midlewares)) {
