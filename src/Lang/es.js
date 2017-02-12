@@ -63,6 +63,7 @@ export default {
     grupos_crear_grupos: "Crear grupo",
     grupos_editar_grupos: "Editar grupo",
     grupos_nombre: "Nombre",
+    grupos_categoria: "Categoria",
     grupos_descripcion: "Descripcion",
 
     //app

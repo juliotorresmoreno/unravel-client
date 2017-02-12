@@ -15,6 +15,7 @@ import SProfile from './Services/Profile';
 import SFriends from './Services/Friends';
 import SGalery from './Services/Galery';
 import SLocation from './Services/Location';
+import SCategory from './Services/Category';
 import SGroups from './Services/Groups';
 import SNews from './Services/News';
 import SChat from './Services/Chat';
@@ -38,6 +39,7 @@ store.addService(SProfile);
 store.addService(SFriends);
 store.addService(SGalery);
 store.addService(SLocation);
+store.addService(SCategory);
 store.addService(SGroups);
 store.addService(SChat);
 store.addService(SNews);
@@ -70,6 +72,7 @@ class Index extends Component {
                     <Route autorized={true} path=":user/friends" component={Friends} />
                     <Route autorized={true} path=":user/galery" component={Galery} />
                     <Route autorized={true} path=":user/galery/:galery" component={Galery} />
+                    <Route autorized={true} path=":user/galery/:galery/:image" component={Galery} />
                     <Route autorized={true} path=":user/galery/create" component={Galery} />
                     <Route autorized={true} path=":user/news" component={News} />
                     <Route autorized={true} path=":user/groups" component={Groups} />

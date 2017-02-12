@@ -15,13 +15,13 @@ export default class Groups extends GroupsCtrl {
     };
     
     componentWillMount() {
-        this.props.store.subscribe(this, ['groups', 'group'], "Groups");
+        this.props.store.subscribe(this, ['groups', 'group', 'categorys'], "Groups");
     };
     getContent() {
         const { store, router, routes, params } = this.props;
         const { activeItem } = this.state;
         if ("groups/create" === routes[1].path)
-            return <Formulario store={store} router={router} />;
+            return <Formulario store={store} router={router} params={params} routes={routes} />;
         if ("groups/:group" === routes[1].path)
             return <Formulario store={store} router={router} params={params} routes={routes} />;
         if (activeItem === 'home')

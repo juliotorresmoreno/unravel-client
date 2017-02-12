@@ -6,22 +6,26 @@ export default class ImageViewCtrl extends Component {
         this.editar = true;
         this.forceUpdate();
     }
-    handleEliminar = (e, obj) => {
+    handleEliminar = () => this.setState({ open: true });
+    handleCancelEliminar = () => this.setState({ open: false });
+    handleConfirmEliminar = (e, obj) => {
         var {galery, image} = this.props.params;
         var store = this.props.store;
+        this.setState({ open: false });
+        return;
         store.galery.eliminar({image: image, galery: galery})
             .then(() => {
                 this.props.router.push("/galery/" + galery);
             });
-    }
+    };
     handleEstablecer = (e, obj) => {
         this.editar = true;
         this.forceUpdate();
-    }
+    };
     handleCancelar = (e, obj) => {
         this.editar = false;
         this.forceUpdate();
-    }
+    };
     handleNext = (e, obj) => {
         var image = this.props.params.image;
         var galeria = this.props.params.galery;
@@ -39,7 +43,7 @@ export default class ImageViewCtrl extends Component {
             this.props.router.push("/galery/" + galeria + "/" + items[i + 1]);
             return;
         }
-    }
+    };
     handlePrev = (e, obj) => {
         var image = this.props.params.image;
         var galeria = this.props.params.galery;
@@ -57,5 +61,5 @@ export default class ImageViewCtrl extends Component {
             this.props.router.push("/galery/" + galeria + "/" + items[i - 1]);
             return;
         }       
-    }
+    };
 }
