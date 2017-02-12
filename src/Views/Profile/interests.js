@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Form } from 'semantic-ui-react'
 
-import Permisos from '../../Lib/Permisos';
+import Permisos from '../../Components/Permisos';
 import InterestsCtrl from './interests.ctrl';
 import InterestsView from './interestsView';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Permisos from '../../Lib/Permisos';
+import Permisos from '../../Components/Permisos';
 import FormularioCtrl from './formulario.ctrl';
-import { Header, Grid, Segment, Divider, Search, Form, Image } from 'semantic-ui-react';
+import { Header, Grid, Form, Image } from 'semantic-ui-react';
  
 var categorias = [];
 
@@ -45,6 +45,7 @@ export default class Formulario extends FormularioCtrl {
         if (group !== '' && grupo.nombre === group) {
             this.form = store.getState().group;
         }
+        const src = "http://localhost:8080/api/v1/jtorres990/galery/fotoPerfil?t=default";
         return (
             <div style={{minHeight: '100%'}}>
                 <Grid style={{display: 'flex'}} columns={2} relaxed>
@@ -62,7 +63,8 @@ export default class Formulario extends FormularioCtrl {
                                 <Form.Select 
                                     label={categoria} 
                                     name="categoria" 
-                                    onChange={this.onHandlerChange} 
+                                    value={this.form.categoria}
+                                    onChange={this.onHandlerChange}
                                     options={categorias} search />
                             </Form.Field>
                             <Form.Field>
@@ -76,7 +78,7 @@ export default class Formulario extends FormularioCtrl {
                         </Form>
                     </Grid.Column>
                     <Grid.Column style={{width: 250}}>
-                        <Image src="http://localhost:8080/api/v1/jtorres990/galery/fotoPerfil?t=default" />
+                        <Image onClick={this.onHandlerImagen} as="a" href="" src={src} />
                     </Grid.Column>
                 </Grid>
             </div>

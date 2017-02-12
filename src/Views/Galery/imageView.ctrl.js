@@ -12,7 +12,6 @@ export default class ImageViewCtrl extends Component {
         var {galery, image} = this.props.params;
         var store = this.props.store;
         this.setState({ open: false });
-        return;
         store.galery.eliminar({image: image, galery: galery})
             .then(() => {
                 this.props.router.push("/galery/" + galery);
@@ -27,38 +26,46 @@ export default class ImageViewCtrl extends Component {
         this.forceUpdate();
     };
     handleNext = (e, obj) => {
-        var image = this.props.params.image;
-        var galeria = this.props.params.galery;
-        var images = this.props.store.getState().images;
+        const store = this.props.store;
+        const session = this.props.store.location.getSession(this.props.params.user);
+        const isMe = session.usuario === store.getState().session.usuario;
+        const luser = !isMe ? '/' + session.usuario: '';
+        const image = this.props.params.image;
+        const galeria = this.props.params.galery;
+        const images = this.props.store.getState().images;
         if (images.galery !== galeria)
             return;
-        var items = images.items;
-        for (var i = 0; i < items.length; i++) {
+        const items = images.items;
+        for (let i = 0; i < items.length; i++) {
             if (items[i] !== image)
                 continue;
             if (i === items.length - 1) {
-                this.props.router.push("/galery/" + galeria + "/" + items[0]);
+                this.props.router.push(luser + "/galery/" + galeria + "/" + items[0]);
                 return;
             }
-            this.props.router.push("/galery/" + galeria + "/" + items[i + 1]);
+            this.props.router.push(luser + "/galery/" + galeria + "/" + items[i + 1]);
             return;
         }
     };
     handlePrev = (e, obj) => {
-        var image = this.props.params.image;
-        var galeria = this.props.params.galery;
-        var images = this.props.store.getState().images;
+        const store = this.props.store;
+        const session = this.props.store.location.getSession(this.props.params.user);
+        const isMe = session.usuario === store.getState().session.usuario;
+        const luser = !isMe ? '/' + session.usuario: '';
+        const image = this.props.params.image;
+        const galeria = this.props.params.galery;
+        const images = this.props.store.getState().images;
         if (images.galery !== galeria)
             return;
-        var items = images.items;
-        for (var i = 0; i < items.length; i++) {
+        const items = images.items;
+        for (let i = 0; i < items.length; i++) {
             if (items[i] !== image)
                 continue;
             if (i === 0) {
-                this.props.router.push("/galery/" + galeria + "/" + items[items.length - 1]);
+                this.props.router.push(luser + "/galery/" + galeria + "/" + items[items.length - 1]);
                 return;
             }
-            this.props.router.push("/galery/" + galeria + "/" + items[i - 1]);
+            this.props.router.push(luser + "/galery/" + galeria + "/" + items[i - 1]);
             return;
         }       
     };

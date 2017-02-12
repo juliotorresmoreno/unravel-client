@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Form, Header, Button } from 'semantic-ui-react';
 
-import Permisos from '../../Lib/Permisos';
+import Permisos from '../../Components/Permisos';
 import FormularioCtrl from './formulario.ctrl';
 
 export default class Formulario extends FormularioCtrl {

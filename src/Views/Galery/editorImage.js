@@ -46,7 +46,7 @@ export default class EditorImage extends EditorImageCtrl {
                     onMouseLeave={this.onmouseleave}
                     style={{position: "absolute", zIndex: 200}} 
                     id="canvasO"></canvas>
-                <canvas id="canvas" style={{width: "870px"}} />
+                <canvas id="canvas" style={{width: "100%"}} />
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 
-import Permisos from '../../Lib/Permisos';
+import Permisos from '../../Components/Permisos';
 import BasicCtrl from './basic.ctrl';
 import BasicView from './basicView';
 

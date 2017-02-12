@@ -51,6 +51,8 @@ export default {
     galeria_subir: "Subir",
     galeria_establecer: "Establecer como foto de perfil",
     galeria_tomar_foto: "Tomar foto",
+    galeria_titulo_eliminar_foto: "Eliminacion de imagen",
+    galeria_pregunta_eliminar_foto: "Realmente desea eliminar la imagen",
 
     // noticias
     noticias_publicar: "Publicar",

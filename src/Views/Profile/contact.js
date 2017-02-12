@@ -4,7 +4,7 @@ import { Form } from 'semantic-ui-react';
 
 
 import ContactView from './contactView';
-import Permisos from '../../Lib/Permisos';
+import Permisos from '../../Components/Permisos';
 import ContactCtrl from './contact.ctrl';
 
 

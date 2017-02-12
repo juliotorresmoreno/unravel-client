@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Form } from 'semantic-ui-react'
 import Publicacion from './publicacion';
-import Permisos from '../../Lib/Permisos';
+import Permisos from '../../Components/Permisos';
 import NewsCtrl from './index.ctrl';
 const TextAreaStyle = {height: 50};
 

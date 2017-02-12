@@ -30,6 +30,8 @@ export default class ImageView extends ImageViewCtrl {
             galery = params.galery,
             image  = params.image;
         const api = store.getState().config.api;
+        const pregunta_delete = store.lang.get("galeria_pregunta_eliminar_foto");
+        const title_delete = store.lang.get("galeria_titulo_eliminar_foto");
         const establecer = store.lang.get("galeria_establecer");
         const eliminar = store.lang.get("app_eliminar");
         const session = this.props.store.location.getSession(this.props.params.user);
@@ -48,15 +50,13 @@ export default class ImageView extends ImageViewCtrl {
         return (
             <div>
                 <Header as="h2">
-                    <a href={"/galery/" + galery} onClick={this.go}>{galery}</a>
+                    <a href={luser + "/galery/" + galery} onClick={this.go}>{galery}</a>
                 </Header>
                 {buttons}
                 <Modal size='small' open={this.state.open} onClose={this.handleCancelEliminar}>
-                    <Modal.Header>
-                        Delete Your Account
-                    </Modal.Header>
+                    <Modal.Header>{title_delete}</Modal.Header>
                     <Modal.Content>
-                        <p>Are you sure you want to delete your account</p>
+                        <p>{pregunta_delete}</p>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button positive onClick={this.handleCancelEliminar}>
