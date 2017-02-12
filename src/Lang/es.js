@@ -67,6 +67,8 @@ export default {
     grupos_nombre: "Nombre",
     grupos_categoria: "Categoria",
     grupos_descripcion: "Descripcion",
+    grupos_recortar_imagen: "Recortar imagen",
+    grupos_recortar: "Recortar",
 
     //app
     app_save: "Guardar",

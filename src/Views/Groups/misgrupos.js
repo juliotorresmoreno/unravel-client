@@ -26,9 +26,10 @@ export default class MisGrupos extends MisGruposCtrl {
                 <div>
                     <Item.Group>
                         {groups.map((value, index) => {
+                            var src = store.getState().config.api + "/groups/" + value.nombre + "/preview";
                             return (
                                 <Item key={index}>
-                                    <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
+                                    <Item.Image size='tiny' src={src} />
                                     <Item.Content>
                                         <Item.Header as='a' onClick={this.handlerGo} href={'/groups/' + value.nombre}>
                                             {value.nombre}

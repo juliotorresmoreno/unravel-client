@@ -23,7 +23,7 @@ export default class Permisos extends Component {
         var permiso = this.permiso || this.props.permiso || 'public';
         return (
             <Button.Group>
-                <Button primary onClick={this.onHandlerClick}>{this.props.label}</Button>
+                <Button positive onClick={this.onHandlerClick}>{this.props.label}</Button>
                 <Dropdown floating button className='icon'>
                 <Dropdown.Menu>
                     <Dropdown.Item
