@@ -79,15 +79,17 @@ export default class Capture extends Component {
         if (imagen.width > imagen.height) {
             left = eleft - maximo / 2;
             top  = 0;
-            if (left < 0)
+            if (left < 0) {
                 left = 0;
-            if (left + maximo / 2 > selector.width - maximo / 2)
+            } else if (left + maximo / 2 > selector.width - maximo / 2) {
                 left = selector.width - maximo;
+            }
         } else {
             top  = etop - maximo / 2;
             left = 0;
-            if (top < 0)
+            if (top < 0) {
                 top = 0;
+            }
         }
         this.clearSelection();
         this.fillSelection(left, top);
