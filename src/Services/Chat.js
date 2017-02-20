@@ -39,12 +39,14 @@ export default class Chat extends ServiceBase
                                         store.getState().chats[usuario][i].estado = "rechazada";
                                 break;
                             case "videollamada": case "llamada":
-                                if (data.tipo === "confirmacion") {
-                                    store.getState().usuario.videollamada = true;
-                                    store.setState({chats: true});
-                                    break;
-                                }
                             case "mensaje":
+                                if (data.action === "videollamada" || data.action === "llamada") {
+                                    if (data.tipo === "confirmacion") {
+                                        store.getState().usuario.videollamada = true;
+                                        store.setState({chats: true});
+                                        break;
+                                    }
+                                }
                                 usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
                                 if(store.getState().chats === undefined)
                                     store.getState().chats = {};

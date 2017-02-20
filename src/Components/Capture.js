@@ -26,15 +26,14 @@ export default class Capture extends Component {
         imagen = new Image();
         imagen.crossOrigin = "use-credentials";
         imagen.onload = () => {
-            var width  = imagen.width;
-            var height = imagen.height;
+            var width, height;
             var etop = 0, eleft = 0;
             if (width > height) {
-                width = maximo / height * width;
+                width = maximo / imagen.height * imagen.width;
                 eleft = (width - maximo) / 2;
                 height = maximo;
-            } else {
-                height = maximo / width * height;
+            } else { 
+                height = maximo / imagen.width * imagen.height;
                 etop = (height - maximo) / 2;
                 width = maximo;
             }
@@ -76,22 +75,22 @@ export default class Capture extends Component {
             return;
         var selector = this.refs.selector;
         var { eleft, etop } = this.getLocation(e.clientX, e.clientY);
-
+        var left, top;
         if (imagen.width > imagen.height) {
-            eleft = eleft - maximo / 2;
-            etop  = 0;
-            if (eleft < 0)
-                eleft = 0;
-            if (eleft + maximo / 2 > selector.width - maximo / 2)
-                eleft = selector.width - maximo;
+            left = eleft - maximo / 2;
+            top  = 0;
+            if (left < 0)
+                left = 0;
+            if (left + maximo / 2 > selector.width - maximo / 2)
+                left = selector.width - maximo;
         } else {
-            etop  = etop - maximo / 2;
-            eleft = 0;
-            if (etop < 0)
-                etop = 0;
+            top  = etop - maximo / 2;
+            left = 0;
+            if (top < 0)
+                top = 0;
         }
         this.clearSelection();
-        this.fillSelection(eleft, etop);
+        this.fillSelection(left, top);
     }
     fillSelection = (left, top) => {
         var selector = this.refs.selector;

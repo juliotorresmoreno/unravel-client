@@ -4,7 +4,7 @@ import Capture from '../../Components/Capture';
 import Permisos from '../../Components/Permisos';
 import WindowModal from '../../Components/WindowModal';
 import FormularioCtrl from './formulario.ctrl';
-import { Header, Grid, Form, Button } from 'semantic-ui-react';
+import { Header, Grid, Form, Button, Image } from 'semantic-ui-react';
  
 var categorias = [];
 
@@ -38,7 +38,7 @@ export default class Formulario extends FormularioCtrl {
     handlerCancel = (e, obj) => {
         this.props.router.push('/groups');
     }
-    render = () => {
+    render = () => {	
         const {store, routes, params} = this.props;
         const crear  = store.lang.get("grupos_crear_grupos");
         const editar = store.lang.get("grupos_editar_grupos");
@@ -98,7 +98,7 @@ export default class Formulario extends FormularioCtrl {
                     </Grid.Column>
                     <Grid.Column style={{width: 250}}>
                         <a onClick={this.onHandlerImagen} className="ui image" href="">
-                            <img style={{width:200,height:200}} src={src} />
+                            <Image style={{width:200,height:200}} src={src} />
                         </a>
                     </Grid.Column>
                 </Grid>
