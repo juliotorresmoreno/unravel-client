@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
+const $ = window.jQuery;
 
 
 const maximo = 250;
 const canvasStyle = {
-    //marginLeft: "50%",
-    //transform: "translateX(-50%)",
     padding: 0,
     height: maximo + "px"
 };

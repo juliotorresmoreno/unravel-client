@@ -1,7 +1,8 @@
 
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router'
-import React, { Component } from 'react'
+import { Router, Route, browserHistory } from 'react-router';
+import React, { Component } from 'react';
+import '../node_modules/semantic-ui-css/semantic.css';
 import './index.css';
 import App from './Views/App';
 import E404 from './Views/E404';

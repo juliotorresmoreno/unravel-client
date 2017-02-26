@@ -1,4 +1,4 @@
-const server = "localhost:8080";
+const server = location.host;
 
 export default {
     api: "http://" + server + "/api/v1",
