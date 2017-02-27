@@ -23,7 +23,7 @@ export default class MenuRight extends MenuRightCtrl {
                         const color = friend.conectado ? "#28b463": "#e74c3c";
                         return (
                             <Menu.Item key={index} as="a" style={{backgroundColor:color}} onClick={this.handleItemClick} href={"/" + friend.usuario + "/chat"}>
-                                <div style={{color: "white"}}>{friend.nombres + ' ' + friend.apellidos}</div>
+                                <div style={{color: "white"}}>{friend.fullname}</div>
                             </Menu.Item>
                         );
                     })}

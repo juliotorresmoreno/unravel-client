@@ -20,7 +20,7 @@ export default class CardUser extends CardUserCtrl {
                     <Feed.Content style={{margin: "0 10px 5px"}}>
                         <Feed.Summary>
                             <Feed.User as="a" onClick={redirect} href={"/" + user.usuario + "/profile"}>
-                                {user.nombres + " " + user.apellidos}
+                                {user.fullname}
                             </Feed.User>
                             <Feed.Date>Registrado en {moment(user.registrado).format("MMM Do YYYY")}</Feed.Date>
                         </Feed.Summary>

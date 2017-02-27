@@ -20,7 +20,7 @@ export default class MenuLeft extends MenuLeftCtrl {
     render = function() {
         const store = this.props.store;
         const session = this.props.store.location.getSession(this.props.params.user);
-        const fullname = session.nombres + ' ' + session.apellidos;
+        const fullname = session.fullname;
         const prev = session !== this.session ? '/' + session.usuario: '';
         const url = store.getState().config.api + "/" + session.usuario + "/galery/fotoPerfil" +
                     "?t=" + (store.getState().fotoPerfil || 'default');

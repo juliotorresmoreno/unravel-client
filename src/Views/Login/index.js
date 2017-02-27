@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Form, Button } from 'semantic-ui-react';
+import { Container, Form, Button, Icon } from 'semantic-ui-react';
 
 import LoginCtrl from './index.ctrl';
 
@@ -44,6 +44,13 @@ export default class Login extends LoginCtrl {
                         </Form.Field>
                         <Button primary>Ingresa</Button>
                     </Form>
+                    <br />
+                    <br />
+                    <div>
+                        <Button onClick={this.authFacebook} color='facebook'>Facebook</Button>
+                        <Button onClick={this.authGoogle} color='google plus'>Google Plus</Button>
+                        <Button onClick={this.authGithub} color='green'>Github</Button>
+                    </div>
                 </div>
             </Container>
         );
