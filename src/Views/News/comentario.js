@@ -19,7 +19,7 @@ export default class Comentario extends ComentarioCtrl {
                     <Comment.Avatar src={url} />
                     <Comment.Content>
                         <Comment.Author as='a' href={href} onClick={this.go}>
-                                {comentario.nombres + " " + comentario.apellidos}
+                            {comentario.fullname}
                         </Comment.Author>
                         <Comment.Metadata>
                             <div>{fecha}</div>

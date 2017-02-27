@@ -12,6 +12,7 @@ export default {
     login_logout: 'Salir',
 
     //profile_
+    profile_fullname: "Nombre completo",
     profile_nacimiento_dia: "Dia de nacimiento",
     profile_nacimiento_mes: "Mes de nacimiento",
     profile_nacimiento_ano: "Ano de nacimiento",

@@ -29,7 +29,7 @@ export default class Publicacion extends PublicacionCtrl {
                         <Comment.Avatar src={url} />
                         <Comment.Content>
                             <Comment.Author as='a' href={href} onClick={this.go}>
-                                {noticia.nombres + " " + noticia.apellidos}
+                                {noticia.fullname}
                             </Comment.Author>
                             <Comment.Metadata>
                                 <div>{fecha}</div>

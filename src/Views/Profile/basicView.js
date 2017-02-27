@@ -30,8 +30,10 @@ export default class BasicView extends BasicViewCtrl {
                 return this.props.store.getState().usuario;
             return this.props.store.getState().session;
         })();
+        const {profile} = this.props.store.getState();
         this.form.nombres = this.session.nombres;
         this.form.apellidos = this.session.apellidos;
+        this.form.fullname = this.session.fullname;
         if(this.props.store.getState().profile) {
             this.form = Object.assign(this.props.store.getState().profile, this.form);
             if(this.form.nacimiento_mes)
@@ -39,7 +41,7 @@ export default class BasicView extends BasicViewCtrl {
         }
     }
     render() {
-        const name = this.props.store.lang.get('login_name');
+        const fullname = this.props.store.lang.get('profile_fullname');
         const lastname = this.props.store.lang.get('login_lastname');
         const campoComponent = (title, value) => {
             const titulo = this.props.store.lang.get(title);
@@ -57,12 +59,8 @@ export default class BasicView extends BasicViewCtrl {
             <div>
                 <Form onSubmit={(e) => e.preventDefault()}>
                     <Form.Field>
-                        <label>{name}</label>
-                        {this.form.nombres}
-                    </Form.Field>
-                    <Form.Field>
-                        <label>{lastname}</label>
-                        {this.form.apellidos}
+                        <label>{fullname}</label>
+                        {this.form.fullname}
                     </Form.Field>
                     {campoComponent('login_email', 'email')}
                     {this.campoNacimientoDia()}
