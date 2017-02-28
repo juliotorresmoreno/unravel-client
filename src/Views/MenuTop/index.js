@@ -19,9 +19,8 @@ export default class MenuTop extends Component {
         const {label, handler} = estados[usuario.estado];
         return (
             <div>
-                <Button primary onClick={handler}>
-                    {label}
-                </Button>
+                {usuario.estado === "Solicitado"?<Button primary onClick={this.agregarAmigo}>Aceptar</Button>:null}
+                <Button primary onClick={handler}>{label}</Button>
                 <br />
             </div>
         );

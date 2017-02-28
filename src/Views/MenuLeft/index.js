@@ -29,7 +29,7 @@ export default class MenuLeft extends MenuLeftCtrl {
                 <Menu vertical>
                     <Menu.Item>
                         <Link to={prev + '/galery'}>
-                            <Image src={url} fluid />
+                            <Image style={{userSelect: 'none'}} src={url} fluid />
                         </Link>
                         <br />
                         <Link to={'/' + session.usuario + '/news'}>{fullname}</Link><br />

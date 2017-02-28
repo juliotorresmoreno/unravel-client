@@ -71,7 +71,7 @@ export default class Friends extends ServiceBase
                         store.getState().friends[i].relacion = detail;
                     }
             }
-            store.setState({updateAt: new Date()});
+            store.setState({friends: true, usuario: true});
         };
 
         this.reject = (user) =>
