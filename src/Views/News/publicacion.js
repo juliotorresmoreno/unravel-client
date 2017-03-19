@@ -12,7 +12,7 @@ export default class Publicacion extends PublicacionCtrl {
     comentario = "";
     go = (e) => {
         e.preventDefault();
-        this.props.router.push(e.target.href.replace(/http(s){0,1}:\/\/[^\/]*/, ''));
+        this.props.router.push(e.target.href.replace(/http(s){0,1}:\/\/[^/]*/, ''));
     }
     render = () => {
         const noticia = this.props.noticia || {};

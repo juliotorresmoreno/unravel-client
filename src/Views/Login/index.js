@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container, Form, Button, Icon } from 'semantic-ui-react';
-
+import { Container, Form, Button } from 'semantic-ui-react';
+import { Link } from 'react-router';
 import LoginCtrl from './index.ctrl';
 
 export default class Login extends LoginCtrl {
     form = {
-        usuario:'',
-        passwd:'' 
+        usuario: '',
+        passwd: '' 
     }
     constructor(args) {
         super(args);
@@ -14,8 +14,10 @@ export default class Login extends LoginCtrl {
     }
     render = function() {
         const title = this.props.store.lang.get('login_title_login');
-        const username = this.props.store.lang.get('login_username');
+        const email = this.props.store.lang.get('login_email');
         const password = this.props.store.lang.get('login_password');
+        const recovery = this.props.store.lang.get('login_recovery');
+        const login = this.props.store.lang.get('login_login');
         const displayE = this.state.error ? '': 'none';
         return (
             <Container text>
@@ -26,12 +28,12 @@ export default class Login extends LoginCtrl {
                         <h2 style={{textAlign:'center'}}>{title}</h2>
                         <br/>
                         <Form.Field>
-                            <label>{username}</label>
+                            <label>{email}</label>
                             <Form.Input 
                                 name='usuario'
                                 onChange={this.onHandlerChange}
                                 value={this.form.usuario}
-                                placeholder={username} />
+                                placeholder={email} />
                         </Form.Field>
                         <Form.Field>
                             <label>{password}</label>
@@ -42,7 +44,8 @@ export default class Login extends LoginCtrl {
                                 placeholder={password}
                                 type='password' />
                         </Form.Field>
-                        <Button primary>Ingresa</Button>
+                        <Button primary>{login}</Button>
+                        <Link to="/recovery_password">{recovery}</Link>
                     </Form>
                     <br />
                     <br />

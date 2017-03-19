@@ -5,7 +5,7 @@ export default class MisGruposCtrl extends Component {
     handlerGo = (e, obj) => {
         e.preventDefault();
         var href = e.target.href;
-        var url = href.replace(/^http(s){0,1}:\/\/[^\/]*/, "");
+        var url = href.replace(/^http(s){0,1}:\/\/[^/]*/, "");
         this.props.router.push(url);
     }
     handlerCreate = (e, obj) => {

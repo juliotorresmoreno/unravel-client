@@ -34,15 +34,14 @@ export default class BasicView extends BasicViewCtrl {
         this.form.nombres = this.session.nombres;
         this.form.apellidos = this.session.apellidos;
         this.form.fullname = this.session.fullname;
-        if(this.props.store.getState().profile) {
-            this.form = Object.assign(this.props.store.getState().profile, this.form);
+        if(typeof profile !== "undefined") {
+            this.form = Object.assign(profile, this.form);
             if(this.form.nacimiento_mes)
                 this.showDays();
         }
     }
     render() {
         const fullname = this.props.store.lang.get('profile_fullname');
-        const lastname = this.props.store.lang.get('login_lastname');
         const campoComponent = (title, value) => {
             const titulo = this.props.store.lang.get(title);
             if (this.form[value]) {

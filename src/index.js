@@ -23,6 +23,7 @@ import SChat from './Services/Chat';
 import SConnection from './Services/Connection';
 
 import Register from './Views/Register';
+import Recovery from './Views/Recovery';
 import Profile from './Views/Profile';
 import News from './Views/News';
 import Messages from './Views/Messages';
@@ -53,6 +54,7 @@ class Index extends Component {
             <Router history={browserHistory}>
                 <Route path="/" autorized={true} component={App} store={store}>
                     <Route autorized={false} path="signup" component={Register} />
+                    <Route autorized={false} path="recovery_password" component={Recovery} />
                     <Route autorized={true} path="news" component={News} />
                     <Route autorized={true} path="profile" component={Profile} />
                     <Route autorized={true} path="messages" component={Messages} />

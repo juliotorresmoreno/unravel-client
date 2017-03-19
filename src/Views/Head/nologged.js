@@ -3,9 +3,6 @@ import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router'
 
 export default class NoLogged extends Component{
-    constructor(args) {
-        super(args);
-    }
     go = (e, o) => {
         e.preventDefault();
         this.props.router.push(o.href);

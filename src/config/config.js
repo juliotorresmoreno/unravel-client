@@ -1,4 +1,4 @@
-const server = location.host;
+const server = "unravel.ga";
 
 export default {
     api: "https://" + server + "/api/v1",

@@ -1,6 +1,7 @@
 import ServiceBase from '../Lib/ServiceBase';
 
 const register = '/auth/registrar';
+const recovery = '/auth/recovery';
 const login    = '/auth/login';
 const logout   = '/auth/logout';
 const session  = '/auth/session';
@@ -38,6 +39,10 @@ export default class Auth extends ServiceBase
                     });
             };
         }
+        this.recovery = (data) => 
+        {
+            return new Promise(resolve(store.getState().config.api + recovery, data));
+        };
         this.register = (data) => 
         {
             return new Promise(resolve(store.getState().config.api + register, data));

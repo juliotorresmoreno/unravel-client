@@ -10,6 +10,8 @@ export default {
     login_signup: 'Sign up',
     login_login: 'Log-in',
     login_logout: 'Salir',
+    login_recovery: 'Recuperar contraseña',
+    login_send_mail: "Enviar correo electronico",
 
     //profile_
     profile_fullname: "Nombre completo",
