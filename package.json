@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "eslint": "^3.17.0",
+    "eslint-plugin-react": "^6.10.0",
     "react-scripts": "0.8.4"
   },
   "dependencies": {

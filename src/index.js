@@ -45,7 +45,7 @@ store.addService(SGroups);
 store.addService(SChat);
 store.addService(SNews);
 store.addService(SConnection);
-moment.locale("es");
+moment.locale('es');
 
 class Index extends Component {
     render() {
