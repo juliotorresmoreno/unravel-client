@@ -1,6 +1,6 @@
-const server = location.protocol + "//" + location.host;
+const server = location.host;
 
 export default {
-    api: "http://" + server + "/api/v1",
-    servidorwss: "ws://" + server + "/ws",
+    api: "https://" + server + "/api/v1",
+    servidorwss: "wss://" + server + "/ws",
 }
