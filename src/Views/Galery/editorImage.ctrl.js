@@ -216,7 +216,10 @@ export default class EditorImageCtrl extends Component {
             this.props.store.galery.establecerFotoPerfil(form)
                 .then(() => {
                     const random = parseInt(Math.random() * 9000 + 1000, 10);
-                    this.props.store.setState({fotoPerfil: random});
+                    this.props.store.setState({
+                        content: "Salvado correctamente.",
+                        fotoPerfil: random
+                    });
                 });
         });
     }
@@ -245,8 +248,8 @@ export default class EditorImageCtrl extends Component {
             this.ctx.drawImage(img, 0, 0, iwidth, iheight);
 
             if (editar === true) {
-                this.left = this.left || (cwidth + tamano) / 2;
-                this.top = this.top || (cheight) / 2;
+                this.left = this.left || (cwidth - tamano) / 2;
+                this.top = this.top || (cheight - tamano - 100) / 2;
                 if (typeof this.tamano === "undefined")
                     this.setearTamano(this.props.tamano || 300);
                 this.fillSelection();

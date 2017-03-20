@@ -35,7 +35,7 @@ export default class EditorImage extends EditorImageCtrl {
         return (
             <div>
                 {this.editar?<div>
-                    <Button primary onClick={this.handlerUpload}>{guardar}</Button>
+                    <Button positive onClick={this.handlerUpload}>{guardar}</Button>
                     <Button primary onClick={this.props.onCancel}>{terminar}</Button>
                 </div>:null}
                 <br />

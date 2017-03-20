@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Image, Button, Header, Grid } from 'semantic-ui-react';
+import { Image, Button, Header, Grid, Icon } from 'semantic-ui-react';
 
 import GaleryViewCtrl from './galeryView.ctrl';
 
@@ -74,6 +74,11 @@ export default class GaleryView extends GaleryViewCtrl {
         const session = this.props.store.location.getSession(this.props.params.user);
         const isMe = session.usuario === store.getState().session.usuario;
         const luser = !isMe ? '/' + session.usuario: '';
+        const style = {
+            zIndex: 100,
+            float: "right",
+            position: "absolute"
+        };
         return (
             <div>
                 <div>
@@ -85,6 +90,7 @@ export default class GaleryView extends GaleryViewCtrl {
                     {this.files.map((value, index) => {
                         return (
                             <Grid.Column key={index}>
+                                {value.loading?<Icon name='circle notched' style={style} loading />:null}
                                 <Image key={index} src={value.src} />
                             </Grid.Column>
                         );

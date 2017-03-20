@@ -24,24 +24,16 @@ export default class Capture extends Component {
         imagen = new Image();
         imagen.crossOrigin = "use-credentials";
         imagen.onload = () => {
-            var width, height;
             var etop = 0, eleft = 0;
-            if (width > height) {
-                width = maximo / imagen.height * imagen.width;
-                eleft = (width - maximo) / 2;
-                height = maximo;
-            } else { 
-                height = maximo / imagen.width * imagen.height;
-                etop = (height - maximo) / 2;
-                width = maximo;
-            }
+            var height = maximo;
+            var width = maximo * imagen.width / imagen.height;
             var context = canvas.getContext("2d");
             $(canvas).css('width', width + "px");
             canvas.width = width;
             $(selector).css('width', width + "px");
             selector.width = width;
             context.drawImage(imagen, 0, 0, width, height);
-            
+            context.drawImage(imagen, 0, 0, imagen.width, imagen.height, 0, 0, width, height);
             this.fillSelection(eleft, etop);
         };
         imagen.src = this.props.src;
@@ -121,10 +113,7 @@ export default class Capture extends Component {
                         width={maximo*2} 
                         height={maximo} 
                         style={selectorStyle} />
-                <canvas ref="canvas" 
-                        width={maximo*2} 
-                        height={maximo} 
-                        style={canvasStyle} />
+                <canvas height={maximo} ref="canvas" style={canvasStyle} />
             </span>
         );
     }

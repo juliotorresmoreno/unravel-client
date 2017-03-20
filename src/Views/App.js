@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Error from './Error';
+import Modal from './Modal';
 import Head from './Head';
 import Loading from './Loading';
 import Main from './Main';
@@ -11,8 +12,8 @@ class App extends Component {
     isLoading = true;
     constructor(args) {
         super(args);
-        const {store} = this.props.route;
-        store.subscribe(this, ['session', 'usuario', 'error'], "App");
+        const { store } = this.props.route;
+        store.subscribe(this, ['session', 'usuario', 'error', 'content'], 'App');
         if (store.getState().session === undefined)
         {
             store.auth.getSession()
@@ -53,6 +54,7 @@ class App extends Component {
         var usuario = store.getState().usuario || {};
         var session = store.getState().session;
         var error = store.getState().error || '';
+        var content = store.getState().content || '';
         var isLogged = autorized && store.getState().session;
         var { user } = this.props.params;
 
@@ -70,6 +72,7 @@ class App extends Component {
             <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
                 <Head params={params} route={route} router={router} store={store} />
                 {<Error error={error} store={store} />}
+                {<Modal content={content} store={store} />}
                 <Main params={params} route={route} router={router} store={store}>
                     {children}
                 </Main>

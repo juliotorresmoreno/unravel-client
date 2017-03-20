@@ -50,8 +50,10 @@ export default class GaleryViewCtrl extends Component {
             data.append("name", this.files[i].name);
             data.append("file", this.file.files[i]);
             data.append("galery", galery);
+            this.files[i].loading = true;
             this.props.store.galery.uploadFoto(data)
                 .then(upload);
         }
+        this.forceUpdate();
     }
 }
