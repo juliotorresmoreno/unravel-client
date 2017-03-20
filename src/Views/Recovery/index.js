@@ -3,13 +3,20 @@ import { Container, Form, Button } from 'semantic-ui-react';
 import RecoveryCtrl from './index.ctrl';
 
 export default class Recovery extends RecoveryCtrl {
-    state = {};
-    form = { email: '' }
+    state = { send: false };
+    form = { email: '' };
     render = () => {
         const title = this.props.store.lang.get('login_recovery');
         const email = this.props.store.lang.get('login_email');
         const send_mail = this.props.store.lang.get('login_send_mail');
         const displayE = this.state.error ? '': 'none';
+        if (this.state.send) {
+            return (
+                <div>
+                    Se ha enviado un correo electronico a {this.form.email}.
+                </div>
+            );
+        }
         return (
             <Container text>
                 <br/>

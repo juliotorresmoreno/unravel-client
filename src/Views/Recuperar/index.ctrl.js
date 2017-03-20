@@ -9,7 +9,9 @@ export default class RecuperarCtrl extends Component {
     handlerCambiarContrasena = (event) => {
         event.preventDefault();
         this.props.store.auth.changePassword(this.form)
-            .then((result) => {})
+            .then((result) => {
+                location.href = "/";
+            })
             .catch((error) => {
                 var errs = error.error.split(";");
                 var errors = {};

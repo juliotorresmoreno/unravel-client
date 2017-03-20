@@ -11,7 +11,7 @@ export default class RecoveryCtrl extends Component {
         const store = this.props.store;
         store.auth.recovery(this.form)
             .then(() => {
-                
+                this.setState({send:true})
             })
             .catch((error) => {
                 if (error.error && error.error.stack) {
