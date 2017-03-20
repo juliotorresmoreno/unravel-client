@@ -2,16 +2,13 @@ import React from 'react';
 
 import MisGruposCtrl from './misgrupos.ctrl';
 import { Button, Item } from 'semantic-ui-react';
-import moment from 'moment'
+import moment from 'moment';
 
 export default class MisGrupos extends MisGruposCtrl {
-    constructor(args) {
-        super(args);
-        this.props.store.subscribe(this, ['groups'], "MisGrupos");
-    }
     componentDidMount = () => {
         const {store} = this.props;
         store.groups.consultar();
+        this.props.store.subscribe(this, ['groups'], "MisGrupos");
     }
     render = () => {
         const {store} = this.props;

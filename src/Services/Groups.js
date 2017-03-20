@@ -1,6 +1,8 @@
 import ServiceBase from '../Lib/ServiceBase';
 
 const save = "/groups";
+const consultar = "/groups";
+const consultarTodos = "/groups/all";
 const describe = "/groups";
 const change_peview = "/groups/changePreview";
 
@@ -26,13 +28,30 @@ export default class Groups extends ServiceBase
             });
         };
         this.consultar = () => {
-            const url = store.getState().config.api + save;
+            const url = store.getState().config.api + consultar;
             return new Promise((resolve, reject) => {
                 this.get(url)
                     .then((response) => {
                         response.json()
                             .then((json) => {
                                 store.setState({groups: json.data});
+                                response.ok ?
+                                    this.secure(resolve)(json):
+                                    this.secure(reject)(json.error);
+                            })
+                            .catch((error) => this.secure(reject)(error))
+                    })
+                    .catch((error) => this.secure(reject)(error))
+            });
+        };
+        this.consultarTodos = (data) => {
+            const url = store.getState().config.api + consultarTodos + "?nombre=" + encodeURI(data.nombre);
+            return new Promise((resolve, reject) => {
+                this.get(url)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => {
+                                store.setState({groupsAll: json.data});
                                 response.ok ?
                                     this.secure(resolve)(json):
                                     this.secure(reject)(json.error);

@@ -9,13 +9,19 @@ import TodosGrupos from './todosgrupos';
 
 export default class Groups extends GroupsCtrl {
     state = { activeItem: 'home' };
-    handleItemClick = (e, { name }) => {
+    handleHomeClick = (e, { name }) => {
         this.props.router.push('/groups');
         this.setState({ activeItem: name });
     };
-    
+    handleAllClick = (e, { name }) => {
+        this.props.router.push('/groups/all');
+        this.setState({ activeItem: name });
+    };
     componentWillMount() {
-        this.props.store.subscribe(this, ['groups', 'group', 'categorys'], "Groups");
+        this.props.store.subscribe(this, ['groupsAll', 'groups', 'group', 'categorys'], "Groups");
+        if (this.props.location.pathname === "/groups/all") {
+            this.state.activeItem = "todos";
+        }
     };
     getContent() {
         const { store, router, routes, params } = this.props;
@@ -38,10 +44,10 @@ export default class Groups extends GroupsCtrl {
         return (
             <div style={{minHeight: '100%', display: 'flex', flexDirection: 'column'}}>
                 <Menu pointing secondary>
-                    <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
+                    <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleHomeClick}>
                         {mis_grupos}
                     </Menu.Item>
-                    <Menu.Item name='todos' active={activeItem === 'todos'} onClick={this.handleItemClick}>
+                    <Menu.Item name='todos' active={activeItem === 'todos'} onClick={this.handleAllClick}>
                         {todos_grupos}
                     </Menu.Item>
                 </Menu>

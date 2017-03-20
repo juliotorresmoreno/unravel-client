@@ -16,10 +16,11 @@ export default class MenuTop extends Component {
         }
         if (!user || (session && user === session.usuario) || typeof estados[usuario.estado] === "undefined")
             return null;
+        const sw = usuario.estado !== "Solicitado" || !solicito;
         const {label, handler} = estados[usuario.estado];
         return (
-            <div>
-                {usuario.estado === "Solicitado"?<Button primary onClick={this.agregarAmigo}>Aceptar</Button>:null}
+            <div style={{marginBottom: 15}}>
+                {sw?<Button primary onClick={this.agregarAmigo}>Aceptar</Button>:null}
                 <Button primary onClick={handler}>{label}</Button>
                 <br />
             </div>
