@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { Form } from 'semantic-ui-react'
 import Publicacion from './publicacion';
-import Permisos from '../../Components/Permisos';
 import NewsCtrl from './index.ctrl';
-const TextAreaStyle = {height: 50};
+import Publicar from './publicar';
 
 export default class News extends NewsCtrl {
-    form = {noticia: ""}
     componentWillMount() {
         const {store, params} = this.props;
         store.subscribe(this, ['news'], "News");
@@ -25,22 +22,12 @@ export default class News extends NewsCtrl {
         return store.getState().news.data || [];
     }
     render = function() {
+        const isme = this.props.params.user === undefined;
         const {store, router} = this.props;
-        const publicar = store.lang.get('noticias_publicar');
-        const label = store.lang.get('noticias_label');
         const news = this.getNews();
         return (
             <div>
-                <Form onSubmit={(e) => e.preventDefault()}>
-                    <Form.TextArea
-                        onChange={this.onHandlerChange}
-                        style={TextAreaStyle}
-                        name="noticia"
-                        placeholder={label}
-                        value={this.form.noticia} />
-                    <Permisos label={publicar} onClick={this.onHandlerPublicar} />
-                </Form>
-                <br />
+                {isme?<Publicar store={store} />:null}
                 {news.map((noticia, index) => 
                     <Publicacion key={index} store={store} router={router} noticia={noticia} />)}
                 <a onClick={this.onHandlerMore} href="#">Mas</a>
