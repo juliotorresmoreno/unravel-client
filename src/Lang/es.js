@@ -11,6 +11,7 @@ export default {
     login_login: 'Log-in',
     login_logout: 'Salir',
     login_recovery: 'Recuperar contraseña',
+    login_recuperar: 'Cambiar contraseña',
     login_send_mail: "Enviar correo electronico",
 
     //profile_

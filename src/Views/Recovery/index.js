@@ -20,8 +20,7 @@ export default class Recovery extends RecoveryCtrl {
                         <br/>
                         <Form.Field>
                             <label>{email}</label>
-                            <Form.Input
-                                name='email'
+                            <Form.Input name='email'
                                 onChange={this.onHandlerChange}
                                 value={this.form.email}
                                 placeholder={email} />
