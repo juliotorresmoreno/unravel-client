@@ -8,11 +8,7 @@ export default class Login extends LoginCtrl {
         usuario: '',
         passwd: '' 
     }
-    constructor(args) {
-        super(args);
-        this.render = this.render.bind(this);
-    }
-    render = function() {
+    render = () => {
         const title = this.props.store.lang.get('login_title_login');
         const email = this.props.store.lang.get('login_email');
         const password = this.props.store.lang.get('login_password');

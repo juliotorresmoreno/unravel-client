@@ -6,14 +6,23 @@ import CardUser from './CardUser';
 import FriendsCtrl from './index.ctrl';
 
 export default class Friends extends FriendsCtrl {
-    constructor(args) {
-        super(args);
-        this.props.store.subscribe(this, ['friends', 'people'], "Friends");
+    componentWillMount = () => {
+        const {store, params} = this.props;
+        store.subscribe(this, ['friends', 'people', 'usuarios'], "Friends");
+        const isme = params.user === undefined;
+        if (isme === false) {
+            store.friends.friendsByUser({user: params.user});
+        }
     }
     render = () => {
-        const people = this.props.store.getState().people || this.props.store.getState().friends || [];
-        var store = this.props.store;
-        var router = this.props.router;
+        const {store, router, params} = this.props;
+        const isme = params.user === undefined;
+        var usuarios;
+        if (isme === false) {
+            usuarios = store.getState().usuarios || [];
+        } else {
+            usuarios = store.getState().people || store.getState().friends || [];
+        }
         return (
             <div>
                 <Form onSubmit={this.onHandlerSearch}>
@@ -21,7 +30,7 @@ export default class Friends extends FriendsCtrl {
                         <Form.Input name="query"/>
                     </Form.Field>
                 </Form>
-                {people.map(function(value, index){
+                {usuarios.map(function(value, index){
                     return <CardUser key={index} store={store} router={router} user={value} />;
                 })}
             </div>

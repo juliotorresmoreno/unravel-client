@@ -58,7 +58,7 @@ class App extends Component {
         var isLogged = autorized && store.getState().session;
         var { user } = this.props.params;
 
-        if (user && isLogged && usuario.usuario !== user && session.usuario !== user) {
+        if (user && isLogged && usuario.usuario !== user && session.usuario !== user && !this.isLoading) {
             this.isLoading = true;
             store.friends.getUser(user)
                 .then((data) => {

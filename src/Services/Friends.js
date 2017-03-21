@@ -110,7 +110,7 @@ export default class Friends extends ServiceBase
                     .catch((error) => this.secure(reject)(error));
             });
         };
-        this.friends = (data) => 
+        this.friends = (data = {}) => 
         {
             return new Promise((resolve, reject) => {
                 const url = store.getState().config.api + consultaFriends;
@@ -120,6 +120,30 @@ export default class Friends extends ServiceBase
                         response.json()
                             .then((json) => {
                                 store.setState({friends: json.data});
+                                response.ok ?
+                                    this.secure(resolve)({response: response, data: json}):
+                                    this.secure(reject)(json);
+                            })
+                            .catch((error) => {
+                                response.ok ?
+                                    this.secure(resolve)({response: response}):
+                                    this.secure(reject)({error: error});
+                            });
+                    })
+                    .catch((error) => this.secure(reject)(error));
+            });
+        };
+        this.friendsByUser = (data = {}) => 
+        {
+            const user = data && data.user !== undefined ? "/" + data.user: "";
+            return new Promise((resolve, reject) => {
+                const url = store.getState().config.api + consultaFriends + user;
+                const query = data && data.query ? "?q=" + encodeURI(data.query): "";
+                this.get(url + query)
+                    .then((response) => {
+                        response.json()
+                            .then((json) => {
+                                store.setState({usuarios: json.data});
                                 response.ok ?
                                     this.secure(resolve)({response: response, data: json}):
                                     this.secure(reject)(json);

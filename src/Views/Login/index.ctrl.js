@@ -16,7 +16,7 @@ export default class LoginCtrl extends Component {
                 if (error.error && error.error.stack) {
                     store.setState({error: error.error.message + "<br/>" + error.error.stack});
                 } else {
-                    this.setState({error:error.error});
+                    this.setState({error: error.error});
                 }
             });
     }

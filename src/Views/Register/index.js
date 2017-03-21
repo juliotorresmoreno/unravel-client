@@ -4,14 +4,7 @@ import { Container, Form, Button } from 'semantic-ui-react';
 import RegisterCtrl from './index.ctrl';
 
 export default class Register extends RegisterCtrl{
-    form = {
-        nombres:'julio cesar',
-        apellidos:'torres moreno',
-        email:'jtorres990@gmail.com',
-        usuario:'jtorres990',
-        passwd:'123456',
-        passwdConfirm:'123456'
-    }
+    form = { nombres: '', apellidos: '', email: '', usuario: '', passwd: '', passwdConfirm: '' };
     render = () => {
         const store = this.props.store;
         const title = store.lang.get('login_title_register');
