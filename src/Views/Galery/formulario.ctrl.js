@@ -11,7 +11,10 @@ export default class FormularioCtrl extends Component {
             .catch((error) => store.setState({error: error}));
     }
     onHandlerCancelar = (e, obj) => {
-        this.props.router.push('/galery/' + this.form.ID);
+        if (this.form.ID === undefined)
+            this.props.router.push('/galery');
+        else
+            this.props.router.push('/galery/' + this.form.ID);
         e.preventDefault();
     }
     onHandlerChange = (e, obj) => {

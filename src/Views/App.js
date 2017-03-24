@@ -9,13 +9,14 @@ import News from './News';
 import Login from './Login';
 
 class App extends Component {
-    isLoading = true;
+    isLoading = false;
     constructor(args) {
         super(args);
         const { store } = this.props.route;
         store.subscribe(this, ['session', 'usuario', 'error', 'content'], 'App');
-        if (store.getState().session === undefined)
+        if (store.getState().session === undefined && this.isLoading === false)
         {
+            this.isLoading = true;
             store.auth.getSession()
                 .then(() => {
                     this.session = store.getState().session;

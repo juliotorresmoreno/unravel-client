@@ -7,25 +7,21 @@ export default class BasicCtrl extends Component {
             nombres: this.form.nombres,
             apellidos: this.form.apellidos
         };
+        const store = this.props.store;
         this.props.store.profile.update(params)
             .then((response) => {
-                this.props.store.getState().session.nombres = this.form.nombres;
-                this.props.store.getState().session.apellidos = this.form.apellidos;
-                this.props.store.setState({updateAt: new Date()});
+                store.getState().session.nombres = this.form.nombres;
+                store.getState().session.apellidos = this.form.apellidos;
+                store.getState().session.fullname = this.form.nombres + " " + this.form.apellidos;
+                store.setState({session: true});
             })
-            .catch((error) => {
-                
-            });
+            .catch((error) => store.setState({error: error.error}));
     }
     updateProfile = (params, obj) => {
         obj.setState({isLoading: true});
         this.props.store.profile.update(params)
-            .then((response) => {
-                obj.setState({isLoading: false});
-            })
-            .catch((error) => {
-                obj.setState({isLoading: false});
-            });
+            .then((response) => obj.setState({isLoading: false}))
+            .catch((error) => obj.setState({isLoading: false}));
     }
     onHandlerGuardarEmail = (e, obj, permiso) => {
         this.updateProfile({

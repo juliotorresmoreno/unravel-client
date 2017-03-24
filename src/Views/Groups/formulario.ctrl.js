@@ -39,8 +39,8 @@ export default class FormularioCtrl extends Component {
         this.newFile();
     };
     onHandlerRecortar = () => {
-        var canvas = this.refs.capture.getSelection();
-        var store = this.props.store;
+        const canvas = this.refs.capture.getSelection();
+        const { params, store } = this.props;
         canvas.toBlob((blob) => {
             var data = new FormData();
             data.append("file", blob);
@@ -49,6 +49,12 @@ export default class FormularioCtrl extends Component {
         });
         this.src = canvas.toDataURL("image/jpeg");
         this.setState({open: false});
+        const url = store.getState().config.api + "/groups/" + params.group + "/preview";
+        fetch(url, {
+            method: "GET",
+            credentials: "include", 
+            mode: "cors"
+        });
     }
     onHandlerImagen = (e, obj) => {
         e.preventDefault();
