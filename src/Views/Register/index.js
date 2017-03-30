@@ -79,6 +79,7 @@ export default class Register extends RegisterCtrl{
                         <Button primary>Registrar</Button>
                     </Form>
                 </div>
+                <br />
             </Container>
         );
     }
