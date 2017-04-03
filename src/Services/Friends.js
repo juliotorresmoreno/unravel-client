@@ -101,7 +101,10 @@ export default class Friends extends ServiceBase
                     .then((response) => {
                         if (response.ok) {
                             response.json()
-                                .then((json) => actualizarEstado(user, json.estado, json.relacion))
+                                .then((json) => {
+                                    actualizarEstado(user, json.estado, json.relacion);
+                                    this.secure(resolve)(json);
+                                })
                                 .catch((error) => this.secure(reject)(error));
                             return;
                         }
@@ -119,7 +122,17 @@ export default class Friends extends ServiceBase
                     .then((response) => {
                         response.json()
                             .then((json) => {
-                                store.setState({friends: json.data});
+                                var usuario = store.getState().usuario;
+                                var state = {friends: json.data};
+                                if (typeof usuario === "object") {
+                                    for (var i = 0; i < json.data.length; i++) {
+                                        if (json.data[i].usuario === usuario.usuario) {
+                                            state.usuario = json.data[i];
+                                            break;
+                                        }
+                                    }
+                                }
+                                store.setState(state);
                                 response.ok ?
                                     this.secure(resolve)({response: response, data: json}):
                                     this.secure(reject)(json);

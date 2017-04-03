@@ -20,7 +20,14 @@ export default class MenuRight extends MenuRightCtrl {
                     {friends.map((friend, index) => {
                         if (friend.estado !== "Amigos")
                             return null;
-                        const color = friend.conectado ? "#28b463": "#e74c3c";
+                        var color;
+                        if (friend.chat === true) {
+                            color = "#d68910";
+                        } else if(friend.conectado) {
+                            color = "#28b463";
+                        } else {
+                            color = "#e74c3c";
+                        }
                         return (
                             <Menu.Item key={index} as="a" style={{backgroundColor:color}} onClick={this.handleItemClick} href={"/" + friend.usuario + "/chat"}>
                                 <div style={{color: "white"}}>{friend.fullname}</div>

@@ -38,6 +38,9 @@ export default class Chat extends ServiceBase
                                     if (store.getState().chats[usuario][i].action === "videollamada")
                                         store.getState().chats[usuario][i].estado = "rechazada";
                                 break;
+                            case "amistad":
+                                store.friends.friends();
+                                break;
                             case "videollamada": case "llamada":
                             case "mensaje":
                                 if (data.action === "videollamada" || data.action === "llamada") {
@@ -47,12 +50,24 @@ export default class Chat extends ServiceBase
                                         break;
                                     }
                                 }
-                                usuario = data.usuario === store.getState().session.usuario ? data.usuarioReceptor: data.usuario;
+                                var session = store.getState().session;
+                                usuario = data.usuario === session.usuario ? data.usuarioReceptor: data.usuario;
                                 if(store.getState().chats === undefined)
                                     store.getState().chats = {};
                                 if(store.getState().chats[usuario] === undefined)
                                     store.getState().chats[usuario] = [];
                                 store.getState().chats[usuario].push(data);
+                                var user = store.getState().usuario;
+                                if ((user === undefined || user.usuario !== usuario) && store.getState().friends !== undefined) {
+                                    for (var i = 0; i < store.getState().friends.length; i++) {
+                                        if (store.getState().friends[i].usuario === usuario) {
+                                            store.getState().friends[i].chat = true;
+                                            store.setState({friends: store.getState().friends});
+                                            console.log("sds");
+                                            break;
+                                        }
+                                    }
+                                }
                                 break;
                             case "connect": case "disconnect":
                                 var friends = store.getState().friends || [];

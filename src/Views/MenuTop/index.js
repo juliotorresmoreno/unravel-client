@@ -16,7 +16,7 @@ export default class MenuTop extends Component {
         }
         if (!user || (session && user === session.usuario) || typeof estados[usuario.estado] === "undefined")
             return null;
-        const sw = usuario.estado !== "Solicitado" || !solicito;
+        const sw = usuario.estado === "Solicitado" && !solicito;
         const {label, handler} = estados[usuario.estado];
         return (
             <div style={{marginBottom: 15}}>
@@ -28,10 +28,18 @@ export default class MenuTop extends Component {
     }
     agregarAmigo = () => {
         var user = this.props.params.user;
-        this.props.store.friends.add(user);
+        var store = this.props.store;
+        store.friends.add(user)
+            .then(() => {
+                store.friends.friends();
+            });
     }
     rechazarAmigo = () => {
         var user = this.props.params.user;
-        this.props.store.friends.reject(user);
+        var store = this.props.store;
+        store.friends.reject(user)
+            .then(() => {
+                store.friends.friends();
+            });
     }
 }
