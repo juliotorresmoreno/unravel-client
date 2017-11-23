@@ -1,8 +1,6 @@
-import React from 'react';
-const { Component } = React;
+import { PureComponent } from 'react';
 
-
-export default class PeticionVideoLlamadaCtrl extends Component {
+export default class PeticionVideoLlamadaCtrl extends PureComponent {
     onHandlerAceptar = (e, obj) => {
         e.preventDefault();
         var store = this.props.store;

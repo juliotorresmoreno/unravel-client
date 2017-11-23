@@ -1,8 +1,5 @@
-import React from 'react';
-const { Component } = React;
+import { PureComponent } from 'react';
 
+export default class ComentarioCtrl extends PureComponent {
 
-
-export default class ComentarioCtrl extends Component {
-  
 }

@@ -1,6 +1,6 @@
-const server = "unravel.ga";
+const server = "localhost";
 
 export default {
-    api: "https://" + server + "/api/v1",
-    servidorwss: "wss://" + server + "/ws",
+    api: "https://" + server + ":8443/api/v1",
+    servidorwss: "wss://" + server + ":8443/ws",
 }

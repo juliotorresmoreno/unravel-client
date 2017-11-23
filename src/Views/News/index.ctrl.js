@@ -8,6 +8,7 @@ export default class NewsCtrl extends Component {
         this.forceUpdate();
     }
     onHandlerMore = (e, obj) => {
+        e.preventDefault();
         const store = this.props.store;
         const news = this.getNews();
         const session = this.props.store.location.getSession(this.props.params.user);

@@ -1,8 +1,5 @@
-import React from 'react';
-const { Component } = React;
+import { PureComponent } from 'react';
 
-
-
-export default class ConversacionCtrl extends Component {
+export default class ConversacionCtrl extends PureComponent {
   
 }

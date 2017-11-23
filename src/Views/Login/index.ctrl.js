@@ -21,13 +21,13 @@ export default class LoginCtrl extends Component {
             });
     }
     authFacebook = () => {
-        location.href = "/auth/facebook";
+        window.location.href = "/auth/facebook";
     }
     authGoogle = () => {
-        location.href = "/auth/google";
+        window.location.href = "/auth/google";
     }
     authGithub = () => {
-        location.href = "/auth/github";
+        window.location.href = "/auth/github";
     }
     onHandlerChange = (e, obj) => {
         this.form[obj.name] = obj.value;

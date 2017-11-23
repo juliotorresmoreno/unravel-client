@@ -10,7 +10,7 @@ export default class RecuperarCtrl extends Component {
         event.preventDefault();
         this.props.store.auth.changePassword(this.form)
             .then((result) => {
-                location.href = "/";
+                window.location.href = "/";
             })
             .catch((error) => {
                 var errs = error.error.split(";");

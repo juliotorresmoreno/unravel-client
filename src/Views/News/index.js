@@ -30,7 +30,7 @@ export default class News extends NewsCtrl {
                 {isme?<Publicar store={store} />:null}
                 {news.map((noticia, index) => 
                     <Publicacion key={index} store={store} router={router} noticia={noticia} />)}
-                <a onClick={this.onHandlerMore} href="#">Mas</a>
+                <a onClick={this.onHandlerMore} href="">Mas</a>
                 <br />
                 <br />
             </div>

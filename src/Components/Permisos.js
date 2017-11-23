@@ -1,5 +1,6 @@
-import React, { Component } from 'react';;
 import { Button, Dropdown } from 'semantic-ui-react'
+import React, { Component } from 'react';;
+
 
 export default class Permisos extends Component {
     state = {isLoading: false};

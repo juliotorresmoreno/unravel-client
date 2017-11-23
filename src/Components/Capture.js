@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-const $ = window.jQuery;
-
+import $ from 'jquery';
 
 const maximo = 250;
 const canvasStyle = {
@@ -50,7 +49,7 @@ export default class Capture extends Component {
         var rect = canvas.getBoundingClientRect();
         var cheight = canvas.clientHeight,
             cwidth = canvas.clientWidth,
-            iheight = imagen.height, 
+            iheight = imagen.height,
             iwidth = imagen.width,
             cleft = rect.left,
             ctop = rect.top,
@@ -58,7 +57,7 @@ export default class Capture extends Component {
             eleft = clientX - cleft,
             nleft = iwidth / cwidth * eleft,
             ntop = iheight / cheight * etop;
-        return {top: ntop, left: nleft, etop, eleft};
+        return { top: ntop, left: nleft, etop, eleft };
     }
     handlerMouseMove = (e, obj) => {
         if (e.buttons !== 1)
@@ -68,14 +67,14 @@ export default class Capture extends Component {
         var left, top;
         if (imagen.width > imagen.height) {
             left = eleft - maximo / 2;
-            top  = 0;
+            top = 0;
             if (left < 0) {
                 left = 0;
             } else if (left + maximo / 2 > selector.width - maximo / 2) {
                 left = selector.width - maximo;
             }
         } else {
-            top  = etop - maximo / 2;
+            top = etop - maximo / 2;
             left = 0;
             if (top < 0) {
                 top = 0;
@@ -108,11 +107,12 @@ export default class Capture extends Component {
     render = () => {
         return (
             <span>
-                <canvas ref="selector" 
-                        onMouseMove={this.handlerMouseMove} 
-                        width={maximo*2} 
-                        height={maximo} 
-                        style={selectorStyle} />
+                <canvas
+                    ref="selector"
+                    onMouseMove={this.handlerMouseMove}
+                    width={maximo * 2}
+                    height={maximo}
+                    style={selectorStyle} />
                 <canvas height={maximo} ref="canvas" style={canvasStyle} />
             </span>
         );
